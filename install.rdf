@@ -7,6 +7,7 @@
     <em:id>rest-easy@quickmediasolutions.com</em:id>
     <em:version>0.1</em:version>
     <em:type>2</em:type>
+    <em:bootstrap>true</em:bootstrap>
    
     <!-- Firefox -->
     <em:targetApplication>
