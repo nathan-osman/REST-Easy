@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -10,8 +11,10 @@
     <!-- Stylesheets -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="img/icon.png" />
+    
   </head>
   <body>
+    
     <!-- Navbar -->
     <div class="navbar navbar-default navbar-static-top">
       <span class="navbar-header navbar-brand">
@@ -38,10 +41,90 @@
           <button class="btn btn-default" type="button">Load</button>
         </span>
       </div>
+      <br>
       <div class="row">
         <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Request</div>
+            <div class="panel-body">
+              
+              <!-- Request method -->
+              <div class="btn-group btn-group-justified" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                  <input type="radio" name="options" id="option1" checked="checked"> GET
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="options" id="option2"> POST
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="options" id="option2"> HEAD
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="options" id="option2"> PUT
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="options" id="option2"> DELETE
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="options" id="option2"> TRACE
+                </label>
+              </div>
+              <br>
+              
+              <!-- Request headers -->
+              <h4>Additional Headers</h4>
+              <table class="table table-striped">
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" placeholder="name">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" placeholder="value">
+                  </td>
+                  <td>
+                    <button class="btn btn-default">
+                      <span class="glyphicon glyphicon-plus"></span>
+                      &nbsp;
+                      Add
+                    </button>
+                  </td>
+                </tr>
+              </table>
+              
+            </div>
+          </div>
         </div>
         <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Response</div>
+            <div class="panel-body">
+              
+              <!-- Progress bar -->
+              <div id="progress" class="progress progress-striped active hidden">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              
+              <!-- Response tabs -->
+              <div id="response" class="hidden">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#headers" data-toggle="tab">Headers</a></li>
+                  <li><a href="#response" data-toggle="tab">Response</a></li>
+                  <li><a href="#preview" data-toggle="tab">Preview</a></li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="headers"></div>
+                  <div class="tab-pane" id="response"></div>
+                  <div class="tab-pane" id="preview"></div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -49,5 +132,7 @@
     <!-- Scripts -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/resteasy.js"></script>
+    
   </body>
 </html>
