@@ -38,7 +38,7 @@
       <div class="input-group">
         <input type="text" id="url" class="form-control" placeholder="http://">
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button">Load</button>
+          <button class="btn btn-default" id="send" type="button">Send</button>
         </span>
       </div>
       <br>
@@ -49,31 +49,33 @@
             <div class="panel-body">
               
               <!-- Request method -->
-              <div class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-primary active">
-                  <input type="radio" name="options" id="option1" checked="checked"> GET
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="options" id="option2"> POST
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="options" id="option2"> HEAD
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="options" id="option2"> PUT
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="options" id="option2"> DELETE
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="options" id="option2"> TRACE
-                </label>
-              </div>
+              <p>
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-primary active">
+                    <input type="radio" name="options" value="GET" checked="checked"> GET
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" value="POST"> POST
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" value="HEAD"> HEAD
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" value="PUT"> PUT
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" value="DELETE"> DELETE
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" value="TRACE"> TRACE
+                  </label>
+                </div>
+              </p>
               <br>
               
               <!-- Request headers -->
-              <h4>Additional Headers</h4>
-              <table class="table table-striped">
+              <h4>Headers</h4>
+              <table class="table table-striped" id="request-headers">
                 <tr>
                   <th>Name</th>
                   <th>Value</th>
@@ -81,13 +83,13 @@
                 </tr>
                 <tr>
                   <td>
-                    <input type="text" class="form-control" placeholder="name">
+                    <input type="text" class="form-control" id="request-header-name" placeholder="name">
                   </td>
                   <td>
-                    <input type="text" class="form-control" placeholder="value">
+                    <input type="text" class="form-control" id="request-header-value" placeholder="value">
                   </td>
                   <td>
-                    <button class="btn btn-default">
+                    <button class="btn btn-default" id="add-header">
                       <span class="glyphicon glyphicon-plus"></span>
                       &nbsp;
                       Add
@@ -105,20 +107,21 @@
             <div class="panel-body">
               
               <!-- Progress bar -->
-              <div id="progress" class="progress progress-striped active hidden">
+              <div id="progress" class="progress progress-striped active" style="display: none;">
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
               
               <!-- Response tabs -->
-              <div id="response" class="hidden">
+              <div id="response" style="display: none;">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#headers" data-toggle="tab">Headers</a></li>
-                  <li><a href="#response" data-toggle="tab">Response</a></li>
+                  <li><a href="#raw" data-toggle="tab">Raw</a></li>
                   <li><a href="#preview" data-toggle="tab">Preview</a></li>
                 </ul>
+                <br>
                 <div class="tab-content">
                   <div class="tab-pane active" id="headers"></div>
-                  <div class="tab-pane" id="response"></div>
+                  <div class="tab-pane" id="raw"></div>
                   <div class="tab-pane" id="preview"></div>
                 </div>
               </div>
