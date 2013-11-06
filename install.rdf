@@ -19,7 +19,7 @@
     </em:targetApplication>
    
     <!-- Metadata -->
-    <em:name>Rest Easy</em:name>
+    <em:name>REST Easy</em:name>
     <em:description>A simple REST client for Firefox</em:description>
     <em:creator>Nathan Osman</em:creator>
     <em:homepageURL>https://github.com/nathan-osman/Rest-Easy</em:homepageURL>
