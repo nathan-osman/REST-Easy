@@ -1,5 +1,5 @@
 /*
- * map.js - HTML interface to an associative array
+ * mapinput.js - HTML interface to an associative array
  * Copyright 2013 - Nathan Osman
  */
 
@@ -76,6 +76,7 @@ function MapInput(root) {
     // Loads data into the map
     this.set = function(data) {
         
-        //...
+        for(var name in data)
+            addItem(name, data[name]);
     };
 }
