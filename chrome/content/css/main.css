@@ -1,0 +1,6 @@
+button.btn-block {
+    display: block;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 100%;
+}

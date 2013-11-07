@@ -10,6 +10,8 @@
     
     <!-- Stylesheets -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+      
     <link rel="icon" href="img/icon.png" />
     
   </head>
@@ -75,28 +77,7 @@
               
               <!-- Request headers -->
               <h4>Headers</h4>
-              <table class="table table-striped" id="request-headers">
-                <tr>
-                  <th>Name</th>
-                  <th>Value</th>
-                  <th></th>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="text" class="form-control" id="request-header-name" placeholder="name">
-                  </td>
-                  <td>
-                    <input type="text" class="form-control" id="request-header-value" placeholder="value">
-                  </td>
-                  <td>
-                    <button class="btn btn-default" id="add-header">
-                      <span class="glyphicon glyphicon-plus"></span>
-                      &nbsp;
-                      Add
-                    </button>
-                  </td>
-                </tr>
-              </table>
+              <div id="request-headers"></div>
               
             </div>
           </div>
@@ -136,6 +117,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/moustache.min.js"></script>
+    <script src="js/mapinput.js"></script>
     <script src="js/resteasy.js"></script>
     
   </body>

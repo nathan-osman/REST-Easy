@@ -1,18 +1,8 @@
-var RestEasy = function() {
+function RestEasy() {
     
     // Utility methods to look up values
     function getUrl()    { return $('#url').val(); }
     function getMethod() { return $('input[name=options]:checked').val(); }
-    
-    // Sets the request headers
-    function setRequestHeaders(req) {
-        
-        $('#request-headers tr.h').each(function(i, e) {
-            
-            h = $(e).find('td');
-            req.setRequestHeader($(h[0]).text(), $(h[1]).text());
-        });
-    }
     
     // Toggles progress display
     function showProgress(show) {
@@ -79,7 +69,6 @@ var RestEasy = function() {
         
         var req = new XMLHttpRequest();
         req.open(getMethod(), getUrl());
-        setRequestHeaders(req);
         
         req.onreadystatechange = function() {
             
@@ -97,10 +86,7 @@ var RestEasy = function() {
         showProgress(true);
     });
     
-    $('#add-header').click(function() {
-        
-        $('<tr class="h"><td>' + $('#request-header-name').val() + '</td><td>' + $('#request-header-value').val() + '</td><td></td></tr>').insertBefore('#request-headers tr:last');
-    });
+    new MapInput($('#request-headers'));
 };
 
 // Initialize everything as soon as the DOM loads

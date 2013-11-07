@@ -3,7 +3,7 @@
  * Copyright 2013 - Nathan Osman
  */
 
-function Map(root) {
+function MapInput(root) {
     
     // Map of all values currently stored
     var map = {};
@@ -13,7 +13,10 @@ function Map(root) {
     table.append('<tr><th>Name</th><th>Value</th><th></th></tr>');
     
     // Adds an item to the map
-    function add(name, value) {
+    function addItem(name, value) {
+        
+        if(!name.trim().length || !value.trim().length)
+            return;
         
         if(name in map)
             map[name].text(value);
@@ -23,7 +26,8 @@ function Map(root) {
             item_row.append(map[name] = $('<td></td>').text(value));
             
             // Create the button that removes the item
-            var remove = $('<button class="btn btn-danger">Remove</button>');
+            var remove = $('<button class="btn btn-sm btn-danger btn-block">Remove</button>');
+            remove.prepend('<span class="glyphicon glyphicon-trash"></span> ');
             remove.click(function() {
                 
                 delete map[name];
@@ -37,14 +41,17 @@ function Map(root) {
     };
     
     // Create the form controls that will be used for inserting items
-    var name  = $('<input type="text" class="form-control" placeholder="name">');
-    var value = $('<input type="text" class="form-control" placeholder="value">');
-    var add   = $('<button class="btn btn-default">Add</button>');
+    var name  = $('<input type="text" class="form-control input-sm" placeholder="name">');
+    var value = $('<input type="text" class="form-control input-sm" placeholder="value">');
+    var add   = $('<button class="btn btn-sm btn-default btn-block">Add</button>');
+    add.prepend('<span class="glyphicon glyphicon-plus"></span> ');
     
     // Set up the event handler for the add button
     add.click(function() {
         
-        add(name.val(), value.val());
+        addItem(name.val(), value.val());
+        name.val('');
+        value.val('');
     });
     
     // Insert the form controls
