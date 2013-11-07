@@ -5,11 +5,11 @@
 
 function RestEasy() {
     
-    var request_headers = new MapInput($('#request-headers'));
+    var request_parameters = new MapInput($('#request-parameters'));
+    var request_headers    = new MapInput($('#request-headers'));
     
     // Utility methods to look up values
-    function getUrl()    { return $('#url').val(); }
-    function getMethod() { return $('input[name=options]:checked').val(); }
+    function getUrl() { return $('#url').val(); }
     
     // Toggles progress display
     function showProgress(show) {
@@ -75,7 +75,7 @@ function RestEasy() {
     $('#send').click(function() {
         
         var req = new XMLHttpRequest();
-        req.open(getMethod(), getUrl());
+        req.open('GET', getUrl());
         
         var headers = request_headers.get();
         for(var name in headers)

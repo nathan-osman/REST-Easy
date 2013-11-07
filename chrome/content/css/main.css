@@ -4,3 +4,7 @@ button.btn-block {
     padding-right: 4px;
     width: 100%;
 }
+
+span.glyphicon {
+    margin: auto 4px;
+}
