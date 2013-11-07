@@ -5,8 +5,11 @@
 
 function RestEasy() {
     
-    //var request_parameters = new MapInput($('#request-parameters'));
-    var request_headers    = new MapInput($('#request-headers'));
+    // Initialize the method dropdown
+    var request_method = new Dropdown($('#request-method'), ['GET', 'POST', 'HEAD', 'PUT', 'DELETE']);
+    
+    var request_parameters = new MapInput($('#request-parameters-control'));
+    var request_headers    = new MapInput($('#request-headers-control'));
     
     // Utility methods to look up values
     function getUrl() { return $('#url').val(); }
@@ -75,7 +78,7 @@ function RestEasy() {
     $('#send').click(function() {
         
         var req = new XMLHttpRequest();
-        req.open('GET', getUrl());
+        req.open(request_method.get(), getUrl());
         
         var headers = request_headers.get();
         for(var name in headers)
