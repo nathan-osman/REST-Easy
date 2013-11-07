@@ -1,4 +1,11 @@
+/*
+ * resteasy.js - Interactivity for the REST Easy addon
+ * Copyright 2013 - Nathan Osman
+ */
+
 function RestEasy() {
+    
+    var request_headers = new MapInput($('#request-headers'));
     
     // Utility methods to look up values
     function getUrl()    { return $('#url').val(); }
@@ -70,6 +77,10 @@ function RestEasy() {
         var req = new XMLHttpRequest();
         req.open(getMethod(), getUrl());
         
+        var headers = request_headers.get();
+        for(var name in headers)
+            req.setRequestHeader(name, headers[name]);
+        
         req.onreadystatechange = function() {
             
             if (req.readyState == 4) {
@@ -85,8 +96,6 @@ function RestEasy() {
         req.send();
         showProgress(true);
     });
-    
-    new MapInput($('#request-headers'));
 };
 
 // Initialize everything as soon as the DOM loads

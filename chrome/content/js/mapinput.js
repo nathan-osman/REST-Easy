@@ -64,10 +64,13 @@ function MapInput(root) {
     // Insert the table into the root element
     root.append(table);
     
-    // Returns the map
+    // Returns the data in the map
     this.get = function() {
         
-        //...
+        var ret = {};
+        for(var name in map)
+            ret[name] = map[name].text();
+        return ret;
     };
     
     // Loads data into the map
