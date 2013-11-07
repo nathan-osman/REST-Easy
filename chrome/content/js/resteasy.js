@@ -5,7 +5,7 @@
 
 function RestEasy() {
     
-    var request_parameters = new MapInput($('#request-parameters'));
+    //var request_parameters = new MapInput($('#request-parameters'));
     var request_headers    = new MapInput($('#request-headers'));
     
     // Utility methods to look up values
