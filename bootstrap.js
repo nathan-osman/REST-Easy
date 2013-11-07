@@ -3,7 +3,7 @@ var NS_XUL = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
 function startup(data, reason) {
     
     // Load the watchWindows function
-    Components.utils.import('chrome://resteasy/content/js/watchwindows.jsm');
+    Components.utils.import('chrome://resteasy/content/js/modules/watchwindows.jsm');
     
     // Register our item in the tools menu
     watchWindows(function(window) {
