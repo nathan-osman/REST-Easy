@@ -5,6 +5,11 @@ button.btn-block {
     width: 100%;
 }
 
+iframe {
+    border: none;
+    width: 100%;
+}
+
 span.glyphicon {
     margin: auto 4px;
 }

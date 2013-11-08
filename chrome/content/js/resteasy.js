@@ -8,24 +8,23 @@ function RestEasy() {
     // Initialize the method dropdown
     var request_method = new Dropdown($('#request-method'), ['GET', 'POST', 'HEAD', 'PUT', 'DELETE']);
     
+    // Initialize the MapInput controls
     var request_parameters = new MapInput($('#request-parameters-control'));
     var request_headers    = new MapInput($('#request-headers-control'));
-    
-    // Utility methods to look up values
-    function getUrl() { return $('#url').val(); }
     
     // Toggles progress display
     function showProgress(show) {
         
         if(show) {
-            $('#response').hide();
-            $('#progress').show();
+            $('#response-tabs').hide();
+            $('#response-progress').show();
         } else {
-            $('#progress').hide();
-            $('#response').show();
+            $('#response-progress').hide();
+            $('#response-tabs').show();
         }
     }
     
+    /*
     // Generates the HTML for the headers tab
     function generateHeadersTab(req) {
         
@@ -43,60 +42,34 @@ function RestEasy() {
         
         return html;
     }
-    
-    // Generates the HTML for the raw tab
-    function generateRawTab(req) {
-        
-        function escape(html) {
-            return html.replace(/&/g, '&amp;')
-                       .replace(/</g, '&lt;')
-                       .replace(/>/g, '&gt;');
-        }
-        
-        return '<pre>' + escape(req.responseText) + '</pre>';
-    }
-    
-    // Generates the HTML for the preview tab
-    function generatePreviewTab(req) {
-        
-        return '[TODO]';
-    }
-    
-    // Loads options into the form controls
-    function loadOptions() {
-        
-        //...
-    }
-    
-    // Saves options from the form controls
-    function saveOptions() {
-        
-        //...
-    }
+    */
     
     // Issues the request
     $('#send').click(function() {
         
-        var req = new XMLHttpRequest();
-        req.open(request_method.get(), getUrl());
+        var request = new XMLHttpRequest();
+        request.open(request_method.get(), $('#url').val());
         
         var headers = request_headers.get();
         for(var name in headers)
-            req.setRequestHeader(name, headers[name]);
+            request.setRequestHeader(name, headers[name]);
         
-        req.onreadystatechange = function() {
+        request.onreadystatechange = function() {
             
-            if (req.readyState == 4) {
+            if(request.readyState == 4) {
                 
-                $('#headers').html(generateHeadersTab(req));
-                $('#raw')    .html(generateRawTab(req));
-                $('#preview').html(generatePreviewTab(req));
+                var response = new Response(request);
+                response.appendHeaders($('#response-headers'));
+                response.appendRaw($('#response-raw'));
+                response.appendPreview($('#response-preview'));
                 
                 showProgress(false);
             }
         };
         
-        req.send();
         showProgress(true);
+        $('#response-tabs .tab-pane').empty();
+        
+        request.send();
     });
 };
