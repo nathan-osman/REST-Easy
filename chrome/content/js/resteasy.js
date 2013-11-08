@@ -100,8 +100,3 @@ function RestEasy() {
         showProgress(true);
     });
 };
-
-// Initialize everything as soon as the DOM loads
-$(document).ready(function() {
-    new RestEasy();
-});
