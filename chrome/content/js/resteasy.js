@@ -52,4 +52,15 @@ function RestEasy() {
         
         request.send();
     });
+    
+    // Resizes the height of the two panels to fit snugly within the window
+    function resizePanels() {
+        
+        var offset = $('.panel').offset().top,
+            margin = parseInt($('.panel').css('marginBottom'));
+        $('.panel').css('height', ($(window).height() - offset - margin) + 'px');
+    }
+    
+    $(window).resize(resizePanels);
+    resizePanels();
 };
