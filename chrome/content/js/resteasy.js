@@ -24,26 +24,6 @@ function RestEasy() {
         }
     }
     
-    /*
-    // Generates the HTML for the headers tab
-    function generateHeadersTab(req) {
-        
-        var html = '<h4>Details</h4><p><strong>Status:</strong> ' + req.status + ' ' + req.statusText + '</p><br>';
-        var headers = req.getAllResponseHeaders().split('\n');
-        
-        html += '<h4>Headers</h4><table class="table table-striped"><tr><th>Name</th><th>Value</th></tr>';
-        for(var i = 0; i < headers.length; ++i) {
-            
-            var split = headers[i].indexOf(':');
-            if(split != -1)
-                html += '<tr><td>' + headers[i].substr(0, split) + '</td><td>' + headers[i].substr(split + 1) + '</td></tr>';
-        }
-        html += '</table>';
-        
-        return html;
-    }
-    */
-    
     // Issues the request
     $('#send').click(function() {
         
