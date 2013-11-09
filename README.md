@@ -8,6 +8,8 @@ It is still a work in progress, but some of the planned features include:
  - ability to add/modify request headers
  - tools for saving and loading requests
 
+[![Add to Firefox](http://i.stack.imgur.com/JE1T5.png)](https://addons.mozilla.org/en-US/firefox/addon/rest-easy/)
+
 ### Screenshots
 
 [![REST Easy](http://i.stack.imgur.com/GzBXb.png)](http://i.stack.imgur.com/27nBA.png)
