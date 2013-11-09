@@ -28,7 +28,11 @@ function RestEasy() {
     $('#send').click(function() {
         
         var request = new XMLHttpRequest();
-        request.open(request_method.get(), $('#url').val());
+        request.open(request_method.get(),
+                     $('#url').val(),
+                     true,
+                     $('#request-username').val(),
+                     $('#request-password').val());
         
         var headers = request_headers.get();
         for(var name in headers)
