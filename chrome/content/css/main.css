@@ -5,11 +5,20 @@ button.btn-block {
     width: 100%;
 }
 
+div.tab-pane {
+    overflow: auto;
+}
+
 iframe {
     border: none;
+    height: 100%;
     width: 100%;
 }
 
 span.glyphicon {
     margin: auto 4px;
+}
+
+ul.nav.nav-tabs {
+    margin-bottom: 10px;
 }
