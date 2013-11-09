@@ -15,7 +15,7 @@ function MapInput(root) {
     // Adds an item to the map
     function addItem(name, value) {
         
-        if(!name.trim().length || !value.trim().length)
+        if(!name.trim().length)
             return;
         
         if(name in map)
