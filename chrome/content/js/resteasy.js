@@ -38,6 +38,9 @@ function RestEasy() {
         for(var name in headers)
             request.setRequestHeader(name, headers[name]);
         
+        if(request_method.get() == 'POST')
+            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        
         request.onreadystatechange = function() {
             
             if(request.readyState == 4) {
@@ -51,10 +54,17 @@ function RestEasy() {
             }
         };
         
+        // URL-encode the POST data
+        var parameters = request_parameters.get(),
+            param_str = [];
+        for(var param in parameters)
+            param_str.push(encodeURIComponent(param) + '=' + encodeURIComponent(parameters[param]));
+        param_str = param_str.join('&');
+        
         showProgress(true);
         $('#response-tabs .tab-pane').empty();
         
-        request.send();
+        request.send(param_str);
     });
     
     // Ensure that the panels are sized correctly when the page is resized
