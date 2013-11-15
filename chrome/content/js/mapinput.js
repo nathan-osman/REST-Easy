@@ -22,7 +22,7 @@ function MapInput(root) {
             map[name].text(value);
         else {
             var item_row = $('<tr></tr>')
-                .append('<td>' + name + '</td>')
+                .append($('<td></td>').text(name))
                 .append(map[name] = $('<td></td>').text(value));
             
             // Create the button that removes the item

@@ -15,7 +15,8 @@ function Dropdown(button, items) {
     // Initialize each item in the list
     $.each(items, function(i, item) {
         
-        var link = links[item] = $('<a href="#">' + item + '</a>')
+        var link = links[item] = $('<a href="#"></a>')
+            .text(item)
             .click(function() {
                 
                 button.text(selection = item).append(' <span class="caret"></span>');
