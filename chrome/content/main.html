@@ -10,6 +10,7 @@
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/main.css">
       
     <link rel="icon" href="img/icon.png" />
@@ -109,8 +110,11 @@
             <div class="panel-body">
               
               <!-- Progress bar -->
-              <div id="response-progress" class="progress progress-striped active" style="display: none;">
-                <div class="progress-bar" style="width: 100%"></div>
+              <div id="response-progress" style="display: none;">
+                <p class="help-block text-center">Request in progress...</p>
+                <div class="progress progress-striped active">
+                  <div class="progress-bar" style="width: 100%"></div>
+                </div>
               </div>
               
               <!-- Response tabs -->
