@@ -46,7 +46,7 @@ function MapInput(root) {
     
     // Create the button that will be used to add items
     var add = $('<button class="btn btn-sm btn-default btn-block">Add</button>')
-        .prepend('<span class="glyphicon glyphicon-plus"></span> ')
+        .prepend('<span class="glyphicon glyphicon-plus"></span>')
         .click(function() {
             
             addItem(name.val(), value.val());
