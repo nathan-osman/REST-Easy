@@ -9,7 +9,7 @@ function Response(request) {
     this.appendHeaders = function(root) {
         
         root.append('<h4>Status</h4>')
-            .append($('<p class="status"></p>').append(request.status + ' ' + request.statusText))
+            .append($('<p class="status"></p>').text(request.status + ' ' + request.statusText))
             .append('<br><h4>Headers</h4>');
         
         // Create the table for displaying headers
