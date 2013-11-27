@@ -8,10 +8,11 @@ function startup(data, reason) {
     // Register our item in the web developer menus
     watchWindows(function(window) {
 
-        // Creates and returns the menu item with the provided prefix in the provided menu
+        // Creates the menu item with the provided prefix in the provided menu
         function createDesktopMenuItem(menu, prefix) {
 
-            var menuItem = window.document.createElementNS(NS_XUL, 'menuitem');
+            var separator = window.document.createElementNS(NS_XUL, 'menuseparator'),
+                 menuItem = window.document.createElementNS(NS_XUL, 'menuitem');
             menuItem.setAttribute('id',        prefix + '_resteasy');
             menuItem.setAttribute('label',     'REST Easy');
             menuItem.setAttribute('accesskey', 'R');
@@ -23,15 +24,19 @@ function startup(data, reason) {
             }, true);
 
             // First append a separator, then the menu item
-            window.document.getElementById(menu).appendChild(window.document.createElementNS(NS_XUL, 'menuseparator'));
-            window.document.getElementById(menu).appendChild(menuItem);
-            return menuItem;
+            menu.appendChild(separator);
+            menu.appendChild(menuItem);
+
+            // Register it for removal
+            unload(function() {
+
+                menu.removeChild(separator);
+                menu.removeChild(menuItem);
+            });
         }
 
         // Check if we are mobile
-        var mobile = typeof window.NativeWindow != 'undefined';
-
-        if(mobile) {
+        if(typeof window.NativeWindow != 'undefined') {
 
             // Add the item to the native menu
             var menu_resteasy = window.NativeWindow.menu.add("REST Easy", null, function() {
@@ -48,15 +53,8 @@ function startup(data, reason) {
         } else {
 
             // Add it to the appropriate menus
-            var appmenu_resteasy = createDesktopMenuItem('appmenu_webDeveloper_popup', 'appmenu');
-            var menu_resteasy    = createDesktopMenuItem('menuWebDeveloperPopup',      'menu');
-
-            // Remove the menu items when the addon is unloaded
-            unload(function() {
-
-                window.document.getElementById('appmenu_webDeveloper_popup').removeChild(appmenu_resteasy);
-                window.document.getElementById('menuWebDeveloperPopup').removeChild(menu_resteasy);
-            });
+            createDesktopMenuItem(window.document.getElementById('appmenu_webDeveloper_popup'), 'appmenu');
+            createDesktopMenuItem(window.document.getElementById('menuWebDeveloperPopup'),      'menu');
         }
     });
 }
