@@ -22,8 +22,8 @@ function Response(request) {
             
             var split = header.indexOf(':');
             if(split != -1)
-                table.append($('<tr></tr>').append($('<td></td>').append(header.substr(0, split)))
-                                           .append($('<td></td>').append(header.substr(split + 1))));
+                table.append($('<tr></tr>').append($('<td></td>').text(header.substr(0, split)))
+                                           .append($('<td></td>').text(header.substr(split + 1))));
         });
         
         // Append the table
