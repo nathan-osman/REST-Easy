@@ -8,7 +8,7 @@
     <em:version>0.2.1</em:version>
     <em:type>2</em:type>
     <em:bootstrap>true</em:bootstrap>
-   
+
     <!-- Firefox -->
     <em:targetApplication>
       <Description>
@@ -17,7 +17,7 @@
         <em:maxVersion>25.*</em:maxVersion>
       </Description>
     </em:targetApplication>
-    
+
     <!-- Firefox Mobile -->
     <em:targetApplication>
       <Description>
@@ -26,12 +26,12 @@
         <em:maxVersion>25.*</em:maxVersion>
       </Description>
     </em:targetApplication>
-   
+
     <!-- Metadata -->
     <em:name>REST Easy</em:name>
     <em:description>A simple REST client for Firefox</em:description>
     <em:creator>Nathan Osman</em:creator>
     <em:homepageURL>https://github.com/nathan-osman/REST-Easy</em:homepageURL>
-    
+
   </Description>
 </RDF>

@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Title -->
     <title>REST Easy</title>
-    
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/main.css">
-      
+
     <link rel="icon" href="img/icon.png" />
-    
+
   </head>
   <body>
-    
+
     <!-- Navbar -->
     <div class="navbar navbar-default navbar-static-top">
       <span class="navbar-header navbar-brand">
@@ -25,10 +25,10 @@
         REST Easy
       </span>
     </div>
-    
+
     <!-- Page Content -->
     <div class="container">
-      
+
       <!-- URL input bar -->
       <div class="input-group">
         <div class="input-group-btn">
@@ -43,22 +43,22 @@
         </span>
       </div>
       <br>
-      
+
       <div class="row">
         <div class="col-sm-6">
           <div class="panel panel-default">
             <div class="panel-heading">Request</div>
             <div class="panel-body">
-              
+
               <!-- Request tabs -->
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#request-parameters" data-toggle="tab">Parameters</a></li>
                 <li><a href="#request-headers" data-toggle="tab">HTTP Headers</a></li>
                 <li><a href="#request-authentication" data-toggle="tab">Authentication</a></li>
               </ul>
-              
+
               <div class="tab-content">
-                
+
                 <!-- Parameters tab -->
                 <div class="tab-pane active" id="request-parameters">
                   <p class="help-block">
@@ -67,7 +67,7 @@
                   <br>
                   <div id="request-parameters-control"></div>
                 </div>
-                
+
                 <!-- Headers tab -->
                 <div class="tab-pane" id="request-headers">
                   <p class="help-block">
@@ -76,7 +76,7 @@
                   <br>
                   <div id="request-headers-control"></div>
                 </div>
-                
+
                 <!-- Authentication tab -->
                 <div class="tab-pane" id="request-authentication">
                   <p class="help-block">
@@ -86,9 +86,9 @@
                   <p><input type="text" class="form-control" id="request-username" placeholder="username"></p>
                   <p><input type="password" class="form-control" id="request-password" placeholder="password"></p>
                 </div>
-                
+
               </div>
-              
+
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Response</div>
             <div class="panel-body">
-              
+
               <!-- Progress bar -->
               <div id="response-progress" style="display: none;">
                 <p class="help-block text-center">Request in progress...</p>
@@ -104,7 +104,7 @@
                   <div class="progress-bar" style="width: 100%"></div>
                 </div>
               </div>
-              
+
               <!-- Response tabs -->
               <div id="response-tabs" style="display: none;">
                 <ul class="nav nav-tabs">
@@ -118,13 +118,13 @@
                   <div class="tab-pane" id="response-preview"></div>
                 </div>
               </div>
-              
+
             </div>
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Scripts -->
     <script src="js/vendor/jquery.min.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
@@ -134,13 +134,13 @@
     <script src="js/response.js"></script>
     <script src="js/resteasy.js"></script>
     <script>
-      
+
       // Initialize everything as soon as the DOM loads
       $(document).ready(function() {
         new RestEasy();
       });
-      
+
     </script>
-    
+
   </body>
 </html>
