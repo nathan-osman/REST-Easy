@@ -7,7 +7,7 @@ function RestEasy() {
 
     // Initialize the method dropdown
     var request_method = new Dropdown($('#request-method'), ['GET', 'POST', 'HEAD']);
-    
+
     // Initialize the MapInput controls
     var request_parameters = new MapInput($('#request-parameters-control'));
     var request_headers    = new MapInput($('#request-headers-control'));
@@ -26,6 +26,10 @@ function RestEasy() {
 
     // Issues the request
     $('#send').click(function() {
+
+        // Ignore an empty request
+        if(!$('#url').val().trim().length)
+            return;
 
         var request = new XMLHttpRequest();
         request.open(request_method.get(),
