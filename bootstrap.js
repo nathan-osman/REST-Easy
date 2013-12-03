@@ -62,7 +62,7 @@ function startup(data, reason) {
             window.XULBrowserWindow.hideChromeForLocation = function(aLocation) {
 
                 return chrome_url == aLocation.substring(0, chrome_url.length) ||
-                       prev.apply(window.XULBrowserWindow, aLocation);
+                       prev.apply(window.XULBrowserWindow, [aLocation]);
             };
 
             // Remove the item from the list
