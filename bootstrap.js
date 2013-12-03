@@ -1,4 +1,5 @@
-var NS_XUL = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
+var NS_XUL     = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul',
+    chrome_url = 'chrome://resteasy/content/main.html';
 
 function startup(data, reason) {
 
@@ -19,7 +20,7 @@ function startup(data, reason) {
             menuItem.addEventListener('command', function() {
 
                 // Open the main.html page in a new tab
-                window.gBrowser.selectedTab = window.gBrowser.addTab('chrome://resteasy/content/main.html');
+                window.gBrowser.selectedTab = window.gBrowser.addTab(chrome_url);
 
             }, true);
 
@@ -41,7 +42,7 @@ function startup(data, reason) {
             // Add the item to the native menu
             var menu_resteasy = window.NativeWindow.menu.add("REST Easy", null, function() {
 
-                window.BrowserApp.addTab('chrome://resteasy/content/main.html')
+                window.BrowserApp.addTab(chrome_url)
             });
 
             // Remove the item when the addon is unloaded
@@ -55,6 +56,16 @@ function startup(data, reason) {
             // Add it to the appropriate menus
             createDesktopMenuItem(window.document.getElementById('appmenu_webDeveloper_popup'), 'appmenu');
             createDesktopMenuItem(window.document.getElementById('menuWebDeveloperPopup'),      'menu');
+
+            // Hide Chrome for the URL
+            window.XULBrowserWindow.inContentWhitelist.push(chrome_url);
+
+            // Remove the item from the list
+            unload(function() {
+
+                var index = window.XULBrowserWindow.inContentWhitelist.indexOf(chrome_url);
+                window.XULBrowserWindow.inContentWhitelist.splice(index, 1);
+            });
         }
     });
 }
