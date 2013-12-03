@@ -58,13 +58,17 @@ function startup(data, reason) {
             createDesktopMenuItem(window.document.getElementById('menuWebDeveloperPopup'),      'menu');
 
             // Hide Chrome for the URL
-            window.XULBrowserWindow.inContentWhitelist.push(chrome_url);
+            var prev = window.XULBrowserWindow.hideChromeForLocation;
+            window.XULBrowserWindow.hideChromeForLocation = function(aLocation) {
+
+                return chrome_url == aLocation.substring(0, chrome_url.length) ||
+                       prev.apply(window.XULBrowserWindow, aLocation);
+            };
 
             // Remove the item from the list
             unload(function() {
 
-                var index = window.XULBrowserWindow.inContentWhitelist.indexOf(chrome_url);
-                window.XULBrowserWindow.inContentWhitelist.splice(index, 1);
+                window.XULBrowserWindow.hideChromeForLocation = prev;
             });
         }
     });
