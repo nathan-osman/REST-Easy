@@ -5,6 +5,8 @@
 
 function Response(request) {
 
+    var NS_XUL = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
+
     // Appends the contents of the headers tab
     this.appendHeaders = function(root) {
 
@@ -39,14 +41,11 @@ function Response(request) {
     // Appends the contents of the preview tab
     this.appendPreview = function(root) {
 
-        var iframe = $('<iframe></iframe>');
+        var iframe = document.createElementNS(NS_XUL, 'iframe');
+        iframe.setAttribute('type', 'content');
         root.append(iframe);
 
-        var iwindow = iframe[0].contentWindow;
-        iwindow.document.write(request.responseText);
-        iwindow.document.close();
-
-        // Hack to suppress the "loading" indicator when the page tries to load static files
-        iwindow.stop();
+        // Insert the HTML
+        $(iframe).attr('src', 'data:text/html,' + encodeURIComponent(request.responseText));
     };
 }
