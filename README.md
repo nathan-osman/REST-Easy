@@ -6,6 +6,7 @@ It is still a work in progress, but the features currently implemented include:
  - support for GET, POST, and HEAD methods
  - parameter editor for POST requests
  - ability to customize HTTP request headers
+ - preview of HTML both as text and rendered in the browser
 
 Features planned for upcoming releases include:
 
@@ -27,7 +28,7 @@ Here are some of the areas we would like some help in:
 
  - **JavaScript programmers:** the add-on is written almost exclusively in JavaScript.
    We currently use XMLHttpRequest for sending the requests but this has a couple of drawbacks:
-   
+
     - redirects are automatically followed
     - HTTP basic authentication is handled by the browser (although the add-on can supply the required data)
 

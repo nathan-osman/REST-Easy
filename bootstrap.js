@@ -69,7 +69,7 @@ function startup(data, reason) {
                        prev.apply(window.XULBrowserWindow, [aLocation]);
             };
 
-            // Remove the item from the list
+            // Restore the old hideChromeForLocation function
             unload(function() {
 
                 window.XULBrowserWindow.hideChromeForLocation = prev;
