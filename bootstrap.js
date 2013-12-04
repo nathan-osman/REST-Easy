@@ -54,8 +54,12 @@ function startup(data, reason) {
         } else {
 
             // Add it to the appropriate menus
-            createDesktopMenuItem(window.document.getElementById('appmenu_webDeveloper_popup'), 'appmenu');
-            createDesktopMenuItem(window.document.getElementById('menuWebDeveloperPopup'),      'menu');
+            var appmenu = window.document.getElementById('appmenu_webDeveloper_popup'),
+                menu    = window.document.getElementById('menuWebDeveloperPopup');
+
+            if(appmenu !== null)
+                createDesktopMenuItem(appmenu, 'appmenu');
+            createDesktopMenuItem(menu, 'menu');
 
             // Hide Chrome for the URL
             var prev = window.XULBrowserWindow.hideChromeForLocation;
