@@ -32,3 +32,7 @@ span.glyphicon {
 ul.nav.nav-tabs {
     margin-bottom: 10px;
 }
+
+ul.nav.nav-tabs li.active a {
+    outline: 0;
+}
