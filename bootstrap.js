@@ -12,6 +12,7 @@ function startup(data, reason) {
     // Load the required modules for initializing the add-on
     Components.utils.import('chrome://resteasy/content/js/modules/browser.jsm');
     Components.utils.import('chrome://resteasy/content/js/modules/menu.jsm');
+    Components.utils.import('chrome://resteasy/content/js/modules/toolbar.jsm');
     Components.utils.import('chrome://resteasy/content/js/modules/watchwindows.jsm');
 
     // Opens a new tab for REST Easy
@@ -23,25 +24,30 @@ function startup(data, reason) {
     // For each open window, create the necessary UI overlays
     watchWindows(function(window) {
 
-        // Add the menu items to the two web developer menus
-        addItemToDesktopMenu(window,
-                             'appmenu_webDeveloper_popup',
-                             'appmenu_resteasy',
-                             'REST Easy',
-                             openRestEasy);
-        addItemToDesktopMenu(window,
-                             'menuWebDeveloperPopup',
-                             'menu_resteasy',
-                             'REST Easy',
-                             openRestEasy);
+        // Inject our custom stylesheet
+        injectStylesheet(window, 'chrome://resteasy/skin/browser.css', function() {
 
-        // Add the menu item to the mobile menu
-        addItemToMobileMenu(window, 'REST Easy', openRestEasy);
+            // Add the menu items to the two web developer menus
+            addItemToDesktopMenu(window,
+                                 'appmenu_webDeveloper_popup',
+                                 'appmenu_resteasy',
+                                 'REST Easy',
+                                 openRestEasy);
+            addItemToDesktopMenu(window,
+                                 'menuWebDeveloperPopup',
+                                 'menu_resteasy',
+                                 'REST Easy',
+                                 openRestEasy);
 
-        // TODO: add toolbar button here
+            // Add the menu item to the mobile menu
+            addItemToMobileMenu(window, 'REST Easy', openRestEasy);
 
-        // Hide chrome for this particular location
-        hideChromeForLocation(window, CHROME_URL);
+            // Add the item to the toolbar
+            addItemToToolbar(window, 'REST Easy', openRestEasy);
+
+            // Hide chrome for this particular location
+            hideChromeForLocation(window, CHROME_URL);
+        });
     });
 }
 
