@@ -1,0 +1,7 @@
+#resteasy-tbb {
+    list-style-image: url("chrome://resteasy/skin/icon24.png");
+}
+
+toolbar[iconsize="small"] #resteasy-tbb {
+    list-style-image: url("chrome://resteasy/skin/icon16.png");
+}
