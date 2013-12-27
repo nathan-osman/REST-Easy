@@ -1,7 +1,7 @@
-#resteasy-tbb {
+#resteasy-launcher {
     list-style-image: url("chrome://resteasy/skin/icon24.png");
 }
 
-toolbar[iconsize="small"] #resteasy-tbb {
+toolbar[iconsize="small"] #resteasy-launcher {
     list-style-image: url("chrome://resteasy/skin/icon16.png");
 }

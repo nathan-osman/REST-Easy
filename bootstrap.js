@@ -46,14 +46,15 @@ function startup(data, reason) {
 
             // Add the item to the toolbar
             addItemToToolbar(window,
+                             'launcher',
                              'REST Easy',
                              openRestEasy);
 
             // Hide chrome for this particular location
             hideChromeForLocation(window, CHROME_URL);
-
-        }, 'navigator:browser');
-    });
+        });
+        
+    }, 'navigator:browser');
 }
 
 function shutdown(data, reason) {
