@@ -43,8 +43,9 @@ Components.utils.import('chrome://resteasy/content/js/modules/unload.jsm');
 /**
  * Invokes the specified callback for each browser window
  * @param [function] callback: A callback to be invoked for each window
+ * @param [String] windowType: The type of window to watch for
  */
-function watchWindows(callback) {
+function watchWindows(callback, windowType) {
 
     // This function originally wrapped callback() in a try/catch block
     // to supress errors, but it's more useful if those errors are
@@ -53,7 +54,7 @@ function watchWindows(callback) {
 
         // Now that the window has loaded, only handle browser windows
         let {documentElement} = window.document;
-        if(documentElement.getAttribute('windowtype') == 'navigator:browser')
+        if(documentElement.getAttribute('windowtype') == windowType)
             callback(window);
     }
 

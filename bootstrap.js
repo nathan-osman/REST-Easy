@@ -40,14 +40,19 @@ function startup(data, reason) {
                                  openRestEasy);
 
             // Add the menu item to the mobile menu
-            addItemToMobileMenu(window, 'REST Easy', openRestEasy);
+            addItemToMobileMenu(window,
+                                'REST Easy',
+                                openRestEasy);
 
             // Add the item to the toolbar
-            addItemToToolbar(window, 'REST Easy', openRestEasy);
+            addItemToToolbar(window,
+                             'REST Easy',
+                             openRestEasy);
 
             // Hide chrome for this particular location
             hideChromeForLocation(window, CHROME_URL);
-        });
+
+        }, 'navigator:browser');
     });
 }
 
