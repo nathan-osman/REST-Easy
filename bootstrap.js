@@ -24,37 +24,33 @@ function startup(data, reason) {
     // For each open window, create the necessary UI overlays
     watchWindows(function(window) {
 
-        // Inject our custom stylesheet
-        injectStylesheet(window, 'chrome://resteasy/skin/browser.css', function() {
-
-            // Add the menu items to the two web developer menus
-            addItemToDesktopMenu(window,
-                                 'appmenu_webDeveloper_popup',
-                                 'appmenu_resteasy',
-                                 'REST Easy',
-                                 openRestEasy);
-            addItemToDesktopMenu(window,
-                                 'menuWebDeveloperPopup',
-                                 'menu_resteasy',
-                                 'REST Easy',
-                                 openRestEasy);
-
-            // Add the menu item to the mobile menu
-            addItemToMobileMenu(window,
-                                'REST Easy',
-                                openRestEasy);
-
-            // Add the item to the toolbar
-            addItemToToolbar(window,
-                             'launcher',
+        // Add the menu items to the two web developer menus
+        addItemToDesktopMenu(window,
+                             'appmenu_webDeveloper_popup',
+                             'appmenu_resteasy',
+                             'REST Easy',
+                             openRestEasy);
+        addItemToDesktopMenu(window,
+                             'menuWebDeveloperPopup',
+                             'menu_resteasy',
                              'REST Easy',
                              openRestEasy);
 
-            // Hide chrome for this particular location
-            hideChromeForLocation(window, CHROME_URL);
-        });
-        
-    }, 'navigator:browser');
+        // Add the menu item to the mobile menu
+        addItemToMobileMenu(window,
+                            'REST Easy',
+                            openRestEasy);
+
+        // Add the item to the toolbar
+        addItemToToolbar(window,
+                         'launcher',
+                         'REST Easy',
+                         'chrome://resteasy/content/img/icon16.png',
+                         openRestEasy);
+
+        // Hide chrome for this particular location
+        hideChromeForLocation(window, CHROME_URL);
+    });
 }
 
 function shutdown(data, reason) {

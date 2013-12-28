@@ -13,9 +13,10 @@ Components.utils.import('chrome://resteasy/content/js/modules/unload.jsm');
  * @param [node] window: The parent window
  * @param [String] id: The ID of the new toolbar button
  * @param [String] label: The label for the new toolbar item
+ * @param [String] icon: The icon to use for the toolbar button
  * @param [function] callback: The callback to be invoked when the toolbar is added
  */
-function addItemToToolbar(window, id, label, callback) {
+function addItemToToolbar(window, id, label, icon, callback) {
 
     // Ensure the toolbar and toolbar palette exist
     let toolbar = window.document.getElementById('nav-bar'),
@@ -30,6 +31,7 @@ function addItemToToolbar(window, id, label, callback) {
     toolbarButton.setAttribute('class',     'toolbarbutton-1 chromeclass-toolbar-additional');
     toolbarButton.setAttribute('label',     label);
     toolbarButton.setAttribute('removable', 'true');
+    toolbarButton.style.listStyleImage = 'url("' + icon + '")';
     toolbarButton.addEventListener('command', function() {
 
         callback(window);
@@ -57,7 +59,7 @@ function addItemToToolbar(window, id, label, callback) {
         if(firstTime) {
 
             toolbar.appendChild(toolbarButton);
-            toolbar.setAttribut('currentset', toolbar.currentSet);
+            toolbar.setAttribute('currentset', toolbar.currentSet);
             window.document.persist(toolbar.id, 'currentset');
 
             // This is no longer the first time
@@ -66,7 +68,10 @@ function addItemToToolbar(window, id, label, callback) {
     } else {
 
         // Determine where to insert the button and insert it
-        let before = (index < currentSet.length - 1)?window.document.getElementById(currentSet[index + 1]):null;
+        let before = null;
+        for(let i = index + 1; i < currentSet.length; ++i)
+            if((before = window.document.getElementById(currentSet[i])))
+                break;
         toolbar.insertBefore(toolbarButton, before);
     }
 }

@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var EXPORTED_SYMBOLS = ['addTab', 'hideChromeForLocation', 'injectStylesheet'];
+var EXPORTED_SYMBOLS = ['addTab', 'hideChromeForLocation'];
 
 Components.utils.import('chrome://resteasy/content/js/modules/unload.jsm');
 
@@ -43,32 +43,5 @@ function hideChromeForLocation(window, location) {
     unload(function() {
 
         window.XULBrowserWindow.hideChromeForLocation = prev;
-    });
-}
-
-/**
- * Injects an XML stylesheet into the window
- * @param [node] window: The parent window
- * @param [String] location: The location of the stylesheet to inject
- * @param [function] callback: The callback to invoke when the stylesheet has been loaded
- */
-function injectStylesheet(window, location, callback) {
-
-    // Create the processing instruction and set the callback
-    let instruction = window.document.createProcessingInstruction('xml-stylesheet',
-            "type='text/css' href='" + location + "'");
-    instruction.addEventListener('load', function() {
-
-        callback(window);
-
-    }, true);
-
-    // Inject it into the browser XUL
-    window.document.insertBefore(instruction, window.document.firstChild);
-
-    // Remove the stylesheet when unloaded
-    unload(function() {
-
-        window.document.removeChild(instruction);
     });
 }
