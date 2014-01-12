@@ -38,3 +38,7 @@ Here are some of the areas we would like some help in:
 
  - **Localization:** the add-on is not currently l10n-capable yet.
    The goal is to have this implemented sooner rather than later.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/nathan-osman/rest-easy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
