@@ -38,12 +38,15 @@ function RestEasy() {
                      $('#request-username').val(),
                      $('#request-password').val());
 
+        // We must obtain an nsIHttpChannel interface in order to set certain headers
+        var channel = request.channel.QueryInterface(Components.interfaces.nsIHttpChannel);
+
         var headers = request_headers.get();
         for(var name in headers)
-            request.setRequestHeader(name, headers[name]);
+            channel.setRequestHeader(name, headers[name], false);
 
         if(request_method.get() == 'POST')
-            request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            channel.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         request.onreadystatechange = function() {
 
