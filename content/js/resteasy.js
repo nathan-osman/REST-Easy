@@ -10,7 +10,7 @@ function RestEasy() {
 
     // Initialize the MapInput controls
     var request_parameters = new MapInput($('#request-parameters-control'));
-    var request_headers    = new MapInput($('#request-headers-control'));
+    var request_headers    = new MapInput($('#request-headers-control'), HTTP_REQUEST_HEADERS);
 
     // Toggles progress display
     function showProgress(show) {

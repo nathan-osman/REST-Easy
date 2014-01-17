@@ -3,7 +3,7 @@
  * Copyright 2013 - Nathan Osman
  */
 
-function MapInput(root) {
+function MapInput(root, items) {
 
     // Map of all values currently stored
     var map = {};
@@ -43,6 +43,10 @@ function MapInput(root) {
     // Create the form controls that will be used for inserting items
     var name  = $('<input type="text" class="form-control input-sm" placeholder="name">');
     var value = $('<input type="text" class="form-control input-sm" placeholder="value">');
+
+    // If autocomplete data was specified, then set it up
+    if(typeof items != 'undefined')
+        name.autocomplete(items);
 
     // Create the button that will be used to add items
     var add = $('<button class="btn btn-sm btn-default btn-block">Add</button>')
