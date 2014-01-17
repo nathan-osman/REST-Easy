@@ -46,7 +46,7 @@ function RestEasy() {
             channel.setRequestHeader(name, headers[name], false);
 
         if(request_method.get() == 'POST')
-            channel.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            channel.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', false);
 
         request.onreadystatechange = function() {
 
