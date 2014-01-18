@@ -35,7 +35,50 @@ function Response(request) {
     // Appends the contents of the raw tab
     this.appendRaw = function(root) {
 
-        root.append($('<pre></pre>').text(request.responseText));
+        // Ensure that a valid MIME type was specified
+        var mime  = request.getResponseHeader('Content-Type'),
+            parts = (mime !== null)?mime.match(/^(.+)\/(.+?)(?:;|$)/):null;
+        if(parts === null) {
+            root.append($('<div class="alert alert-danger">Unable to read Content-Type HTTP header.</div>'));
+            return;
+        }
+
+        // Any MIME type recognized in the list below is highlighted
+        var highlight = {
+            'application/javascript': 'sh_javascript',
+            'application/json':       'sh_javascript',
+            'text/html':              'sh_html',
+            'text/xml':               'sh_xml'
+        };
+
+        // If it's a recognized type, assign the correct class
+        var combined = parts[1] + '/' + parts[2];
+        if(combined in highlight) {
+
+            root.append($('<pre></pre>').text(request.responseText).addClass(highlight[combined]));
+
+            // If the size of the content is > 10 KiB, then highlighting is manually applied
+            if(request.responseText.length > 10240){
+
+                var icon    = $('<span class="glyphicon glyphicon-ok"></span>'),
+                    button  = $('<button class="btn btn-default btn-sm pull-right">Highlight Anyway</button>').prepend(icon),
+                    warning = $('<div class="alert alert-warning">The response is larger than 10 KiB. ' +
+                                'Syntax highlighting may take a long time.</div>').prepend(button);
+
+                // Set the click handler for the button and append it to the root element
+                button.click(function() {
+
+                    warning.remove();
+                    sh_highlightDocument();
+                });
+                root.prepend(warning);
+
+            } else
+                sh_highlightDocument();
+        }
+        // Anything else, we can still append as a simple <pre>
+        else
+            root.append($('<pre></pre>').text(request.responseText));
     };
 
     // Appends the contents of the preview tab
