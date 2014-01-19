@@ -5,6 +5,21 @@
 
 function RestEasy() {
 
+    // List of common HTTP request headers
+    var HTTP_REQUEST_HEADERS = [
+        "Accept",              "Accept-Charset",  "Accept-Encoding",
+        "Accept-Language",     "Accept-Datetime", "Authorization",
+        "Cache-Control",       "Connection",      "Cookie",
+        "Content-Length",      "Content-MD5",     "Content-Type",
+        "Date",                "Expect",          "From",
+        "Host",                "If-Match",        "If-Modified-Since",
+        "If-None-Match",       "If-Range",        "If-Unmodified-Since",
+        "Max-Forwards",        "Origin",          "Pragma",
+        "Proxy-Authorization", "Range",           "Referer",
+        "TE",                  "Upgrade",         "User-Agent",
+        "Via",                 "Warning"
+    ];
+
     // Initialize the method dropdown
     var request_method = new Dropdown($('#request-method'), ['GET', 'POST', 'HEAD']);
 
