@@ -110,20 +110,6 @@ function Response(request) {
             }
         });
 
-    // If it's an image format, we can simply create the element
-    else if(type === 'image') {
-
-        // Generate the blob for the image contents
-        var blob = URL.createObjectURL(new Blob([request.response]));
-        var img  = $('<img>', {
-                'src': blob
-            });
-
-        // Append the image and then free the blob
-        $('#response-raw').append(img);
-        URL.revokeObjectURL(blob);
-    }
-
     // Anything else and we are going to have to display a hex dump
     else {
 
@@ -140,5 +126,19 @@ function Response(request) {
         });
 
         $('#response-raw').append(pre.append(hex));
+
+        // If it is an image, we can display a preview
+        if(type === 'image') {
+
+            // Generate the blob for the image contents
+            var blob = URL.createObjectURL(new Blob([request.response]));
+            var img  = $('<img>', {
+                    'src': blob
+                });
+
+            // Append the image and then free the blob
+            $('#response-preview').empty().append(img);
+            URL.revokeObjectURL(blob);
+        }
     }
 }
