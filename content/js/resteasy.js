@@ -37,6 +37,7 @@ function RestEasy() {
                      true,
                      $('#request-username').val(),
                      $('#request-password').val());
+        request.responseType = 'arraybuffer';
 
         // We must obtain an nsIHttpChannel interface in order to set certain headers
         var channel = request.channel.QueryInterface(Components.interfaces.nsIHttpChannel);
@@ -53,10 +54,6 @@ function RestEasy() {
             if(request.readyState == 4) {
 
                 var response = new Response(request);
-                response.appendHeaders($('#response-headers'));
-                response.appendRaw($('#response-raw'));
-                response.appendPreview($('#response-preview'));
-
                 showProgress(false);
             }
         };

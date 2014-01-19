@@ -33,6 +33,10 @@ iframe {
     width: 100%;
 }
 
+pre.break {
+    word-break: normal;
+}
+
 span.glyphicon {
     margin: auto 4px;
 }
