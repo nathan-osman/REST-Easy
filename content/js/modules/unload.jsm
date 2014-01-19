@@ -35,7 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-var EXPORTED_SYMBOLS = ["unload"];
+var EXPORTED_SYMBOLS = ['unload'];
 
 /**
  * Save callbacks to run when unloading
