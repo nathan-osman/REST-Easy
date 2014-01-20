@@ -11,6 +11,7 @@ function startup(data, reason) {
 
     // Load the required modules for initializing the add-on
     Components.utils.import('chrome://resteasy/content/js/modules/browser.jsm');
+    Components.utils.import('chrome://resteasy/content/js/modules/l10n.jsm');
     Components.utils.import('chrome://resteasy/content/js/modules/menu.jsm');
     Components.utils.import('chrome://resteasy/content/js/modules/toolbar.jsm');
     Components.utils.import('chrome://resteasy/content/js/modules/watchwindows.jsm');
@@ -28,23 +29,23 @@ function startup(data, reason) {
         addItemToDesktopMenu(window,
                              'appmenu_webDeveloper_popup',
                              'appmenu_resteasy',
-                             'REST Easy',
+                             _('ui.title'),
                              openRestEasy);
         addItemToDesktopMenu(window,
                              'menuWebDeveloperPopup',
                              'menu_resteasy',
-                             'REST Easy',
+                             _('ui.title'),
                              openRestEasy);
 
         // Add the menu item to the mobile menu
         addItemToMobileMenu(window,
-                            'REST Easy',
+                            _('ui.title'),
                             openRestEasy);
 
         // Add the item to the toolbar
         addItemToToolbar(window,
                          'launcher',
-                         'REST Easy',
+                         _('ui.title'),
                          'chrome://resteasy/content/img/icon16.png',
                          openRestEasy);
 

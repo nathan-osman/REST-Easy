@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Title -->
-    <title>REST Easy</title>
+    <!-- Title is set via JS -->
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
@@ -23,7 +22,6 @@
     <div class="navbar navbar-default navbar-static-top">
       <span class="navbar-header navbar-brand">
         <img src="img/icon22.png">
-        REST Easy
       </span>
     </div>
 
@@ -39,7 +37,6 @@
         <span class="input-group-btn">
           <a href="#response-progress" class="btn btn-default" id="send">
             <span class="glyphicon glyphicon-send"></span>
-            Send
           </a>
         </span>
       </div>
@@ -47,45 +44,36 @@
 
       <div class="row">
         <div class="col-sm-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">Request</div>
+          <div class="panel panel-default" id="request">
+            <div class="panel-heading"></div>
             <div class="panel-body">
 
               <!-- Request tabs -->
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#request-parameters" data-toggle="tab">Parameters</a></li>
-                <li><a href="#request-headers" data-toggle="tab">HTTP Headers</a></li>
-                <li><a href="#request-authentication" data-toggle="tab">Authentication</a></li>
+                <li class="active"><a href="#request-parameters" data-toggle="tab"></a></li>
+                <li><a href="#request-headers" data-toggle="tab"></a></li>
+                <li><a href="#request-authentication" data-toggle="tab"></a></li>
               </ul>
 
               <div class="tab-content">
 
                 <!-- Parameters tab -->
                 <div class="tab-pane active" id="request-parameters">
-                  <p class="help-block">
-                    The parameters specified below will be sent using the MIME type <code>application/x-www-form-urlencoded</code>.
-                  </p>
-                  <br>
+                  <p class="help-block"></p><br>
                   <div id="request-parameters-control"></div>
                 </div>
 
                 <!-- Headers tab -->
                 <div class="tab-pane" id="request-headers">
-                  <p class="help-block">
-                    The headers specified below will be combined with the browser's headers and sent with the request.
-                  </p>
-                  <br>
+                  <p class="help-block"></p><br>
                   <div id="request-headers-control"></div>
                 </div>
 
                 <!-- Authentication tab -->
                 <div class="tab-pane" id="request-authentication">
-                  <p class="help-block">
-                    The username and password specified below will be used for HTTP basic auth.
-                  </p>
-                  <br>
-                  <p><input type="text" class="form-control" id="request-username" placeholder="username"></p>
-                  <p><input type="password" class="form-control" id="request-password" placeholder="password"></p>
+                  <p class="help-block"></p><br>
+                  <p><input type="text" class="form-control" id="request-username"></p>
+                  <p><input type="password" class="form-control" id="request-password"></p>
                 </div>
 
               </div>
@@ -94,13 +82,13 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">Response</div>
+          <div class="panel panel-default" id="response">
+            <div class="panel-heading"></div>
             <div class="panel-body">
 
               <!-- Progress bar -->
               <div id="response-progress" style="display: none;">
-                <p class="help-block text-center">Request in progress...</p>
+                <p class="help-block text-center"></p>
                 <div class="progress progress-striped active">
                   <div class="progress-bar" style="width: 100%"></div>
                 </div>
@@ -109,9 +97,9 @@
               <!-- Response tabs -->
               <div id="response-tabs" style="display: none;">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a href="#response-headers" data-toggle="tab">Headers</a></li>
-                  <li><a href="#response-raw" data-toggle="tab">Raw</a></li>
-                  <li><a href="#response-preview" data-toggle="tab">Preview</a></li>
+                  <li class="active"><a href="#response-headers" data-toggle="tab"></a></li>
+                  <li><a href="#response-raw" data-toggle="tab"></a></li>
+                  <li><a href="#response-preview" data-toggle="tab"></a></li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="response-headers"></div>
@@ -133,6 +121,12 @@
     <script src="js/vendor/sh_html.min.js"></script>
     <script src="js/vendor/sh_javascript.min.js"></script>
     <script src="js/vendor/sh_xml.min.js"></script>
+    <script>
+
+      // Load support for translations
+      Components.utils.import('chrome://resteasy/content/js/modules/l10n.jsm');
+
+    </script>
     <script src="js/autocomplete.js"></script>
     <script src="js/dropdown.js"></script>
     <script src="js/mapinput.js"></script>

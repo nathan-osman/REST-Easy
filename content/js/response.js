@@ -8,13 +8,14 @@ function Response(request) {
     var NS_XUL = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
 
     // Display the status of the request
-    $('#response-headers').append('<h4>Status</h4>')
+    $('#response-headers').append($('<h4></h4>').text(_('ui.response.headers.status')))
                           .append($('<p class="status"></p>').text(request.status + ' ' + request.statusText))
-                          .append('<br><h4>Headers</h4>');
+                          .append('<br>')
+                          .append($('<h4></h4>').text(_('ui.response.headers.title')));
 
     // Create the table for displaying headers
     var table = $('<table class="table table-striped"></table>')
-        .append('<tr><th>Name</th><th>Value</th></tr>')
+        .append('<tr><th>' + _('ui.map.header.name') + '</th><th>' + _('ui.map.header.value') + '</th><th></th></tr>')
 
     // Split the headers
     var headers = request.getAllResponseHeaders().split('\n');
@@ -36,12 +37,12 @@ function Response(request) {
 
     // If the MIME type is invalid, discontinue all further processing
     if(type === '') {
-        $('#response-raw').append($('<p class="help-block">Missing or unrecognized Content-Type.</p>'));
+        $('#response-raw').append($('<p class="help-block"></p>').text(_('error.response.contenttype')));
         return;
     }
 
     // Add an indicator to the preview tab
-    $('#response-preview').empty().append('<p class="help-block">This content cannot be previewed.</p>');
+    $('#response-preview').empty().append($('<p class="help-block"></p>').text(_('warning.response.nopreview')));
 
     // Any MIME type recognized in the list below is highlighted
     var highlight = {
@@ -81,9 +82,9 @@ function Response(request) {
                 if(text.length > 10240) {
 
                     var icon    = $('<span class="glyphicon glyphicon-ok"></span>'),
-                        button  = $('<button class="btn btn-default btn-sm pull-right">Highlight Anyway</button>').prepend(icon),
-                        warning = $('<div class="alert alert-warning">The response is larger than 10 KiB. ' +
-                                    'Syntax highlighting may take a long time.</div>').prepend(button);
+                        button  = $('<button class="btn btn-default btn-sm pull-right"></button>')
+                                      .text(_('warning.response.large.button')).prepend(icon),
+                        warning = $('<div class="alert alert-warning"></div>').text(_('warning.response.large')).prepend(button);
 
                     // Set the click handler for the button and append it to the root element
                     button.click(function() {
