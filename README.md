@@ -22,7 +22,11 @@ Using REST Easy is simple: just click the toolbar button or the "REST Easy" item
 
 ### Screenshots
 
-[![REST Easy](http://i.stack.imgur.com/GzBXb.png)](http://i.stack.imgur.com/27nBA.png)
+[![](http://i.stack.imgur.com/yADPd.png)](http://i.stack.imgur.com/Ad3Uf.png)
+
+[![](http://i.stack.imgur.com/W8EU5.png)](http://i.stack.imgur.com/iZUX3.png)
+[![](http://i.stack.imgur.com/ZVsox.png)](http://i.stack.imgur.com/o127F.png)
+
 
 ### Get Involved
 
