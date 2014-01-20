@@ -5,13 +5,14 @@ It is still a work in progress, but the features currently implemented include:
 
  - support for GET, POST, and HEAD methods
  - parameter editor for POST requests
- - ability to customize HTTP request headers
+ - ability to customize nearly every HTTP request header
  - preview of HTML both as text and rendered in the browser
+ - syntax highlighting for HTML, JavaScript/JSON, and XML
+ - preview of images and a simple hex viewer for binary files
 
 Features planned for upcoming releases include:
 
  - tools for saving and loading requests
- - localization (currently in progress)
 
 [![Add to Firefox](http://i.stack.imgur.com/JE1T5.png)](https://addons.mozilla.org/en-US/firefox/addon/rest-easy/)
 
@@ -41,7 +42,7 @@ Here are some of the areas we would like some help in:
    Currently, there are a set of nasty JavaScipt event handlers that position everything on the page.
    It would be nice if this could be done in CSS somehow.
 
- - **Localization:** the add-on is not currently l10n-capable quite yet.
-   The goal is to have this completed sooner rather than later so that translating can begin.
+ - **Localization:** the add-on currently provides only an English translation.
+   All translations for other languages are welcome.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/nathan-osman/rest-easy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
