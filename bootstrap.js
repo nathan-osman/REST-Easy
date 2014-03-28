@@ -48,9 +48,6 @@ function startup(data, reason) {
                          _('ui.title'),
                          'chrome://resteasy/content/img/icon16.png',
                          openRestEasy);
-
-        // Hide chrome for this particular location
-        hideChromeForLocation(window, CHROME_URL);
     });
 }
 
