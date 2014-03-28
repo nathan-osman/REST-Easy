@@ -1,3 +1,4 @@
 content resteasy content/
 
 locale  resteasy en-US locale/en-US/
+locale  resteasy de-DE locale/de-DE/
