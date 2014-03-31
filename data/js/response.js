@@ -8,14 +8,18 @@ function Response(request) {
     var NS_XUL = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
 
     // Display the status of the request
-    $('#response-headers').append($('<h4></h4>').text(_('ui.response.headers.status')))
+    $('#response-headers').append($('<h4></h4>').translate('ui.response.headers.status'))
                           .append($('<p class="status"></p>').text(request.status + ' ' + request.statusText))
                           .append('<br>')
-                          .append($('<h4></h4>').text(_('ui.response.headers.title')));
+                          .append($('<h4></h4>').translate('ui.response.headers.title'));
 
     // Create the table for displaying headers
     var table = $('<table class="table table-striped"></table>')
-        .append('<tr><th>' + _('ui.map.header.name') + '</th><th>' + _('ui.map.header.value') + '</th><th></th></tr>')
+        .append($('<tr></tr>')
+            .append($('<th></th>').translate('ui.map.header.name'))
+            .append($('<th></th>').translate('ui.map.header.value'))
+            .append('<th></th>')
+        );
 
     // Split the headers
     var headers = request.getAllResponseHeaders().split('\n');
@@ -37,12 +41,12 @@ function Response(request) {
 
     // If the MIME type is invalid, discontinue all further processing
     if(type === '') {
-        $('#response-raw').append($('<p class="help-block"></p>').text(_('error.response.contenttype')));
+        $('#response-raw').append($('<p class="help-block"></p>').translate('error.response.contenttype'));
         return;
     }
 
     // Add an indicator to the preview tab
-    $('#response-preview').empty().append($('<p class="help-block"></p>').text(_('warning.response.nopreview')));
+    $('#response-preview').empty().append($('<p class="help-block"></p>').translate('warning.response.nopreview'));
 
     // Any MIME type recognized in the list below is highlighted
     var highlight = {
@@ -83,8 +87,8 @@ function Response(request) {
 
                     var icon    = $('<span class="glyphicon glyphicon-ok"></span>'),
                         button  = $('<button class="btn btn-default btn-sm pull-right"></button>')
-                                      .text(_('warning.response.large.button')).prepend(icon),
-                        warning = $('<div class="alert alert-warning"></div>').text(_('warning.response.large')).prepend(button);
+                                      .translate('warning.response.large.button').prepend(icon),
+                        warning = $('<div class="alert alert-warning"></div>').translate('warning.response.large').prepend(button);
 
                     // Set the click handler for the button and append it to the root element
                     button.click(function() {

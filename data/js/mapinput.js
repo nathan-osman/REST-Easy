@@ -10,7 +10,11 @@ function MapInput(root, items) {
 
     // Begin by constructing the table that will contain the map
     var table = $('<table class="table table-striped"></table>')
-        .append('<tr><th>' + _('ui.map.header.name') + '</th><th>' + _('ui.map.header.value') + '</th><th></th></tr>');
+        .append($('<tr></tr>')
+            .append($('<th></th>').translate('ui.map.header.name'))
+            .append($('<th></th>').translate('ui.map.header.value'))
+            .append('<th></th>')
+        );
 
     // Adds an item to the map
     function addItem(name, value) {
@@ -26,7 +30,7 @@ function MapInput(root, items) {
                 .append(map[name] = $('<td></td>').text(value));
 
             // Create the button that removes the item
-            var remove = $('<button class="btn btn-sm btn-danger btn-block"></button>').text(_('ui.map.remove'))
+            var remove = $('<button class="btn btn-sm btn-danger btn-block"></button>').translate('ui.map.remove')
                 .prepend('<span class="glyphicon glyphicon-trash"></span> ')
                 .click(function() {
 
@@ -41,15 +45,18 @@ function MapInput(root, items) {
     };
 
     // Create the form controls that will be used for inserting items
-    var name  = $('<input type="text" class="form-control input-sm">').attr('placeholder', _('ui.map.name'));
-    var value = $('<input type="text" class="form-control input-sm">').attr('placeholder', _('ui.map.value'));
+    var name  = $('<input type="text" class="form-control input-sm">');
+    var value = $('<input type="text" class="form-control input-sm">');
+    
+    $.translate('ui.map.name', function(text) { name.attr('placeholder', text); });
+    $.translate('ui.map.value', function(text) { value.attr('placeholder', text); });
 
     // If autocomplete data was specified, then set it up
     if(typeof items != 'undefined')
         name.autocomplete(items);
 
     // Create the button that will be used to add items
-    var add = $('<button class="btn btn-sm btn-default btn-block"></button>').text(_('ui.map.add'))
+    var add = $('<button class="btn btn-sm btn-default btn-block"></button>').translate('ui.map.add')
         .prepend('<span class="glyphicon glyphicon-plus"></span>')
         .click(function() {
 

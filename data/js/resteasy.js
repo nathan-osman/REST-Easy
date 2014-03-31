@@ -5,27 +5,26 @@
 
 function RestEasy() {
 
-    // Begin by initializing the UI
-    document.title = _('ui.title');
+    // Begin initializing the UI
+    $('title').translate('ui.title');
+    $('#send').translate('ui.url.send');
 
-    $('span.navbar-brand').append(_('ui.title'));
-    $('#send').append(_('ui.url.send'));
+    $('#request div.panel-heading').translate('ui.request.title');
+    $('#request ul.nav a[href=#request-parameters]').translate('ui.request.parameters.title');
+    $('#request-parameters p.help-block').translate('ui.request.parameters.description');
+    $('#request ul.nav a[href=#request-headers]').translate('ui.request.headers.title');
+    $('#request-headers p.help-block').translate('ui.request.headers.description');
+    $('#request ul.nav a[href=#request-authentication]').translate('ui.request.authentication.title');
+    $('#request-authentication p.help-block').translate('ui.request.authentication.description');
+    
+    $.translate('ui.request.authentication.username', function(text) { $('#request-username').attr('placeholder', text); });
+    $.translate('ui.request.authentication.password', function(text) { $('#request-password').attr('placeholder', text); });
 
-    $('#request div.panel-heading').text(_('ui.request.title'));
-    $('#request ul.nav a[href=#request-parameters]').text(_('ui.request.parameters.title'));
-    $('#request-parameters p.help-block').text(_('ui.request.parameters.description'));
-    $('#request ul.nav a[href=#request-headers]').text(_('ui.request.headers.title'));
-    $('#request-headers p.help-block').text(_('ui.request.headers.description'));
-    $('#request ul.nav a[href=#request-authentication]').text(_('ui.request.authentication.title'));
-    $('#request-authentication p.help-block').text(_('ui.request.authentication.description'));
-    $('#request-username').attr('placeholder', _('ui.request.authentication.username'));
-    $('#request-password').attr('placeholder', _('ui.request.authentication.password'));
-
-    $('#response div.panel-heading').text(_('ui.response.title'));
-    $('#response-progress p.help-block').text(_('ui.response.progress'));
-    $('#response ul.nav a[href=#response-headers]').text(_('ui.response.headers.title'));
-    $('#response ul.nav a[href=#response-raw]').text(_('ui.response.raw.title'));
-    $('#response ul.nav a[href=#response-preview]').text(_('ui.response.preview.title'));
+    $('#response div.panel-heading').translate('ui.response.title');
+    $('#response-progress p.help-block').translate('ui.response.progress');
+    $('#response ul.nav a[href=#response-headers]').translate('ui.response.headers.title');
+    $('#response ul.nav a[href=#response-raw]').translate('ui.response.raw.title');
+    $('#response ul.nav a[href=#response-preview]').translate('ui.response.preview.title');
 
     // List of common HTTP request headers
     var HTTP_REQUEST_HEADERS = [
