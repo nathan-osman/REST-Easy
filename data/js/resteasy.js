@@ -83,7 +83,7 @@ function RestEasy() {
     
     $.response = function(data) {
         
-        alert(data.status);
+        new Response(data);
         showProgress(false);
     };
 
@@ -101,5 +101,8 @@ function RestEasy() {
         setHeight($('.panel'),    parseInt($('.panel').css('marginBottom')));
         setHeight($('.tab-pane'), parseInt($('.panel').css('marginBottom')) + parseInt($('.panel-body').css('paddingBottom')));
 
-    }).resize();
+    });
+    
+    // This is so evil, I hardly know where to begin...
+    window.setTimeout(function() { $(window).resize(); }, 200);
 };

@@ -3,13 +3,13 @@
  * Copyright 2013 - Nathan Osman
  */
 
-function Response(request) {
+function Response(data) {
 
     var NS_XUL = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
 
     // Display the status of the request
     $('#response-headers').append($('<h4></h4>').translate('ui.response.headers.status'))
-                          .append($('<p class="status"></p>').text(request.status + ' ' + request.statusText))
+                          .append($('<p class="status"></p>').text(data.status + ' ' + data.statusText))
                           .append('<br>')
                           .append($('<h4></h4>').translate('ui.response.headers.title'));
 
@@ -22,7 +22,7 @@ function Response(request) {
         );
 
     // Split the headers
-    var headers = request.getAllResponseHeaders().split('\n');
+    var headers = data.headers.split('\n');
     $.each(headers, function(i, header) {
 
         var split = header.indexOf(':');
@@ -32,9 +32,10 @@ function Response(request) {
     });
 
     $('#response-headers').append(table);
-
+    
+    /*
     // This is far from RFC 2616 compliant but it works for our needs
-    var mime     = (request.getResponseHeader('Content-Type') || '').match(/^(.+)\/(.+?)\s*(?:;|$)/) || [null, '', ''],
+    var mime     = data.contentType.match(/^(.+)\/(.+?)\s*(?:;|$)/) || [null, '', ''],
         type     = mime[1],
         subtype  = mime[2],
         combined = type + '/' + subtype;
@@ -146,4 +147,5 @@ function Response(request) {
             URL.revokeObjectURL(blob);
         }
     }
+    */
 }
