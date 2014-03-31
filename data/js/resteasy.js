@@ -66,46 +66,26 @@ function RestEasy() {
         // Ignore an empty request
         if(!$('#url').val().trim().length)
             return;
-
-        var request = new XMLHttpRequest();
-        request.open(request_method.get(),
-                     $('#url').val(),
-                     true,
-                     $('#request-username').val(),
-                     $('#request-password').val());
-        request.responseType = 'arraybuffer';
-
-        // We must obtain an nsIHttpChannel interface in order to set certain headers
-        var channel = request.channel.QueryInterface(Components.interfaces.nsIHttpChannel);
-
-        var headers = request_headers.get();
-        for(var name in headers)
-            channel.setRequestHeader(name, headers[name], false);
-
-        if(request_method.get() == 'POST')
-            channel.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', false);
-
-        request.onreadystatechange = function() {
-
-            if(request.readyState == 4) {
-
-                var response = new Response(request);
-                showProgress(false);
-            }
-        };
-
-        // URL-encode the POST data
-        var parameters = request_parameters.get(),
-            param_str = [];
-        for(var param in parameters)
-            param_str.push(encodeURIComponent(param) + '=' + encodeURIComponent(parameters[param]));
-        param_str = param_str.join('&');
-
+        
+        // Issue the request.
+        $.request({
+            url: $('#url').val(),
+            method: request_method.get(),
+            username: $('#request-username').val(),
+            password: $('#request-password').val(),
+            headers: request_headers.get(),
+            parameters: request_parameters.get()
+        });
+        
         showProgress(true);
         $('#response-tabs .tab-pane').empty();
-
-        request.send(param_str);
     });
+    
+    $.response = function(data) {
+        
+        alert(data.status);
+        showProgress(false);
+    };
 
     // Ensure that the panels are sized correctly when the page is resized
     $(window).resize(function() {

@@ -20,7 +20,7 @@ $.translate = function(id, callback) {
             elements[id].push(callback);
         else {
             elements[id] = [callback];
-            self.port.emit("translate", id);
+            self.port.emit('translate', id);
         }
     }
 };
@@ -38,7 +38,7 @@ $.fn.translate = function(id) {
 };
 
 // Listen for translation messages.
-self.port.on("translation", function(data) {
+self.port.on('translation', function(data) {
     
     // Invoke all of the callbacks.
     $.each(elements[data.id], function() {
@@ -47,4 +47,16 @@ self.port.on("translation", function(data) {
     
     // Store the translation for later retrieval.
     translations[data.id] = data.text;
+});
+
+// jQuery utility method to make a privileged AJAX request.
+$.request = function(data) {
+    
+    self.port.emit('request', data);
+};
+
+// Invoke $.response when the response arrives.
+self.port.on('response', function(data) {
+    
+    $.response(data);
 });
