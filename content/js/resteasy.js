@@ -107,20 +107,4 @@ function RestEasy() {
 
         request.send(param_str);
     });
-
-    // Ensure that the panels are sized correctly when the page is resized
-    $(window).resize(function() {
-
-        function setHeight(element, margin) {
-
-            // Calculate the page offset of the element and set the height accordingly
-            var height = $(window).height() - element.offset().top;
-            element.css('height',  (height - margin) + 'px');
-        }
-
-        // Do the same for the panels
-        setHeight($('.panel'),    parseInt($('.panel').css('marginBottom')));
-        setHeight($('.tab-pane'), parseInt($('.panel').css('marginBottom')) + parseInt($('.panel-body').css('paddingBottom')));
-
-    }).resize();
 };

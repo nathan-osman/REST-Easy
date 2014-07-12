@@ -1,5 +1,30 @@
+html, body {
+    height: 100%;
+}
+
 body {
     background-color: #f2f2f2 !important;
+}
+
+.container {
+    height: calc(100% - 94px);
+}
+
+.container > .row {
+    height: calc(100% - 54px);
+}
+
+.col-sm-6, .panel {
+    height: 100%;
+}
+
+.panel {
+    margin-bottom: 0 !important;
+}
+
+.panel-body {
+    overflow-y: scroll;
+    height: calc(100% - 40px);
 }
 
 button.btn-block {
