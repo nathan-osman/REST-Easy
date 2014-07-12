@@ -42,6 +42,9 @@ function RestEasy() {
         "Via",                 "Warning"
     ];
 
+    // Enter key code constant
+    var ENTER_KEY = 13;
+
     // Initialize the method dropdown
     var request_method = new Dropdown($('#request-method'), ['GET', 'POST', 'HEAD']);
 
@@ -62,7 +65,16 @@ function RestEasy() {
     }
 
     // Issues the request
-    $('#send').click(function() {
+    $('#send').click(onSend);
+
+    // Issues the request on enter key press
+    $(window).keypress(function(e) {
+        if(e.keyCode === ENTER_KEY) {
+            onSend();
+        }
+    });
+
+    function onSend() {
 
         // Ignore an empty request
         if(!$('#url').val().trim().length)
@@ -106,5 +118,5 @@ function RestEasy() {
         $('#response-tabs .tab-pane').empty();
 
         request.send(param_str);
-    });
+    }
 };
