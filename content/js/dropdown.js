@@ -8,7 +8,7 @@ function Dropdown(button, items) {
     // Map of links and current selection
     var links = {};
     var selection;
-    
+
     // Create the list that will contain the options
     var list = $('<ul class="dropdown-menu"></ul>');
 
@@ -17,7 +17,8 @@ function Dropdown(button, items) {
 
         var link = links[item] = $('<a href="#"></a>')
             .text(item)
-            .click(function() {
+            .click(function(e) {
+                e.preventDefault();
 
                 button.text(selection = item).append(' <span class="caret"></span>');
             });

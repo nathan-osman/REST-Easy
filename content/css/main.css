@@ -1,5 +1,34 @@
+html, body {
+    height: 100%;
+}
+
 body {
     background-color: #f2f2f2 !important;
+}
+
+.container-fluid {
+    height: calc(100% - 94px);
+}
+
+.container-fluid > .row {
+    height: calc(100% - 52px);
+}
+
+.col-sm-6, .panel {
+    height: 100%;
+}
+
+.panel {
+    margin-bottom: 0 !important;
+}
+
+.panel-body {
+    height: calc(100% - 40px);
+}
+
+.tab-content {
+    overflow-y: scroll;
+    height: calc(100% - 52px);
 }
 
 button.btn-block {
