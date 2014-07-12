@@ -6,12 +6,12 @@ body {
     background-color: #f2f2f2 !important;
 }
 
-.container {
+.container-fluid {
     height: calc(100% - 94px);
 }
 
-.container > .row {
-    height: calc(100% - 54px);
+.container-fluid > .row {
+    height: calc(100% - 52px);
 }
 
 .col-sm-6, .panel {
