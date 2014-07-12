@@ -23,8 +23,12 @@ body {
 }
 
 .panel-body {
-    overflow-y: scroll;
     height: calc(100% - 40px);
+}
+
+.tab-content {
+    overflow-y: scroll;
+    height: calc(100% - 52px);
 }
 
 button.btn-block {

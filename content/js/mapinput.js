@@ -12,8 +12,8 @@ function MapInput(root, items) {
     var table = $('<table class="table table-striped"></table>')
         .append('<tr><th>' + _('ui.map.header.name') + '</th><th>' + _('ui.map.header.value') + '</th><th></th></tr>');
 
-    // Saves a reference to the request panel body
-    var panel_body = $("#request .panel-body");
+    // Saves a reference to the request's tab content
+    var tab_content = $("#request .tab-content");
 
     // Adds an item to the map
     function addItem(name, value) {
@@ -41,8 +41,8 @@ function MapInput(root, items) {
             item_row.append($('<td></td>').append(remove))
                 .insertBefore(table.find('tr:last'));
 
-            // Keep the scroll to the bottom of the panel
-            panel_body.scrollTop(panel_body.prop("scrollHeight"));
+            // Keep the scroll to the bottom of the tab content
+            tab_content.scrollTop(tab_content.prop("scrollHeight"));
         }
     };
 
