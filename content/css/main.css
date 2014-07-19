@@ -14,8 +14,12 @@ body {
     height: calc(100% - 52px);
 }
 
-.col-sm-6, .panel {
+.col-sm-6, .panel, .response-tabs {
     height: 100%;
+}
+
+.response-tabs {
+    display: none;
 }
 
 .panel {
@@ -27,7 +31,7 @@ body {
 }
 
 .tab-content {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: calc(100% - 52px);
 }
 
@@ -60,6 +64,10 @@ iframe {
     border: none;
     height: 100%;
     width: 100%;
+}
+
+#request-authentication > p, pre {
+	margin-right: 15px;
 }
 
 pre.break {

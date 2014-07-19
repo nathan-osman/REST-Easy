@@ -42,10 +42,6 @@ Here are some of the areas we would like some help in:
     - redirects are automatically followed
     - HTTP basic authentication is handled by the browser (although the add-on can supply the required data)
 
- - **CSS Designers:** the add-on uses Twitter Bootstrap.
-   Currently, there are a set of nasty JavaScript event handlers that position everything on the page.
-   It would be nice if this could be done in CSS somehow.
-
  - **Localization:** the add-on currently provides only an English translation.
    All translations for other languages are welcome.
 
