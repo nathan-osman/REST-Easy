@@ -13,7 +13,7 @@ function MapInput(root, items) {
         .append('<tr><th>' + _('ui.map.header.name') + '</th><th>' + _('ui.map.header.value') + '</th><th></th></tr>');
 
     // Saves a reference to the request's tab content
-    var tab_content = $("#request .tab-content");
+    var tab_content = $('#request .tab-content');
 
     // Adds an item to the map
     function addItem(name, value) {
@@ -42,13 +42,13 @@ function MapInput(root, items) {
                 .insertBefore(table.find('tr:last'));
 
             // Keep the scroll to the bottom of the tab content
-            tab_content.scrollTop(tab_content.prop("scrollHeight"));
+            tab_content.scrollTop(tab_content.prop('scrollHeight'));
         }
     };
 
     // Create the form controls that will be used for inserting items
-    var name  = $('<input type="text" class="form-control input-sm">').attr('placeholder', _('ui.map.name'));
-    var value = $('<input type="text" class="form-control input-sm">').attr('placeholder', _('ui.map.value'));
+    var name  = $('<input type="text" class="param form-control input-sm">').attr('placeholder', _('ui.map.name'));
+    var value = $('<input type="text" class="param form-control input-sm">').attr('placeholder', _('ui.map.value'));
 
     // If autocomplete data was specified, then set it up
     if(typeof items != 'undefined')

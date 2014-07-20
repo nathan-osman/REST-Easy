@@ -42,9 +42,6 @@ function RestEasy() {
         "Via",                 "Warning"
     ];
 
-    // Enter key code constant
-    var ENTER_KEY = 13;
-
     // Initialize the method dropdown
     var request_method = new Dropdown($('#request-method'), ['GET', 'POST', 'HEAD']);
 
@@ -54,28 +51,45 @@ function RestEasy() {
 
     // Toggles progress display
     function showProgress(show) {
-
         if(show) {
-            $('#response-tabs').hide();
+            $('.response-tabs').hide();
             $('#response-progress').show();
         } else {
+            $('.response-tabs').show();
             $('#response-progress').hide();
-            $('#response-tabs').show();
         }
     }
 
-    // Issues the request
-    $('#send').click(onSend);
+    // Initializes jotkeys
+    var hotkeys = {
+        submit: 'return',
+        url: 'u'
+    }
 
-    // Issues the request on enter key press
-    $(window).keypress(function(e) {
-        if(e.keyCode === ENTER_KEY) {
-            onSend();
-        }
+    // Sets hotkeys tooltips
+    $('#send').attr('rel', 'tooltip').attr('title', _('ui.hotkey') + ': ' + hotkeys.submit);
+    $('#url').attr('rel', 'tooltip').attr('title', _('ui.hotkey') + ': ' + hotkeys.url);
+    $('#request button').attr('rel', 'tooltip').attr('title', _('ui.hotkey') + ': ' + hotkeys.submit);
+
+    // Binds hotkeys listeners
+    $(document).add('#url').bind('keyup', hotkeys.submit, function() {
+		onSend();
     });
 
-    function onSend() {
+    $(document).bind('keyup', hotkeys.url, function() {
+		$('#url').focus().select();
+    });
 
+    $('#request').on('keyup', 'input', hotkeys.submit, function(e) {
+        onAdd($(e.target));
+    });
+
+    // Hotkey for parameter adding
+    function onAdd(input) {
+        input.parent().parent().find("td:last button").click();
+    }
+
+    function onSend() {
         // Ignore an empty request
         if(!$('#url').val().trim().length)
             return;
@@ -115,7 +129,7 @@ function RestEasy() {
         param_str = param_str.join('&');
 
         showProgress(true);
-        $('#response-tabs .tab-pane').empty();
+        $('.response-tabs .tab-pane').empty();
 
         request.send(param_str);
     }
