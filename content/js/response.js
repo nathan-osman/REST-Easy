@@ -109,6 +109,16 @@ function Response(request) {
                 $(iframe).attr('src', 'data:' + request.getResponseHeader('Content-Type') + ',' +
                                       encodeURIComponent(text)).css('marginBottom', '-5px');
             }
+            else if(combined === 'application/json') {
+
+                var pre    = $('<pre class="break"></pre>'),
+                    json   = JSON.parse(text),
+                    pretty = JSON.stringify(json, null, 4);
+                pre.append(pretty);
+
+                // Insert the HTML
+                $('#response-preview').empty().append(pre);
+            }
         });
 
     // Anything else and we are going to have to display a hex dump

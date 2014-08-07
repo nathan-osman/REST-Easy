@@ -84,6 +84,9 @@ function RestEasy() {
         onAdd($(e.target));
     });
 
+    // Click handler for Send button
+    $('#send').click( onSend );
+
     // Hotkey for parameter adding
     function onAdd(input) {
         input.parent().parent().find("td:last button").click();
