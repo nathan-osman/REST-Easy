@@ -73,11 +73,11 @@ function RestEasy() {
 
     // Binds hotkeys listeners
     $(document).add('#url').bind('keyup', hotkeys.submit, function() {
-		onSend();
+        onSend();
     });
 
     $(document).bind('keyup', hotkeys.url, function() {
-		$('#url').focus().select();
+        $('#url').focus().select();
     });
 
     $('#request').on('keyup', 'input', hotkeys.submit, function(e) {
