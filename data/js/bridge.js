@@ -51,12 +51,10 @@ self.port.on('translation', function(data) {
 
 // jQuery utility method to make a privileged AJAX request.
 $.request = function(data) {
-    
     self.port.emit('request', data);
 };
 
 // Invoke $.response when the response arrives.
 self.port.on('response', function(data) {
-    
     $.response(data);
 });

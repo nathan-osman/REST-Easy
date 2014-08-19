@@ -10,6 +10,7 @@ function RestEasy() {
     $('#send').translate('ui.url.send');
 
     $('#request div.panel-heading').translate('ui.request.title');
+    $('#request ul.nav a[href=#request-body]').translate('ui.request.body.title');
     $('#request ul.nav a[href=#request-parameters]').translate('ui.request.parameters.title');
     $('#request-parameters p.help-block').translate('ui.request.parameters.description');
     $('#request ul.nav a[href=#request-headers]').translate('ui.request.headers.title');
@@ -66,11 +67,14 @@ function RestEasy() {
         // Ignore an empty request
         if(!$('#url').val().trim().length)
             return;
-        
+       
+        // new rest call
+
         // Issue the request.
         $.request({
             url: $('#url').val(),
             method: request_method.get(),
+            content: $('#request-body-control').val(),
             username: $('#request-username').val(),
             password: $('#request-password').val(),
             headers: request_headers.get(),
