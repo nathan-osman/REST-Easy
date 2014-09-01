@@ -43,15 +43,22 @@
 
               <!-- Request tabs -->
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#request-parameters" data-toggle="tab"></a></li>
+                <li class="active"><a href="#request-body" data-toggle="tab"></a></li>
+                <li><a href="#request-parameters" data-toggle="tab"></a></li>
                 <li><a href="#request-headers" data-toggle="tab"></a></li>
                 <li><a href="#request-authentication" data-toggle="tab"></a></li>
               </ul>
 
               <div class="tab-content">
 
+                <!-- Body request tab -->
+                <div class="tab-pane active" id="request-body">
+                  <p class="help-block"></p><br>
+                  <textarea id="request-body-control"></textarea>
+                </div>
+                
                 <!-- Parameters tab -->
-                <div class="tab-pane active" id="request-parameters">
+                <div class="tab-pane" id="request-parameters">
                   <p class="help-block"></p><br>
                   <div id="request-parameters-control"></div>
                 </div>

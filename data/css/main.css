@@ -43,3 +43,8 @@ ul.nav.nav-tabs {
 ul.nav.nav-tabs li.active a {
     outline: 0;
 }
+
+#request-body-control {
+    width: 100%;
+    height: 100%;
+}
