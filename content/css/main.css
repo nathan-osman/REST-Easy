@@ -1,62 +1,42 @@
-html, body {
-    height: 100%;
-}
+html, body { height: 100%; }
+body { background-color: #f2f2f2 !important; }
 
-body {
-    background-color: #f2f2f2 !important;
-}
+/* TODO: see if any of these are no longer needed */
+.container-fluid { height: calc(100% - 94px); }
+.container-fluid > .row { height: calc(100% - 52px); }
+.col-sm-6, .panel, .response-tabs { height: 100%; }
+.response-tabs { display: none; }
+.panel { margin-bottom: 0 !important; }
+.panel-body { height: calc(100% - 40px); }
+.tab-content { height: calc(100% - 52px); overflow-y: auto; }
 
-.container-fluid {
-    height: calc(100% - 94px);
-}
-
-.container-fluid > .row {
-    height: calc(100% - 52px);
-}
-
-.col-sm-6, .panel, .response-tabs {
-    height: 100%;
-}
-
-.response-tabs {
-    display: none;
-}
-
-.panel {
-    margin-bottom: 0 !important;
-}
-
-.panel-body {
-    height: calc(100% - 40px);
-}
-
-.tab-content {
-    overflow-y: auto;
-    height: calc(100% - 52px);
-}
-
-button.btn-block {
+.btn-block {
     display: block;
     padding-left: 4px;
     padding-right: 4px;
     width: 100%;
 }
 
-button.pull-right {
+.pull-right {
     margin-left: 10px;
 }
 
-div.alert {
+.alert {
     overflow: auto;
 }
 
-div.navbar-default {
+.navbar-brand img {
+    float: left;
+    margin: -6px 8px 0 0;
+}
+
+.navbar-default {
     background-image: linear-gradient(to bottom, rgb(245, 245, 245) 0px, rgb(232, 232, 232) 100%);
     border: 1px solid rgb(221, 221, 221);
     box-shadow: none;
 }
 
-div.tab-pane {
+.tab-pane {
     overflow: auto;
 }
 
@@ -70,18 +50,18 @@ iframe {
     margin-right: 15px;
 }
 
-pre.break {
+.break {
     word-break: normal;
 }
 
-span.glyphicon {
+.glyphicon {
     margin: auto 4px;
 }
 
-ul.nav.nav-tabs {
+.nav.nav-tabs {
     margin-bottom: 10px;
 }
 
-ul.nav.nav-tabs li.active a {
+.nav.nav-tabs .active a {
     outline: 0;
 }
