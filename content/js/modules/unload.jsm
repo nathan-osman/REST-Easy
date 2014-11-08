@@ -40,10 +40,10 @@ var EXPORTED_SYMBOLS = ['unload'];
 /**
  * Save callbacks to run when unloading
  *
- * @usage unload(): Run all callbacks and release them
+ * @usage unload(): run all callbacks and release them
+ * @usage unload(callback): add a callback to run on unload
  *
- * @usage unload(callback): Add a callback to run on unload
- * @param [function] callback: 0-parameter function to call on unload
+ * @param [function] callback: function to call on unload
  */
 function unload(callback) {
 
@@ -54,15 +54,12 @@ function unload(callback) {
 
     // Calling with no arguments runs all the unloader callbacks
     if(callback == null) {
-
         unloaders.slice().forEach(function(unloader) {
-
             unloader()
         });
         unloaders.length = 0;
-        return;
+    // Calling with an argument adds the provided callback
+    } else {
+        unloaders.push(callback);
     }
-
-    // Add to the list of unloaders
-    unloaders.push(callback);
 }
