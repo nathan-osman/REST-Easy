@@ -1,5 +1,8 @@
 ## REST Easy
 
+> **Note:** REST Easy is about to undergo some drastic reorganization. Consequently, some
+> of the information listed below may be inaccurate.
+
 REST Easy is a Firefox add-on that provides a full-featured REST client in the browser.
 It is still a work in progress, but the features currently implemented include:
 
