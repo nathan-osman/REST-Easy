@@ -10,8 +10,8 @@ function uninstall(data, reason) {}
 function startup(data, reason) {
 
     // Load the required modules for initializing the add-on
-    Components.utils.import('chrome://resteasy/content/js/modules/l10n.jsm');
-    Components.utils.import('chrome://resteasy/content/js/modules/toolbar.jsm');
+    Components.utils.import('chrome://resteasy/content/modules/l10n.jsm');
+    Components.utils.import('chrome://resteasy/content/modules/toolbar.jsm');
 
     // Add the primary button to the toolbar
     addButtonToToolbar(
@@ -29,7 +29,7 @@ function startup(data, reason) {
 function shutdown(data, reason) {
 
     // Load the unload function
-    Components.utils.import('chrome://resteasy/content/js/modules/unload.jsm');
+    Components.utils.import('chrome://resteasy/content/modules/unload.jsm');
 
     // Run the unloaders when we're shutting down
     if(reason != APP_SHUTDOWN)

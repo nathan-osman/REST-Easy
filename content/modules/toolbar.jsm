@@ -6,7 +6,7 @@ var EXPORTED_SYMBOLS = ['addButtonToToolbar'];
 var NS_XUL = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
 
 Components.utils.import("resource:///modules/CustomizableUI.jsm");
-Components.utils.import('chrome://resteasy/content/js/modules/unload.jsm');
+Components.utils.import('chrome://resteasy/content/modules/unload.jsm');
 
 /**
  * Adds a button to the toolbar.

@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 var EXPORTED_SYMBOLS = ['_'];
-var LOCALE_URI       = 'chrome://resteasy/locale/resteasy.properties';
+var LOCALE_URI = 'chrome://resteasy/locale/resteasy.properties';
 
 Components.utils.import('resource://gre/modules/Services.jsm');
 
@@ -16,6 +16,5 @@ var bundle = Services.strings.createBundle(LOCALE_URI);
  * @return [String]: The translated text
  */
 function _(text) {
-
     return bundle.GetStringFromName(text);
 }
