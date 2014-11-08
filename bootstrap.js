@@ -4,51 +4,26 @@
 
 var CHROME_URL = 'chrome://resteasy/content/resteasy.html';
 
-function install(data, reason)   {}
+function install(data, reason) {}
 function uninstall(data, reason) {}
 
 function startup(data, reason) {
 
     // Load the required modules for initializing the add-on
-    Components.utils.import('chrome://resteasy/content/js/modules/browser.jsm');
     Components.utils.import('chrome://resteasy/content/js/modules/l10n.jsm');
-    Components.utils.import('chrome://resteasy/content/js/modules/menu.jsm');
     Components.utils.import('chrome://resteasy/content/js/modules/toolbar.jsm');
-    Components.utils.import('chrome://resteasy/content/js/modules/watchwindows.jsm');
 
-    // Opens a new tab for REST Easy
-    function openRestEasy(window) {
-
-        addTab(window, CHROME_URL);
-    }
-
-    // For each open window, create the necessary UI overlays
-    watchWindows(function(window) {
-
-        // Add the menu items to the two web developer menus
-        addItemToDesktopMenu(window,
-                             'appmenu_webDeveloper_popup',
-                             'appmenu_resteasy',
-                             _('ui.title'),
-                             openRestEasy);
-        addItemToDesktopMenu(window,
-                             'menuWebDeveloperPopup',
-                             'menu_resteasy',
-                             _('ui.title'),
-                             openRestEasy);
-
-        // Add the menu item to the mobile menu
-        addItemToMobileMenu(window,
-                            _('ui.title'),
-                            openRestEasy);
-
-        // Add the item to the toolbar
-        addItemToToolbar(window,
-                         'launcher',
-                         _('ui.title'),
-                         'chrome://resteasy/content/img/icon16.png',
-                         openRestEasy);
-    });
+    // Add the primary button to the toolbar
+    addButtonToToolbar(
+        'resteasy',
+        _('ui.title'),
+        _('ui.tooltip'),
+        'chrome://resteasy/content/img/icon16.png',
+        'chrome://resteasy/content/img/icon32.png',
+        function(window) {
+            window.gBrowser.selectedTab = window.gBrowser.addTab(CHROME_URL);
+        }
+    );
 }
 
 function shutdown(data, reason) {
