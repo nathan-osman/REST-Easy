@@ -107,7 +107,7 @@ function Response(request) {
 
                 // Insert the HTML
                 $(iframe).attr('src', 'data:' + request.getResponseHeader('Content-Type') + ',' +
-                                      encodeURIComponent(text)).css('marginBottom', '-5px');
+                                      encodeURIComponent(text)).css('height', '500px');
             }
         });
 

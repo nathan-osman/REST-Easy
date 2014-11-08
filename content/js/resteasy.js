@@ -43,7 +43,7 @@ function RestEasy() {
     ];
 
     // Initialize the method dropdown
-    var request_method = new Dropdown($('#request-method'), ['GET', 'POST', 'HEAD']);
+    var request_method = new Dropdown($('#request-method'), ['GET', 'HEAD', 'OPTIONS', 'POST', 'PUT', 'DELETE', 'PATCH']);
 
     // Initialize the MapInput controls
     var request_parameters = new MapInput($('#request-parameters-control'));
@@ -60,7 +60,7 @@ function RestEasy() {
         }
     }
 
-    // Initializes jotkeys
+    // Initializes hotkeys
     var hotkeys = {
         submit: 'return',
         url: 'u'
@@ -75,6 +75,8 @@ function RestEasy() {
     $(document).add('#url').bind('keyup', hotkeys.submit, function() {
         onSend();
     });
+
+    $('#send').click(onSend);
 
     $(document).bind('keyup', hotkeys.url, function() {
         $('#url').focus().select();
@@ -109,7 +111,8 @@ function RestEasy() {
         for(var name in headers)
             channel.setRequestHeader(name, headers[name], false);
 
-        if(request_method.get() == 'POST')
+        var method = request_method.get();
+        if(method == 'POST' || method == 'PUT' || method == 'DELETE' || method == 'PATCH')
             channel.setRequestHeader('Content-type', 'application/x-www-form-urlencoded', false);
 
         request.onreadystatechange = function() {
