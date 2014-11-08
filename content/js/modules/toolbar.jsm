@@ -2,76 +2,69 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var EXPORTED_SYMBOLS = ['addItemToToolbar'];
-var NS_XUL           = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
+var EXPORTED_SYMBOLS = ['addButtonToToolbar'];
+var NS_XUL = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
 
-Components.utils.import('resource://gre/modules/Services.jsm');
+Components.utils.import("resource:///modules/CustomizableUI.jsm");
 Components.utils.import('chrome://resteasy/content/js/modules/unload.jsm');
 
 /**
- * Adds an item to the toolbar
- * @param [node] window: The parent window
- * @param [String] id: The ID of the new toolbar button
- * @param [String] label: The label for the new toolbar item
- * @param [String] icon: The icon to use for the toolbar button
- * @param [function] callback: The callback to be invoked when the toolbar is added
+ * Adds a button to the toolbar.
+ *
+ * This used to be a rather complicated function that had to inject the button
+ * into the toolbar of each window individually. Now, thanks to Australis, this
+ * is no longer the case. Something finally gets easier for once!
+ *
+ * @param [String] id: ID for the toolbar button
+ * @param [String] label: a short label for the button
+ * @param [String] tooltip: longer text describing the button
+ * @param [String] icon18: URL of an 16x16 icon to display in the widget
+ * @param [String] icon32: URL of a 32x32 icon to display in the widget
+ * @param [function] callback: function to be invoked when the button is clicked
  */
-function addItemToToolbar(window, id, label, icon, callback) {
+function addButtonToToolbar(id, label, tooltip, icon16, icon32, callback) {
 
-    // Ensure the toolbar and toolbar palette exist
-    let toolbar = window.document.getElementById('nav-bar'),
-        palette = window.document.getElementById('navigator-toolbox').palette;
-    if(toolbar === null || palette == null)
-        return;
+    // Create the widget that will be added to the toolbar
+    let widget = CustomizableUI.createWidget({
+        id: id,
+        type: 'custom',
+        defaultArea: CustomizableUI.AREA_NAVBAR,
+        onBuild: function(document) {
 
-    // Create the toolbar item
-    let toolbarButton = window.document.createElementNS(NS_XUL, 'toolbarbutton'),
-        toolbarId = 'resteasy-' + id;
-    toolbarButton.setAttribute('id',        toolbarId);
-    toolbarButton.setAttribute('class',     'toolbarbutton-1 chromeclass-toolbar-additional');
-    toolbarButton.setAttribute('label',     label);
-    toolbarButton.setAttribute('removable', 'true');
-    toolbarButton.style.listStyleImage = 'url("' + icon + '")';
-    toolbarButton.addEventListener('command', function() {
+            // Create the toolbar button
+            let toolbarButton = document.createElementNS(NS_XUL, 'toolbarbutton');
+            toolbarButton.setAttribute('id', id);
+            toolbarButton.setAttribute('class', 'toolbarbutton-1 chromeclass-toolbar-additional');
+            toolbarButton.setAttribute('label', label);
+            toolbarButton.setAttribute('tooltiptext', tooltip);
+            toolbarButton.addEventListener('command', function(event) {
+                callback(event.view);
+            }, true);
 
-        callback(window);
+            // Set the currently displayed icon
+            function setIcon() {
+                let inToolbar = false,
+                    placement = CustomizableUI.getPlacementOfWidget(id);
+                if(placement)
+                    inToolbar = CustomizableUI.getAreaType(placement.area) === CustomizableUI.TYPE_TOOLBAR;
+                toolbarButton.setAttribute('image', inToolbar ? icon16 : icon32);
+            }
+            setIcon();
 
-    }, true);
+            // Change the icon if it is added to a toolbar or removed
+            CustomizableUI.addListener({
+                onWidgetAfterDOMChange: function(node, nextNode, container) {
+                    if(node.id === id)
+                        setIcon();
+                }
+            });
 
-    // Add the toolbar to the palette
-    palette.appendChild(toolbarButton);
-
-    // Have the button remove itself from its parent when unloading
-    unload(function() {
-
-        toolbarButton.parentNode.removeChild(toolbarButton);
+            return toolbarButton;
+        }
     });
 
-    // Check to see if the button has been added to the toolbar
-    let currentSet = toolbar.getAttribute('currentset').split(','),
-        index = currentSet.indexOf(toolbarId);
-    if(index == -1) {
-
-        // Determine if this is the first time the button is being added
-        let pref = 'extensions.resteasy.toolbar.' + id,
-            firstTime = !Services.prefs.prefHasUserValue(pref);
-
-        if(firstTime) {
-
-            toolbar.appendChild(toolbarButton);
-            toolbar.setAttribute('currentset', toolbar.currentSet);
-            window.document.persist(toolbar.id, 'currentset');
-
-            // This is no longer the first time
-            Services.prefs.setBoolPref(pref, true);
-        }
-    } else {
-
-        // Determine where to insert the button and insert it
-        let before = null;
-        for(let i = index + 1; i < currentSet.length; ++i)
-            if((before = window.document.getElementById(currentSet[i])))
-                break;
-        toolbar.insertBefore(toolbarButton, before);
-    }
+    // Remove the widget when the add-on is unloaded
+    unload(function() {
+        CustomizableUI.destroyWidget(id);
+    });
 }
