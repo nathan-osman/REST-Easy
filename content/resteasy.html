@@ -1,146 +1,125 @@
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- TODO: set page title -->
+        <title>[TITLE GOES HERE]</title>
 
-    <!-- Title is set via JS -->
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="css/application.css">
+    </head>
+    <body>
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
-    <link rel="stylesheet" href="vendor/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="vendor/css/sh.min.css">
-    <link rel="stylesheet" href="css/main.css">
-
-    <link rel="icon" href="img/icon16.png" />
-
-  </head>
-  <body>
-
-    <!-- Navbar -->
-    <div class="navbar navbar-default navbar-static-top">
-      <span class="navbar-header navbar-brand">
-        <img src="img/icon32.png">
-      </span>
-    </div>
-
-    <!-- Page Content -->
-    <div class="container-fluid">
-
-      <!-- URL input bar -->
-      <div class="input-group">
-        <div class="input-group-btn">
-          <button id="request-method" class="btn btn-default dropdown-toggle" data-toggle="dropdown"></button>
+        <!-- Page header (currently unused) -->
+        <div class="header">
+            <img src="img/icon32.png">
+            <h2>REST Easy</h2>
         </div>
-        <input type="text" id="url" class="form-control" placeholder="http://">
-        <span class="input-group-btn">
-          <button id="send" class="btn btn-default">
-            <span class="glyphicon glyphicon-send"></span>
-          </button>
-        </span>
-      </div>
-      <br>
 
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="panel panel-default" id="request">
-            <div class="panel-heading"></div>
-            <div class="panel-body">
+        <!-- Request pane -->
+        <div class="request">
 
-              <!-- Request tabs -->
-              <ul class="nav nav-tabs">
-                <li class="active"><a href="#request-parameters" data-toggle="tab"></a></li>
-                <li><a href="#request-headers" data-toggle="tab"></a></li>
-                <li><a href="#request-authentication" data-toggle="tab"></a></li>
-              </ul>
-
-              <div class="tab-content">
-
-                <!-- Parameters tab -->
-                <div class="tab-pane active" id="request-parameters">
-                  <p class="help-block"></p><br>
-                  <div id="request-parameters-control"></div>
-                </div>
-
-                <!-- Headers tab -->
-                <div class="tab-pane" id="request-headers">
-                  <p class="help-block"></p><br>
-                  <div id="request-headers-control"></div>
-                </div>
-
-                <!-- Authentication tab -->
-                <div class="tab-pane" id="request-authentication">
-                  <p class="help-block"></p><br>
-                  <p><input type="text" class="form-control" id="request-username"></p>
-                  <p><input type="password" class="form-control" id="request-password"></p>
-                </div>
-
-              </div>
-
+            <!-- HTTP method and URL -->
+            <div class="float-left">
+                <select>
+                    <option>GET</option>
+                    <option>HEAD</option>
+                    <option>POST</option>
+                    <option>PUT</option>
+                    <option>DELETE</option>
+                    <option>LINK</option>
+                    <option>UNLINK</option>
+                    <option>OPTIONS</option>
+                </select>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="panel panel-default" id="response">
-            <div class="panel-heading"></div>
-            <div class="panel-body">
-
-              <!-- Progress bar -->
-              <div id="response-progress" style="display: none;">
-                <p class="help-block text-center"></p>
-                <div class="progress progress-striped active">
-                  <div class="progress-bar" style="width: 100%"></div>
-                </div>
-              </div>
-
-              <!-- Response tabs -->
-              <div class="response-tabs">
-                <ul class="nav nav-tabs">
-                  <li class="active"><a href="#response-headers" data-toggle="tab"></a></li>
-                  <li><a href="#response-raw" data-toggle="tab"></a></li>
-                  <li><a href="#response-preview" data-toggle="tab"></a></li>
-                </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="response-headers"></div>
-                  <div class="tab-pane" id="response-raw"></div>
-                  <div class="tab-pane" id="response-preview"></div>
-                </div>
-              </div>
-
+            <button class="float-right">Send</button>
+            <div class="control">
+                <input type="text" placeholder="http://">
             </div>
-          </div>
+
+            <!-- HTTP headers -->
+            <div class="section">
+                <h4>
+                    <button class="expand"></button>
+                    HTTP Headers
+                </h4>
+                <div class="content">
+                    TODO: replace me.
+                </div>
+            </div>
+
+            <!-- POST data -->
+            <div class="section">
+                <h4>
+                    <button class="expand"></button>
+                    POST Data
+                </h4>
+                <div class="content">
+                    <table>
+                        <tr>
+                            <td>Row 1</td>
+                            <td>Row 2</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Authentication -->
+            <div class="section">
+                <h4>
+                    <button class="expand"></button>
+                    Authentication
+                </h4>
+                <div class="content">
+                    <label>
+                        <input type="radio" name="group1">
+                        Item 1
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="group1">
+                        Item 2
+                    </label>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Scripts -->
-    <script src="vendor/js/jquery.min.js"></script>
-    <script src="vendor/js/jquery.hotkeys.min.js"></script>
-    <script src="vendor/js/bootstrap.min.js"></script>
-    <script src="vendor/js/sh_main.min.js"></script>
-    <script src="vendor/js/sh_html.min.js"></script>
-    <script src="vendor/js/sh_javascript.min.js"></script>
-    <script src="vendor/js/sh_xml.min.js"></script>
-    <script>
+        <!-- Splitter between panes -->
+        <div class="splitter"></div>
 
-      // Load support for translations
-      Components.utils.import('chrome://resteasy/content/modules/l10n.jsm');
+        <!-- Response pane -->
+        <div class="response">
+            <div class="tabs">
+                <button class="tab active" data-id="headers">Headers</button>
+                <button class="tab" data-id="raw">Raw</button>
+                <button class="tab" data-id="preview">Preview</button>
+                <div id="headers" class="content active">
+                    <h3>304 Not Modified</h3>
+                    <table>
+                        <tr><th>Header</th><th>Value</th></tr>
+                        <tr><td>Header 1</td><td>Value 1</td></tr>
+                        <tr><td>Header 2</td><td>Value 2</td></tr>
+                        <tr><td>Header 3</td><td>Value 3</td></tr>
+                        <tr><td>Header 4</td><td>Value 4</td></tr>
+                        <tr><td>Header 5</td><td>Value 5</td></tr>
+                    </table>
+                </div>
+                <div id="raw" class="content">
+                    <h2>TODO: raw content goes here</h2>
+                </div>
+                <div id="preview" class="content">
+                    <h2>TODO: preview content goes here</h2>
+                </div>
+            </div>
+        </div>
 
-    </script>
-    <script src="js/autocomplete.js"></script>
-    <script src="js/dropdown.js"></script>
-    <script src="js/mapinput.js"></script>
-    <script src="js/response.js"></script>
-    <script src="js/resteasy.js"></script>
-    <script>
-
-      // Initialize everything as soon as the DOM loads
-      $(document).ready(function() {
-        new RestEasy();
-      });
-
-    </script>
-
-  </body>
+        <!-- Scripts -->
+        <script src="vendor/js/jquery.min.js"></script>
+        <script src="js/combo.js"></script>
+        <script src="js/sections.js"></script>
+        <script src="js/splitter.js"></script>
+        <script src="js/tabs.js"></script>
+    </body>
 </html>

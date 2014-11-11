@@ -1,0 +1,253 @@
+/*********************************
+ *  REST Easy Application Theme  *
+ * Copyright 2014 - Nathan Osman *
+ *********************************/
+
+/**
+ * Color Palette
+ *
+ * Border: #dedede
+ * Background color: #ededed
+ * Light background gradient: #fff => #f7f7f7
+ * Background gradient: #fff => #ededed
+ * Dark background gradient: #f7f7f7 => #dedede
+ * Shadow: #aaa;
+ */
+
+/* Page-level properties */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #f7f7f7;
+    box-sizing: border-box;
+    color: #555;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+/* <button> elements */
+
+button {
+    background: -moz-linear-gradient(top, #fff 0%, #ededed 100%);
+    border: 1px solid #dedede;
+    border-radius: 3px;
+    padding: 3px 12px;
+}
+
+button:active {
+    box-shadow: inset 1px 1px 2px #dedede;
+}
+
+button:hover {
+    background: -moz-linear-gradient(top, #f7f7f7 0%, #dedede 100%);
+    cursor: pointer;
+}
+
+/* Text <input> elements */
+
+input[type=text] {
+    border: 1px solid #dedede;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+input[type=text]:focus {
+    box-shadow: 0 0 3px #ededed;
+}
+
+input[type=text]::-moz-placeholder {
+    color: #aaa;
+}
+
+/* Tables (ONLY for tabular data) */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table tr:nth-child(even) {
+    background-color: #ededed;
+}
+
+table th, table td {
+    border: 1px solid #dedede;
+    padding: 3px 12px;
+    text-align: left;
+}
+
+/* Utility classes */
+
+.control {
+    overflow: auto;
+}
+
+.control input[type=text] {
+    margin: 0 4px;
+    width: calc(100% - 18px);
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float:right;
+}
+
+/* Replacement combo boxes */
+
+.combo {
+    position: relative;
+}
+
+.combo button:after {
+    content: "\25be";
+    margin-left: 8px;
+}
+
+.combo .menu {
+    background-color: #fff;
+    border: 1px solid #dedede;
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px #aaa;
+    display: none;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+
+.combo .menu li {
+    cursor: pointer;
+    padding: 3px 12px;
+}
+
+.combo .menu li:hover {
+    background-color: #ededed;
+}
+
+/* Header displayed at the top of the page */
+
+.header {
+    background: -moz-linear-gradient(top, #fff 0%, #ededed 100%);
+    box-shadow: 0 1px 2px #aaa;
+    height: 32px;
+    padding: 8px 16px;
+    position: relative;
+}
+
+.header h2 {
+    color: #777;
+    display: inline-block;
+    font-size: 14pt;
+    margin: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.header img {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Request pane */
+
+.request {
+    float: left;
+    height: calc(100% - 80px);
+    min-width: 192px;
+    padding: 16px;
+    width: 25%;
+}
+
+/* Response pane */
+
+.response {
+    padding: 16px;
+    height: calc(100% - 80px);
+    width: calc(100% - 32px);
+}
+
+/* Collapsible sections */
+
+.section {
+    padding: 16px 0;
+}
+
+.section h4 {
+    border-bottom: 1px solid #dedede;
+    line-height: 20pt;
+    margin: 0;
+    overflow: auto;
+}
+
+.section h4 .expand {
+    border-radius: 12px;
+    float: right;
+    line-height: 9px;
+    height: 24px;
+    padding: 0 4px;
+}
+
+.section h4 .expand:after {
+    content: "\23ec";
+    display: block;
+    transition: transform 400ms;
+}
+
+.section h4 .expand.expanded:after {
+    transform: rotate(-180deg);
+    transition: transform 400ms;
+}
+
+.section .content {
+    display: none;
+    margin-top: 16px;
+}
+
+/* Splitter user for separating request and response */
+
+.splitter {
+    background-color: #ededed;
+    box-shadow: 1px 0 2px #aaa;
+    cursor: ew-resize;
+    float: left;
+    height: calc(100% - 48px);
+    margin-right: 16px;
+    width: 4px;
+}
+
+/* Tab control */
+
+.tabs {
+    height: 100%;
+}
+
+.tabs .tab {
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    height: 30px;
+}
+
+.tabs .tab.active {
+    background: -moz-linear-gradient(top, #fff 0%, #f7f7f7 100%);
+    border-bottom: 1px solid #f7f7f7;
+    margin-bottom: -1px;
+}
+
+.tabs .content {
+    border: 1px solid #dedede;
+    box-shadow: 1px 1px 2px #aaa;
+    display: none;
+    height: calc(100% - 69px);
+    overflow: auto;
+    padding: 16px;
+}
+
+.tabs .content.active {
+    display: block;
+}
