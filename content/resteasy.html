@@ -12,114 +12,88 @@
     </head>
     <body>
 
-        <!-- Page header (currently unused) -->
-        <div class="header">
-            <img src="img/icon32.png">
-            <h2>REST Easy</h2>
-        </div>
-
-        <!-- Request pane -->
-        <div class="request">
-
-            <!-- HTTP method and URL -->
-            <div class="float-left">
-                <select>
-                    <option>GET</option>
-                    <option>HEAD</option>
-                    <option>POST</option>
-                    <option>PUT</option>
-                    <option>DELETE</option>
-                    <option>LINK</option>
-                    <option>UNLINK</option>
-                    <option>OPTIONS</option>
-                </select>
-            </div>
-            <button class="float-right">Send</button>
-            <div class="control">
-                <input type="text" placeholder="http://">
+        <script type="text/x-handlebars">
+            <!-- Page header (currently unused) -->
+            <div class="header">
+                <img src="img/icon32.png">
+                <h2>REST Easy</h2>
             </div>
 
-            <!-- HTTP headers -->
-            <div class="section">
-                <h4>
-                    <button class="expand"></button>
-                    HTTP Headers
-                </h4>
-                <div class="content">
-                    TODO: replace me.
-                </div>
-            </div>
+            <!-- Request pane -->
+            {{view RESTEasy.RequestView}}
 
-            <!-- POST data -->
-            <div class="section">
-                <h4>
-                    <button class="expand"></button>
-                    POST Data
-                </h4>
-                <div class="content">
-                    <table>
-                        <tr>
-                            <td>Row 1</td>
-                            <td>Row 2</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+            <!-- Splitter between panes -->
+            <div class="splitter"></div>
 
-            <!-- Authentication -->
-            <div class="section">
-                <h4>
-                    <button class="expand"></button>
-                    Authentication
-                </h4>
-                <div class="content">
-                    <label>
-                        <input type="radio" name="group1">
-                        Item 1
-                    </label>
-                    <br>
-                    <label>
-                        <input type="radio" name="group1">
-                        Item 2
-                    </label>
-                </div>
-            </div>
-        </div>
+            <!-- Response pane -->
+            {{view RESTEasy.ResponseView}}
+        </script>
 
-        <!-- Splitter between panes -->
-        <div class="splitter"></div>
+        <!-- Request view -->
+        <script type="text/x-handlebars" data-template-name="app-request">
+            <div class="request">
+                <!-- Request method, URL, and send button -->
+                <div class="float-left">
+                    {{combo-box choices=controller.methods selection=controller.method}}
+                </div>
+                <button class="float-right" {{action 'send'}}>Send</button>
+                <div class="control">
+                    {{input placeholder='http://' value=controller.url}}
+                </div>
 
-        <!-- Response pane -->
-        <div class="response">
-            <div class="tabs">
-                <button class="tab active" data-id="headers">Headers</button>
-                <button class="tab" data-id="raw">Raw</button>
-                <button class="tab" data-id="preview">Preview</button>
-                <div id="headers" class="content active">
-                    <h3>304 Not Modified</h3>
-                    <table>
-                        <tr><th>Header</th><th>Value</th></tr>
-                        <tr><td>Header 1</td><td>Value 1</td></tr>
-                        <tr><td>Header 2</td><td>Value 2</td></tr>
-                        <tr><td>Header 3</td><td>Value 3</td></tr>
-                        <tr><td>Header 4</td><td>Value 4</td></tr>
-                        <tr><td>Header 5</td><td>Value 5</td></tr>
-                    </table>
-                </div>
-                <div id="raw" class="content">
-                    <h2>TODO: raw content goes here</h2>
-                </div>
-                <div id="preview" class="content">
-                    <h2>TODO: preview content goes here</h2>
-                </div>
+                <!-- HTTP headers -->
+                {{#collapsible-section title='Headers'}}
+                    <div>TODO: Content goes here</div>
+                {{/collapsible-section}}
+
+                <!-- POST data -->
+                {{#collapsible-section title='POST Data'}}
+                    <div>TODO: Content goes here</div>
+                {{/collapsible-section}}
+
+                <!-- Authentication data -->
+                {{#collapsible-section title='Authentication'}}
+                    <div>TODO: Content goes here</div>
+                {{/collapsible-section}}
             </div>
-        </div>
+        </script>
+
+        <!-- Response view -->
+        <script type="text/x-handlebars" data-template-name="app-response">
+            <div class="response">
+                <h2>TODO: Content Goes Here</h2>
+            </div>
+        </script>
+
+        <!-- Combo box control -->
+        <script type="text/x-handlebars" data-template-name="components/combo-box">
+            <button {{action 'toggle'}}>{{selection}}</button>
+            <ul {{bind-attr class=":menu expanded"}}>
+                {{#each choices}}
+                    <li {{action 'select' this}}>{{this}}</li>
+                {{/each}}
+            </ul>
+        </script>
+
+        <!-- Collapsible section control -->
+        <script type="text/x-handlebars" data-template-name="components/collapsible-section">
+            <h4>
+                <button {{bind-attr class=":expand expanded"}} {{action 'toggle'}}></button>
+                {{title}}
+            </h4>
+            <div {{bind-attr class=":content expanded"}}>
+                {{yield}}
+            </div>
+        </script>
 
         <!-- Scripts -->
         <script src="vendor/js/jquery.min.js"></script>
+        <script src="vendor/js/handlebars.min.js"></script>
+        <script src="vendor/js/ember.min.js"></script>
         <script src="js/combo.js"></script>
         <script src="js/sections.js"></script>
         <script src="js/splitter.js"></script>
         <script src="js/tabs.js"></script>
+        <script src="js/application.js"></script>
     </body>
 </html>

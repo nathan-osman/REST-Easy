@@ -16,7 +16,7 @@
 
 /* Page-level properties */
 
-html, body {
+html, body, body > .ember-view {
     height: 100%;
 }
 
@@ -121,6 +121,10 @@ table th, table td {
     position: absolute;
 }
 
+.combo .menu.expanded {
+    display: block;
+}
+
 .combo .menu li {
     cursor: pointer;
     padding: 3px 12px;
@@ -193,19 +197,22 @@ table th, table td {
 }
 
 .section h4 .expand:after {
-    content: "\23ec";
+    content: "+";
     display: block;
-    transition: transform 400ms;
+    font-weight: bold;
 }
 
 .section h4 .expand.expanded:after {
-    transform: rotate(-180deg);
-    transition: transform 400ms;
+    content: "\2013";
 }
 
 .section .content {
     display: none;
     margin-top: 16px;
+}
+
+.section .content.expanded {
+    display: block;
 }
 
 /* Splitter user for separating request and response */
