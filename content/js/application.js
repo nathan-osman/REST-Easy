@@ -6,14 +6,6 @@
 window.RESTEasy = Ember.Application.create();
 
 /**
- * Request or response header.
- */
-RESTEasy.Header = Ember.Object.extend({
-    name: null,
-    value: null
-});
-
-/**
  * Main controller for the REST Easy application.
  * The actual sending of requests and receiving of responses takes place here.
  */
@@ -21,13 +13,12 @@ RESTEasy.Header = Ember.Object.extend({
     methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'OPTIONS'],
     method: 'GET',
     url: null,
-    requestHeaders: Ember.A(),
+    requestHeaders: [],
+    username: null,
+    password: null,
     actions: {
         send: function() {
             alert(this.get('method') + ' ' + this.get('url'));
-        },
-        header: function() {
-            this.get('requestHeaders').pushObject(RESTEasy.Header.create({name: 'test1', value: 'test2'}));
         }
     }
  });
@@ -83,3 +74,35 @@ RESTEasy.CollapsibleSectionComponent = Ember.Component.extend({
         }
     }
 })
+
+/**
+ * Entry in a table.
+ */
+RESTEasy.TableEntry = Ember.Object.extend({
+    name: null,
+    value: null
+});
+
+/**
+ * Editable map control that displays a table of map values.
+ * Items can be added to the map and removed.
+ */
+RESTEasy.EditableMapComponent = Ember.Component.extend({
+    tagName: 'table',
+    name: null,
+    value: null,
+    actions: {
+        add: function() {
+            var o = RESTEasy.TableEntry.create({
+                name: this.get('name'),
+                value: this.get('value')
+            })
+            this.get('entries').pushObject(o);
+            this.set('name', '');
+            this.set('value', '');
+        },
+        remove: function(o) {
+            this.get('entries').removeObject(o);
+        }
+    }
+});

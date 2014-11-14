@@ -43,7 +43,8 @@
 
                 <!-- HTTP headers -->
                 {{#collapsible-section title='Headers'}}
-                    <div>TODO: Content goes here</div>
+                    <p>The headers specified below will be added to the browser's default standard headers.</p>
+                    {{editable-map entries=controller.requestHeaders}}
                 {{/collapsible-section}}
 
                 <!-- POST data -->
@@ -53,7 +54,13 @@
 
                 <!-- Authentication data -->
                 {{#collapsible-section title='Authentication'}}
-                    <div>TODO: Content goes here</div>
+                    <p>The parameters provided below will be used for HTTP Basic Auth.</p>
+                    <div class="control">
+                        {{input placeholder='Username' value=username}}
+                    </div>
+                    <div class="control">
+                        {{input placeholder='Password' value=password}}
+                    </div>
                 {{/collapsible-section}}
             </div>
         </script>
@@ -84,6 +91,35 @@
             <div {{bind-attr class=":content expanded"}}>
                 {{yield}}
             </div>
+        </script>
+
+        <!-- Editable map control -->
+        <script type="text/x-handlebars" data-template-name="components/editable-map">
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th></th>
+            </tr>
+            {{#each entries}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{value}}</td>
+                    <td>
+                        <button {{action 'remove' this}}>&times;</button>
+                    </td>
+                </tr>
+            {{else}}
+                <tr>
+                    <td colspan="3">No items</td>
+                </tr>
+            {{/each}}
+            <tr>
+                <td><div class="control">{{input placeholder='Name' value=name}}</div></td>
+                <td><div class="control">{{input placeholder='Value' value=value}}</div></td>
+                <td>
+                    <button {{action 'add'}}>+</button>
+                </td>
+            </tr>
         </script>
 
         <!-- Scripts -->

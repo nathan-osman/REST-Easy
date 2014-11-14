@@ -86,8 +86,7 @@ table th, table td {
 }
 
 .control input[type=text] {
-    margin: 0 4px;
-    width: calc(100% - 18px);
+    width: calc(100% - 10px);
 }
 
 .float-left {
