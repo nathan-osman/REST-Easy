@@ -28,7 +28,8 @@ window.RESTEasy = Ember.Application.create();
  * Includes controls for setting the request method, URL, headers, etc.
  */
 RESTEasy.RequestView = Ember.View.extend({
-    templateName: 'app-request'
+    templateName: 'app-request',
+    classNames: ['vexpand']
 });
 
 /**
@@ -36,7 +37,8 @@ RESTEasy.RequestView = Ember.View.extend({
  * Includes tabs for viewing response headers, previewing content, etc.
  */
 RESTEasy.ResponseView = Ember.View.extend({
-    templateName: 'app-response'
+    templateName: 'app-response',
+    classNames: ['vexpand']
 })
 
 // TODO: the combo box and collapsible section control have identical
@@ -84,10 +86,10 @@ RESTEasy.TableEntry = Ember.Object.extend({
 });
 
 /**
- * Editable map control that displays a table of map values.
- * Items can be added to the map and removed.
+ * Editable table.
+ * Items can be added to the table and removed.
  */
-RESTEasy.EditableMapComponent = Ember.Component.extend({
+RESTEasy.EditableTableComponent = Ember.Component.extend({
     tagName: 'table',
     name: null,
     value: null,
@@ -105,4 +107,40 @@ RESTEasy.EditableMapComponent = Ember.Component.extend({
             this.get('entries').removeObject(o);
         }
     }
+});
+
+/**
+ * Tab container for buttons and content.
+ * Changes the content displayed when a tab button is clicked.
+ */
+RESTEasy.TabContainerComponent = Ember.Component.extend({
+    classNames: ['tabs']
+});
+
+// TODO: the next two classes share some common code.
+
+/**
+ * Tab button within a tab container.
+ */
+RESTEasy.TabButtonComponent = Ember.Component.extend({
+    tagName: 'button',
+    classNames: ['tab'],
+    classNameBindings: ['active'],
+    active: function() {
+        return this.get('activeTab') == this.get('name');
+    }.property('activeTab'),
+    click: function() {
+        this.set('activeTab', this.get('name'));
+    }
+});
+
+/**
+ * Tab content within a tab container.
+ */
+RESTEasy.TabContentComponent = Ember.Component.extend({
+    classNames: ['content'],
+    classNameBindings: ['active'],
+    active: function() {
+        return this.get('activeTab') == this.get('name');
+    }.property('activeTab')
 });

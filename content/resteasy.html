@@ -43,8 +43,8 @@
 
                 <!-- HTTP headers -->
                 {{#collapsible-section title='Headers'}}
-                    <p>The headers specified below will be added to the browser's default standard headers.</p>
-                    {{editable-map entries=controller.requestHeaders}}
+                    <p class="help">The headers specified below will be added to the browser's default standard headers.</p>
+                    {{editable-table entries=controller.requestHeaders}}
                 {{/collapsible-section}}
 
                 <!-- POST data -->
@@ -54,7 +54,7 @@
 
                 <!-- Authentication data -->
                 {{#collapsible-section title='Authentication'}}
-                    <p>The parameters provided below will be used for HTTP Basic Auth.</p>
+                    <p class="help">The parameters provided below will be used for HTTP Basic Auth.</p>
                     <div class="control">
                         {{input placeholder='Username' value=username}}
                     </div>
@@ -68,14 +68,27 @@
         <!-- Response view -->
         <script type="text/x-handlebars" data-template-name="app-response">
             <div class="response">
-                <h2>TODO: Content Goes Here</h2>
+                {{#tab-container}}
+                    {{tab-button activeTab=controller.activeTab name="headers" title="Headers"}}
+                    {{tab-button activeTab=controller.activeTab name="raw" title="Raw"}}
+                    {{tab-button activeTab=controller.activeTab name="preview" title="Preview"}}
+                    {{#tab-content activeTab=controller.activeTab name="headers"}}
+                        <p>Headers</p>
+                    {{/tab-content}}
+                    {{#tab-content activeTab=controller.activeTab name="raw"}}
+                        <p>Raw</p>
+                    {{/tab-content}}
+                    {{#tab-content activeTab=controller.activeTab name="preview"}}
+                        <p>Preview</p>
+                    {{/tab-content}}
+                {{/tab-container}}
             </div>
         </script>
 
         <!-- Combo box control -->
         <script type="text/x-handlebars" data-template-name="components/combo-box">
             <button {{action 'toggle'}}>{{selection}}</button>
-            <ul {{bind-attr class=":menu expanded"}}>
+            <ul {{bind-attr class=':menu expanded'}}>
                 {{#each choices}}
                     <li {{action 'select' this}}>{{this}}</li>
                 {{/each}}
@@ -93,8 +106,8 @@
             </div>
         </script>
 
-        <!-- Editable map control -->
-        <script type="text/x-handlebars" data-template-name="components/editable-map">
+        <!-- Editable table control -->
+        <script type="text/x-handlebars" data-template-name="components/editable-table">
             <tr>
                 <th>Name</th>
                 <th>Value</th>
@@ -110,7 +123,9 @@
                 </tr>
             {{else}}
                 <tr>
-                    <td colspan="3">No items</td>
+                    <td colspan="3">
+                        <p class="info">Table is empty</p>
+                    </td>
                 </tr>
             {{/each}}
             <tr>
@@ -120,6 +135,21 @@
                     <button {{action 'add'}}>+</button>
                 </td>
             </tr>
+        </script>
+
+        <!-- Tab container control -->
+        <script type="text/x-handlebars" data-template-name="components/tab-container">
+            {{ yield }}
+        </script>
+
+        <!-- Tab button control -->
+        <script type="text/x-handlebars" data-template-name="components/tab-button">
+            {{title}}
+        </script>
+
+        <!-- Tab content control -->
+        <script type="text/x-handlebars" data-template-name="components/tab-content">
+            {{yield}}
         </script>
 
         <!-- Scripts -->
