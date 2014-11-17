@@ -31,58 +31,54 @@
 
         <!-- Request view -->
         <script type="text/x-handlebars" data-template-name="app-request">
-            <div class="request">
-                <!-- Request method, URL, and send button -->
-                <div class="float-left">
-                    {{combo-box choices=controller.methods selection=controller.method}}
-                </div>
-                <button class="float-right" {{action 'send'}}>Send</button>
-                <div class="control">
-                    {{input placeholder='http://' value=controller.url}}
-                </div>
-
-                <!-- HTTP headers -->
-                {{#collapsible-section title='Headers'}}
-                    <p class="help">The headers specified below will be added to the browser's default standard headers.</p>
-                    {{editable-table entries=controller.requestHeaders}}
-                {{/collapsible-section}}
-
-                <!-- POST data -->
-                {{#collapsible-section title='POST Data'}}
-                    <div>TODO: Content goes here</div>
-                {{/collapsible-section}}
-
-                <!-- Authentication data -->
-                {{#collapsible-section title='Authentication'}}
-                    <p class="help">The parameters provided below will be used for HTTP Basic Auth.</p>
-                    <div class="control">
-                        {{input placeholder='Username' value=username}}
-                    </div>
-                    <div class="control">
-                        {{input placeholder='Password' value=password}}
-                    </div>
-                {{/collapsible-section}}
+            <!-- Request method, URL, and send button -->
+            <div class="float-left">
+                {{combo-box choices=controller.methods selection=controller.method}}
             </div>
+            <button class="float-right" {{action 'send'}}>Send</button>
+            <div class="control">
+                {{input placeholder='http://' value=controller.url}}
+            </div>
+
+            <!-- HTTP headers -->
+            {{#collapsible-section title='Headers'}}
+                <p class="help">The headers specified below will be added to the browser's default standard headers.</p>
+                {{editable-table entries=controller.requestHeaders}}
+            {{/collapsible-section}}
+
+            <!-- POST data -->
+            {{#collapsible-section title='POST Data'}}
+                <div>TODO: Content goes here</div>
+            {{/collapsible-section}}
+
+            <!-- Authentication data -->
+            {{#collapsible-section title='Authentication'}}
+                <p class="help">The parameters provided below will be used for HTTP Basic Auth.</p>
+                <div class="control">
+                    {{input placeholder='Username' value=username}}
+                </div>
+                <div class="control">
+                    {{input placeholder='Password' value=password}}
+                </div>
+            {{/collapsible-section}}
         </script>
 
         <!-- Response view -->
         <script type="text/x-handlebars" data-template-name="app-response">
-            <div class="response">
-                {{#tab-container activeTab='headers'}}
-                    {{tab-button name="headers" title="Headers"}}
-                    {{tab-button name="raw" title="Raw"}}
-                    {{tab-button name="preview" title="Preview"}}
-                    {{#tab-content name="headers"}}
-                        <p>Headers</p>
-                    {{/tab-content}}
-                    {{#tab-content name="raw"}}
-                        <p>Raw</p>
-                    {{/tab-content}}
-                    {{#tab-content name="preview"}}
-                        <p>Preview</p>
-                    {{/tab-content}}
-                {{/tab-container}}
-            </div>
+            {{#tab-container activeTab='headers'}}
+                {{tab-button name="headers" title="Headers"}}
+                {{tab-button name="raw" title="Raw"}}
+                {{tab-button name="preview" title="Preview"}}
+                {{#tab-content name="headers"}}
+                    <p>Headers</p>
+                {{/tab-content}}
+                {{#tab-content name="raw"}}
+                    <p>Raw</p>
+                {{/tab-content}}
+                {{#tab-content name="preview"}}
+                    <p>Preview</p>
+                {{/tab-content}}
+            {{/tab-container}}
         </script>
 
         <!-- Combo box control -->

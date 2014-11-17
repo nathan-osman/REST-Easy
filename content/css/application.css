@@ -34,7 +34,7 @@ button {
     background: -moz-linear-gradient(top, #fff 0%, #ededed 100%);
     border: 1px solid #dedede;
     border-radius: 3px;
-    padding: 3px 12px;
+    padding: 3px 12px 2px;
 }
 
 button:active {
@@ -75,8 +75,12 @@ table tr:nth-child(even) {
 
 table th, table td {
     border: 1px solid #dedede;
-    padding: 3px 12px;
+    padding: 4px;
     text-align: left;
+}
+
+table td {
+    font-size: 10pt;
 }
 
 /* Utility classes */
@@ -91,10 +95,24 @@ table th, table td {
 
 .float-left {
     float: left;
+    margin-right: 4px;
 }
 
 .float-right {
     float:right;
+    margin-left: 4px;
+}
+
+.help {
+    font-size: 10pt;
+    color: #888;
+    margin-top: 0;
+}
+
+.info {
+    color: #888;
+    margin: 16px;
+    text-align: center;
 }
 
 /* Replacement combo boxes */
@@ -207,7 +225,7 @@ table th, table td {
 
 .section .content {
     display: none;
-    margin-top: 16px;
+    margin: 8px 16px;
 }
 
 .section .content.expanded {

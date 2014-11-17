@@ -29,7 +29,7 @@ window.RESTEasy = Ember.Application.create();
  */
 RESTEasy.RequestView = Ember.View.extend({
     templateName: 'app-request',
-    classNames: ['vexpand']
+    classNames: ['request']
 });
 
 /**
@@ -38,7 +38,7 @@ RESTEasy.RequestView = Ember.View.extend({
  */
 RESTEasy.ResponseView = Ember.View.extend({
     templateName: 'app-response',
-    classNames: ['vexpand']
+    classNames: ['response']
 })
 
 // TODO: the combo box and collapsible section control have identical
