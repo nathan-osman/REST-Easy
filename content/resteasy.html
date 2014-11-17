@@ -27,6 +27,15 @@
 
             <!-- Response pane -->
             {{view RESTEasy.ResponseView}}
+
+            <!-- Progress display -->
+            <div class="progress">
+                <div class="container">
+                    <p>Please wait...</p>
+                    <div class="bar"></div>
+                    <p><button>Cancel</button></p>
+                </div>
+            </div>
         </script>
 
         <!-- Request view -->
@@ -48,7 +57,7 @@
 
             <!-- POST data -->
             {{#collapsible-section title='POST Data'}}
-                <div>TODO: Content goes here</div>
+                <div>TODO: feature not yet implemented.</div>
             {{/collapsible-section}}
 
             <!-- Authentication data -->
