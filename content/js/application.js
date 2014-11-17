@@ -117,8 +117,6 @@ RESTEasy.TabContainerComponent = Ember.Component.extend({
     classNames: ['tabs']
 });
 
-// TODO: the next two classes share some common code.
-
 /**
  * Tab button within a tab container.
  */
@@ -127,10 +125,10 @@ RESTEasy.TabButtonComponent = Ember.Component.extend({
     classNames: ['tab'],
     classNameBindings: ['active'],
     active: function() {
-        return this.get('activeTab') == this.get('name');
-    }.property('activeTab'),
+        return this.get('parentView.activeTab') == this.get('name');
+    }.property('parentView.activeTab'),
     click: function() {
-        this.set('activeTab', this.get('name'));
+        this.set('parentView.activeTab', this.get('name'));
     }
 });
 
@@ -141,6 +139,6 @@ RESTEasy.TabContentComponent = Ember.Component.extend({
     classNames: ['content'],
     classNameBindings: ['active'],
     active: function() {
-        return this.get('activeTab') == this.get('name');
-    }.property('activeTab')
+        return this.get('parentView.activeTab') == this.get('name');
+    }.property('parentView.activeTab')
 });

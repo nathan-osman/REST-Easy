@@ -68,17 +68,17 @@
         <!-- Response view -->
         <script type="text/x-handlebars" data-template-name="app-response">
             <div class="response">
-                {{#tab-container}}
-                    {{tab-button activeTab=controller.activeTab name="headers" title="Headers"}}
-                    {{tab-button activeTab=controller.activeTab name="raw" title="Raw"}}
-                    {{tab-button activeTab=controller.activeTab name="preview" title="Preview"}}
-                    {{#tab-content activeTab=controller.activeTab name="headers"}}
+                {{#tab-container activeTab='headers'}}
+                    {{tab-button name="headers" title="Headers"}}
+                    {{tab-button name="raw" title="Raw"}}
+                    {{tab-button name="preview" title="Preview"}}
+                    {{#tab-content name="headers"}}
                         <p>Headers</p>
                     {{/tab-content}}
-                    {{#tab-content activeTab=controller.activeTab name="raw"}}
+                    {{#tab-content name="raw"}}
                         <p>Raw</p>
                     {{/tab-content}}
-                    {{#tab-content activeTab=controller.activeTab name="preview"}}
+                    {{#tab-content name="preview"}}
                         <p>Preview</p>
                     {{/tab-content}}
                 {{/tab-container}}
@@ -137,19 +137,9 @@
             </tr>
         </script>
 
-        <!-- Tab container control -->
-        <script type="text/x-handlebars" data-template-name="components/tab-container">
-            {{ yield }}
-        </script>
-
         <!-- Tab button control -->
         <script type="text/x-handlebars" data-template-name="components/tab-button">
             {{title}}
-        </script>
-
-        <!-- Tab content control -->
-        <script type="text/x-handlebars" data-template-name="components/tab-content">
-            {{yield}}
         </script>
 
         <!-- Scripts -->
