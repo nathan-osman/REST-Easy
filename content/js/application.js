@@ -33,6 +33,40 @@ RESTEasy.RequestView = Ember.View.extend({
 });
 
 /**
+ * View for the splitter dividing the two panes.
+ */
+RESTEasy.SplitterView = Ember.View.extend({
+    classNames: ['splitter'],
+    didInsertElement: function() {
+        var $splitter = $(this.get('element')),
+            $pane = $splitter.prev();
+
+        $splitter.mousedown(function(e) {
+
+            e.preventDefault();
+
+            // Capture the initial width of the pane and position
+            // of the mouse relative to the document
+            var paneW = $pane.width(),
+                pageX = e.pageX;
+
+            function mouseMove(e) {
+                $pane.width(paneW - (pageX - e.pageX));
+            }
+
+            function mouseUp() {
+                $(document).off('mousemove', mouseMove);
+                $(document).off('mouseup', mouseUp);
+            }
+
+            // Bind the event until the mouse button is released
+            $(document).on('mousemove', mouseMove);
+            $(document).on('mouseup', mouseUp);
+        });
+    }
+})
+
+/**
  * View for examining a response.
  * Includes tabs for viewing response headers, previewing content, etc.
  */

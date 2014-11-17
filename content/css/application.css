@@ -178,6 +178,7 @@ table td {
 
 .progress {
     background-color: rgba(0, 0, 0, 0.3);
+    display: none;
     left: 0;
     height: 100%;
     position: absolute;
