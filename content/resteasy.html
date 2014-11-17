@@ -29,13 +29,7 @@
             {{view RESTEasy.ResponseView}}
 
             <!-- Progress display -->
-            <div class="progress">
-                <div class="container">
-                    <p>Please wait...</p>
-                    <div class="bar"></div>
-                    <p><button>Cancel</button></p>
-                </div>
-            </div>
+            {{view RESTEasy.ProgressView}}
         </script>
 
         <!-- Request view -->
@@ -88,6 +82,17 @@
                     <p>Preview</p>
                 {{/tab-content}}
             {{/tab-container}}
+        </script>
+
+        <!-- Progress view -->
+        <script type="text/x-handlebars" data-template-name="app-progress">
+            <div class="container">
+                <p>Please wait - sending request...</p>
+                <div class="bar"></div>
+                <p>
+                    <button {{action 'cancel'}}>Cancel</button>
+                </p>
+            </div>
         </script>
 
         <!-- Combo box control -->

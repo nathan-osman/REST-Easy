@@ -181,18 +181,22 @@ table td {
     display: none;
     left: 0;
     height: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
+}
+
+.progress.active {
+    display: block;
 }
 
 .progress .container {
     background-color: #f7f7f7;
     border-radius: 3px;
     box-shadow: 0 0 8px #777;
-    left: calc(25% - 16px);
+    left: calc(50% - 216px);
     padding: 8px 16px;
-    position: absolute;
+    position: fixed;
     top: 40%;
     width: 400px;
 }

@@ -16,9 +16,13 @@ window.RESTEasy = Ember.Application.create();
     requestHeaders: [],
     username: null,
     password: null,
+    inProgress: false,
     actions: {
         send: function() {
-            alert(this.get('method') + ' ' + this.get('url'));
+            this.set('inProgress', true);
+        },
+        cancel: function() {
+            this.set('inProgress', false);
         }
     }
  });
@@ -73,7 +77,16 @@ RESTEasy.SplitterView = Ember.View.extend({
 RESTEasy.ResponseView = Ember.View.extend({
     templateName: 'app-response',
     classNames: ['response']
-})
+});
+
+/**
+ * View for displaying a request in progress.
+ */
+RESTEasy.ProgressView = Ember.View.extend({
+    templateName: 'app-progress',
+    classNames: ['progress'],
+    classNameBindings: ['controller.inProgress:active']
+});
 
 // TODO: the combo box and collapsible section control have identical
 // toggle methods - might be a good idea for them to share a base class
