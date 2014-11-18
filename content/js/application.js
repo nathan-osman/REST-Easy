@@ -6,26 +6,73 @@
 window.RESTEasy = Ember.Application.create();
 
 /**
+ * Entry in a table.
+ */
+RESTEasy.TableEntry = Ember.Object.extend({
+    name: null,
+    value: null
+});
+
+/**
  * Main controller for the REST Easy application.
  * The actual sending of requests and receiving of responses takes place here.
  */
- RESTEasy.ApplicationController = Ember.Controller.extend({
+RESTEasy.ApplicationController = Ember.Controller.extend({
     methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'OPTIONS'],
     method: 'GET',
-    url: null,
     requestHeaders: [],
-    username: null,
-    password: null,
-    inProgress: false,
+    init: function() {
+        var self = this,
+            request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            self.send('readyStateChange', request);
+        };
+
+        this.set('request', request);
+    },
     actions: {
         send: function() {
+            var request = this.get('request');
+            request.open(
+                this.get('method'),
+                this.get('url'),
+                true,  // async?
+                this.get('username'),
+                this.get('password')
+            );
+
+            // Obtain an nsIHttpChannel interface so that any header can be set
+            var channel = request.channel.QueryInterface(Components.interfaces.nsIHttpChannel);
+            this.get('requestHeaders').forEach(function(e) {
+                channel.setRequestHeader(e.name, e.value, false);
+            });
+
+            request.send();
             this.set('inProgress', true);
         },
+        readyStateChange: function(request) {
+            if(request.readyState === 4) {
+                var headers = request.getAllResponseHeaders().trim().split('\n').map(function(header) {
+                    index = header.indexOf(':');
+                    return RESTEasy.TableEntry.create({
+                        name: header.substr(0, index),
+                        value: header.substr(index + 1)
+                    });
+                });
+
+                this.set('response', {
+                    status: request.status + ' ' + request.statusText,
+                    headers: headers
+                });
+                this.set('inProgress', false);
+            }
+        },
         cancel: function() {
+            this.get('request').abort();
             this.set('inProgress', false);
         }
     }
- });
+});
 
 /**
  * View for issuing a request.
@@ -123,14 +170,6 @@ RESTEasy.CollapsibleSectionComponent = Ember.Component.extend({
         }
     }
 })
-
-/**
- * Entry in a table.
- */
-RESTEasy.TableEntry = Ember.Object.extend({
-    name: null,
-    value: null
-});
 
 /**
  * Editable table.

@@ -73,7 +73,21 @@
                 {{tab-button name="raw" title="Raw"}}
                 {{tab-button name="preview" title="Preview"}}
                 {{#tab-content name="headers"}}
-                    <p>Headers</p>
+                    {{#if response}}
+                        <h2>{{response.status}}</h2>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Value</th>
+                            </tr>
+                            {{#each response.headers}}
+                                <tr>
+                                    <td>{{name}}</td>
+                                    <td>{{value}}</td>
+                                </tr>
+                            {{/each}}
+                        </table>
+                    {{/if}}
                 {{/tab-content}}
                 {{#tab-content name="raw"}}
                     <p>Raw</p>
