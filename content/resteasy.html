@@ -91,12 +91,14 @@
                 {{/tab-content}}
                 {{#tab-content name="raw"}}
                     {{#if response}}
-                        Test.
+                        <pre class="pre">{{response.raw}}</pre>
                     {{/if}}
                 {{/tab-content}}
                 {{#tab-content name="preview"}}
-                    {{#if response}}
-                        <iframe type="content" {{bind-attr src=response.preview}}></iframe>
+                    {{#if response }}
+                        {{#if response.preview}}
+                            <iframe type="content" {{bind-attr src=response.preview}}></iframe>
+                        {{/if}}
                     {{/if}}
                 {{/tab-content}}
             {{/tab-container}}

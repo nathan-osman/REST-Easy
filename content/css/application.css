@@ -46,6 +46,14 @@ button:hover {
     cursor: pointer;
 }
 
+/* Iframes */
+
+iframe {
+    border: 1px solid #dedede;
+    height: 100%;
+    width: 100%;
+}
+
 /* Text <input> elements */
 
 input[type=text] {
@@ -172,6 +180,13 @@ table td {
 .header img {
     margin-right: 8px;
     vertical-align: middle;
+}
+
+/* Pre */
+
+.pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 /* Progress bar */

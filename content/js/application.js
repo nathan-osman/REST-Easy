@@ -52,11 +52,17 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                     };
                 });
 
-                this.set('response', {
-                    status: request.status + ' ' + request.statusText,
-                    headers: headers,
-                    preview: 'data:' + request.getResponseHeader('Content-Type') + ',' + encodeURIComponent(request.response)
-                });
+                var contentType = request.getResponseHeader('Content-Type'),
+                    response = {
+                        status: request.status + ' ' + request.statusText,
+                        headers: headers,
+                        raw: request.response
+                    };
+
+                if(contentType.substring(0, 5) == 'text/')
+                    response['preview'] = 'data:' + contentType + ',' + encodeURIComponent(request.response);
+
+                this.set('response', response);
                 this.set('inProgress', false);
             }
         },
