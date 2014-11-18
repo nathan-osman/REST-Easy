@@ -90,10 +90,14 @@
                     {{/if}}
                 {{/tab-content}}
                 {{#tab-content name="raw"}}
-                    <p>Raw</p>
+                    {{#if response}}
+                        Test.
+                    {{/if}}
                 {{/tab-content}}
                 {{#tab-content name="preview"}}
-                    <p>Preview</p>
+                    {{#if response}}
+                        <iframe type="content" {{bind-attr src=response.preview}}></iframe>
+                    {{/if}}
                 {{/tab-content}}
             {{/tab-container}}
         </script>

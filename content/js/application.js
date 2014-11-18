@@ -6,14 +6,6 @@
 window.RESTEasy = Ember.Application.create();
 
 /**
- * Entry in a table.
- */
-RESTEasy.TableEntry = Ember.Object.extend({
-    name: null,
-    value: null
-});
-
-/**
  * Main controller for the REST Easy application.
  * The actual sending of requests and receiving of responses takes place here.
  */
@@ -54,15 +46,16 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             if(request.readyState === 4) {
                 var headers = request.getAllResponseHeaders().trim().split('\n').map(function(header) {
                     index = header.indexOf(':');
-                    return RESTEasy.TableEntry.create({
+                    return {
                         name: header.substr(0, index),
                         value: header.substr(index + 1)
-                    });
+                    };
                 });
 
                 this.set('response', {
                     status: request.status + ' ' + request.statusText,
-                    headers: headers
+                    headers: headers,
+                    preview: 'data:' + request.getResponseHeader('Content-Type') + ',' + encodeURIComponent(request.response)
                 });
                 this.set('inProgress', false);
             }
@@ -181,11 +174,10 @@ RESTEasy.EditableTableComponent = Ember.Component.extend({
     value: null,
     actions: {
         add: function() {
-            var o = RESTEasy.TableEntry.create({
+            this.get('entries').pushObject({
                 name: this.get('name'),
                 value: this.get('value')
-            })
-            this.get('entries').pushObject(o);
+            });
             this.set('name', '');
             this.set('value', '');
         },
