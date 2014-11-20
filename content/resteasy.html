@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Page title will be set by Ember -->
+        <!-- Page title is set by Ember -->
 
         <link rel="shortcut icon" href="img/icon16.png">
         <link rel="stylesheet" href="css/application.css">
@@ -21,6 +21,16 @@
 
         <!-- Page header view-->
         <script type="text/x-handlebars" data-template-name="app-header">
+            <div style="float: right;">
+                <button {{action 'reset'}}>
+                    <span class="fa fa-trash"></span>
+                    Reset
+                </button>
+                <button {{action 'about'}}>
+                    <span class="fa fa-info-circle"></span>
+                    About
+                </button>
+            </div>
             <img src="img/icon32.png">
             <h2>{{t 'ui.title'}}</h2>
         </script>
@@ -45,9 +55,17 @@
                 {{editable-table entries=controller.requestHeaders}}
             {{/collapsible-section}}
 
-            <!-- POST data -->
-            {{#collapsible-section title='POST Data'}}
-                <div>TODO: feature not yet implemented.</div>
+            <!-- Data -->
+            {{#collapsible-section title='Data'}}
+                <p class="help">Select one of the options below to include data with the request.</p>
+                {{combo-box choices=controller.dataModes selection=controller.dataMode}}
+                <br>
+                {{#if view.dataForm}}
+                    {{editable-table entries=controller.dataForm}}
+                {{/if}}
+                {{#if view.dataCustom}}
+                    {{textarea value=controller.dataCustom}}
+                {{/if}}
             {{/collapsible-section}}
 
             <!-- Authentication data -->
@@ -70,7 +88,7 @@
                 {{tab-button name="preview" title="Preview"}}
                 {{#tab-content name="headers"}}
                     {{#if response}}
-                        <h2>{{response.status}}</h2>
+                        <h2>{{response.status}} {{response.statusText}}</h2>
                         <table>
                             <tr>
                                 <th>Name</th>
@@ -144,7 +162,9 @@
                     <td>{{name}}</td>
                     <td>{{value}}</td>
                     <td>
-                        <button {{action 'remove' this}}>&times;</button>
+                        <button {{action 'remove' this}} title="Remove header">
+                            <span class="fa fa-trash"></span>
+                        </button>
                     </td>
                 </tr>
             {{else}}
@@ -158,7 +178,9 @@
                 <td><div class="control">{{input placeholder='Name' value=name}}</div></td>
                 <td><div class="control">{{input placeholder='Value' value=value}}</div></td>
                 <td>
-                    <button {{action 'add'}}>+</button>
+                    <button {{action 'add'}} title="Add header">
+                        <span class="fa fa-plus"></span>
+                    </button>
                 </td>
             </tr>
         </script>

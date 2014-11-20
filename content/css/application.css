@@ -101,6 +101,10 @@ table td {
     width: calc(100% - 10px);
 }
 
+.fa {
+    margin-right: 4px;
+}
+
 .float-left {
     float: left;
     margin-right: 4px;
@@ -144,6 +148,7 @@ table td {
     margin: 0;
     padding: 0;
     position: absolute;
+    z-index: 1;
 }
 
 .combo .menu.expanded {

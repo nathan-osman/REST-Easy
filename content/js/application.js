@@ -3,6 +3,13 @@
  * Copyright 2014 - Nathan Osman *
  *********************************/
 
+// Constants
+var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'OPTIONS'],
+    DATA_NONE = 'None',
+    DATA_FORM = 'Form',
+    DATA_CUSTOM = 'Custom Data',
+    DATA_MODES = [DATA_NONE, DATA_FORM, DATA_CUSTOM];
+
 // Load the translation strings for the current locale and create a map from them
 (function() {
     Components.utils.import('resource://gre/modules/Services.jsm');
@@ -25,7 +32,8 @@ window.document.title = Ember.I18n.t('ui.title');
 
 // Main controller for the REST Easy application
 RESTEasy.ApplicationController = Ember.Controller.extend({
-    methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'OPTIONS'],
+    methods: HTTP_METHODS,
+    dataModes: DATA_MODES,
 
     // Initialize the application for the first time
     init: function() {
@@ -59,9 +67,12 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
         // Clear all values and set them to their defaults
         reset: function() {
-            this.set('method', 'GET');
+            this.set('method', HTTP_METHODS[0]);
             this.set('url', '');
             this.set('requestHeaders', []);
+            this.set('dataMode', DATA_MODES[0]);
+            this.set('dataForm', []);
+            this.set('dataCustom', '');
             this.set('username', '');
             this.set('password', '');
             this.set('response', null);
@@ -137,7 +148,15 @@ RESTEasy.HeaderView = Ember.View.extend({
 // View for setting request
 RESTEasy.RequestView = Ember.View.extend({
     templateName: 'app-request',
-    classNames: ['request']
+    classNames: ['request'],
+
+    // Properties for dataMode
+    dataForm: function() {
+        return this.get('controller.dataMode') === DATA_FORM;
+    }.property('controller.dataMode'),
+    dataCustom: function() {
+        return this.get('controller.dataMode') === DATA_CUSTOM;
+    }.property('controller.dataMode')
 });
 
 // View for the splitter dividing the two panes
