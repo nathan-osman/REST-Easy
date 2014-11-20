@@ -4,32 +4,25 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- TODO: set page title -->
-        <title>[TITLE GOES HERE]</title>
+        <!-- Page title will be set by Ember -->
 
-        <!-- Stylesheets -->
+        <link rel="shortcut icon" href="img/icon16.png">
         <link rel="stylesheet" href="css/application.css">
+        <link rel="stylesheet" href="vendor/css/font-awesome.min.css">
     </head>
     <body>
-
         <script type="text/x-handlebars">
-            <!-- Page header (currently unused) -->
-            <div class="header">
-                <img src="img/icon32.png">
-                <h2>REST Easy</h2>
-            </div>
-
-            <!-- Request pane -->
+            {{view RESTEasy.HeaderView}}
             {{view RESTEasy.RequestView}}
-
-            <!-- Splitter between panes -->
             {{view RESTEasy.SplitterView}}
-
-            <!-- Response pane -->
             {{view RESTEasy.ResponseView}}
-
-            <!-- Progress display -->
             {{view RESTEasy.ProgressView}}
+        </script>
+
+        <!-- Page header view-->
+        <script type="text/x-handlebars" data-template-name="app-header">
+            <img src="img/icon32.png">
+            <h2>{{t 'ui.title'}}</h2>
         </script>
 
         <!-- Request view -->
@@ -38,7 +31,10 @@
             <div class="float-left">
                 {{combo-box choices=controller.methods selection=controller.method}}
             </div>
-            <button class="float-right" {{action 'send'}}>Send</button>
+            <button class="float-right" {{action 'send'}}>
+                <span class="fa fa-send"></span>
+                {{t 'ui.url.send'}}
+            </button>
             <div class="control">
                 {{input placeholder='http://' value=controller.url}}
             </div>
@@ -176,6 +172,7 @@
         <script src="vendor/js/jquery.min.js"></script>
         <script src="vendor/js/handlebars.min.js"></script>
         <script src="vendor/js/ember.min.js"></script>
+        <script src="vendor/js/i18n.min.js"></script>
         <script src="js/application.js"></script>
     </body>
 </html>

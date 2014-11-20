@@ -6,6 +6,22 @@
 window.RESTEasy = Ember.Application.create();
 
 /**
+ * Load the translation strings for the current locale and create a map from them.
+ */
+(function() {
+    Components.utils.import('resource://gre/modules/Services.jsm');
+    var bundle = Services.strings.createBundle('chrome://resteasy/locale/resteasy.properties'),
+        senum = bundle.getSimpleEnumeration(),
+        strings = {},
+        string;
+    while(senum.hasMoreElements()) {
+        string = senum.getNext().QueryInterface(Components.interfaces.nsIPropertyElement);
+        strings[string.key] = string.value;
+    }
+    Ember.I18n.translations = strings;
+})();
+
+/**
  * Main controller for the REST Easy application.
  * The actual sending of requests and receiving of responses takes place here.
  */
@@ -71,6 +87,14 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('inProgress', false);
         }
     }
+});
+
+/**
+ * View for the header at the top of the page.
+ */
+RESTEasy.HeaderView = Ember.View.extend({
+    templateName: 'app-header',
+    classNames: ['header']
 });
 
 /**
