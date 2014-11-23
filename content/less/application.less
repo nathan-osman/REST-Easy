@@ -1,0 +1,99 @@
+/*********************************
+ *  REST Easy Application Theme  *
+ * Copyright 2014 - Nathan Osman *
+ *********************************/
+
+// Base colors
+@baseBG:            #f7f7f7;
+@baseFG:            #555555;
+@highlight:         #99ccff;
+
+// Palette generated from the base colors
+@lightBG:           lighten(@baseBG, 10%);
+@lightFG:           lighten(@baseFG, 10%);
+@darkBG:            darken(@baseBG, 10%);
+@darkFG:            darken(@baseFG, 10%);
+
+// Gradient colors
+@lightGradient1:    @lightBG;
+@lightGradient2:    @baseBG;
+@mediumGradient1:   @lightBG;
+@mediumGradient2:   @darkBG;
+@darkGradient1:     @baseBG;
+@darkGradient2:     @darkBG;
+
+// Border and shadow colors
+@borderColor:       @darkBG;
+@shadowOutsetColor: @lightFG;
+@shadowInsetColor:  @darkBG;
+
+// Mixins used for adding features to an element
+.border()         { border: 1px solid @borderColor; }
+.borderRadius()   { border-radius: 3px; }
+
+.control()        { padding: 4px 8px; }
+
+.gradientLight()  { background: -moz-linear-gradient(top, @lightGradient1  0%, @lightGradient2  100%); }
+.gradientMedium() { background: -moz-linear-gradient(top, @mediumGradient1 0%, @mediumGradient2 100%); }
+.gradientDark()   { background: -moz-linear-gradient(top, @darkGradient1   0%, @darkGradient2   100%); }
+
+.highlight()      { box-shadow: 0 0 3px @highlight; }
+
+.shadowOutset()   { box-shadow: outset 1px 1px 2px @shadowOutsetColor; }
+.shadowInset()    { box-shadow: inset  1px 1px 2px @shadowInsetColor; }
+
+// Standard elements
+body {
+    background-color: @baseBG;
+    box-sizing: border-box;
+    color: @baseFG;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+button {
+    .border();
+    .borderRadius();
+    .control();
+    .gradientMedium();
+    cursor: pointer;
+
+    &:active {
+        .shadowInset();
+    }
+
+    &:hover {
+        .gradientDark();
+    }
+}
+
+input[type=text],
+textarea {
+    .border();
+    .borderRadius();
+    .control();
+
+    &:focus {
+        .highlight();
+    }
+
+    &::-moz-placeholder {
+        color: @lightFG;
+    }
+}
+
+// Component classes
+.table {
+    border-collapse: collapse;
+    width: 100%;
+
+    tr:nth-child(even) {
+        background: @darkBG;
+    }
+
+    th, td {
+        .border;
+        padding: 4px;
+        text-align: left;
+    }
+}
