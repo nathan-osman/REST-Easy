@@ -226,6 +226,28 @@ pre {
     height: 12px;
 }
 
+.section {
+    .title {
+        border-bottom: @borderSize solid @borderColor;
+        cursor: pointer;
+
+        button {
+            font-size: 8pt;
+            margin-right: 4px;
+            padding: 0;
+            vertical-align: top;
+        }
+    }
+
+    .content {
+        display: none;
+
+        &.expanded {
+            display: block;
+        }
+    }
+}
+
 .splitter {
     .border();
     .shadowInset();

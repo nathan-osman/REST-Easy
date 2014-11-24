@@ -5,10 +5,13 @@
 
 // Constants
 var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'OPTIONS'],
-    DATA_NONE = 'None',
-    DATA_FORM = 'Form',
-    DATA_CUSTOM = 'Custom Data',
-    DATA_MODES = [DATA_NONE, DATA_FORM, DATA_CUSTOM];
+    DM_NONE = 'None',
+    DM_FORM = 'Form',
+    DM_CUSTOM = 'Custom Data',
+    DATA_MODES = [DM_NONE, DM_FORM, DM_CUSTOM],
+    FT_URLENCODED = 'application/x-www-form-urlencoded',
+    FT_MULTIPART = 'multipart/form-data',
+    FORM_TYPES = [FT_URLENCODED, FT_MULTIPART];
 
 // Load the translation strings for the current locale and create a map from them
 (function() {
@@ -34,6 +37,7 @@ window.document.title = Ember.I18n.t('ui.title');
 RESTEasy.ApplicationController = Ember.Controller.extend({
     methods: HTTP_METHODS,
     dataModes: DATA_MODES,
+    formTypes: FORM_TYPES,
 
     // Initialize the application for the first time
     init: function() {
@@ -71,8 +75,10 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('url', '');
             this.set('requestHeaders', []);
             this.set('dataMode', DATA_MODES[0]);
-            this.set('dataForm', []);
-            this.set('dataCustom', '');
+            this.set('formType', FORM_TYPES[0]);
+            this.set('formData', []);
+            this.set('customType', '');
+            this.set('customData', '');
             this.set('username', '');
             this.set('password', '');
             this.set('response', null);
@@ -85,7 +91,9 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
         // Open a new request using the values from the UI and send it
         send: function() {
-            var request = this.get('request');
+            var request = this.get('request'),
+                dataMode = this.get('dataMode');
+
             request.open(
                 this.get('method'),
                 this.get('url'),
@@ -101,8 +109,24 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 channel.setRequestHeader(e.name, e.value, false);
             });
 
-            // Send the request and display the progress dialog
-            request.send();
+            // If no mode was selected, don't include any data
+            if(dataMode == DM_NONE) {
+                request.send();
+
+            // If form mode was selected, create and populate a FormData
+            } else if(dataMode == DM_FORM) {
+                var params = [];
+                this.get('formData').forEach(function(e) {
+                    params.push(encodeURIComponent(e.name) + '=' + encodeURIComponent(e.value));
+                });
+                request.send(params.join('&'));
+
+            // Form mode must be custom - just send the provided data
+            } else {
+                request.send(this.get('dataCustom'));
+            }
+
+            // Display the progress dialog
             this.set('inProgress', true);
         },
 
@@ -148,14 +172,14 @@ RESTEasy.HeaderView = Ember.View.extend({
 // View for setting request
 RESTEasy.RequestView = Ember.View.extend({
     templateName: 'app-request',
-    classNames: ['request'],
+    classNames: ['pane', 'first'],
 
-    // Properties for dataMode
-    dataForm: function() {
-        return this.get('controller.dataMode') === DATA_FORM;
+    // Properties that dictate which controls are visible
+    dmForm: function() {
+        return this.get('controller.dataMode') === DM_FORM;
     }.property('controller.dataMode'),
-    dataCustom: function() {
-        return this.get('controller.dataMode') === DATA_CUSTOM;
+    dmCustom: function() {
+        return this.get('controller.dataMode') === DM_CUSTOM;
     }.property('controller.dataMode')
 });
 
@@ -195,13 +219,13 @@ RESTEasy.SplitterView = Ember.View.extend({
 // View for examining a response
 RESTEasy.ResponseView = Ember.View.extend({
     templateName: 'app-response',
-    classNames: ['response']
+    classNames: ['pane']
 });
 
 // View for displaying a request in progress
 RESTEasy.ProgressView = Ember.View.extend({
     templateName: 'app-progress',
-    classNames: ['progress'],
+    classNames: ['dialog'],
     classNameBindings: ['controller.inProgress:active']
 });
 
@@ -210,7 +234,7 @@ RESTEasy.ProgressView = Ember.View.extend({
 
 // Combo box control displaying contents as a drop-down menu
 RESTEasy.ComboBoxComponent = Ember.Component.extend({
-    classNames: ['combo'],
+    classNames: ['combo', 'control'],
     expanded: false,
     actions: {
         toggle: function() {
@@ -231,12 +255,19 @@ RESTEasy.CollapsibleSectionComponent = Ember.Component.extend({
         toggle: function() {
             this.set('expanded', !this.get('expanded'));
         }
-    }
+    },
+
+    // Returns the appropriate Font Awesome class for the button
+    // depending on whether it is expanded or not
+    buttonClass: function() {
+        return this.get('expanded') ? 'fa-minus' : 'fa-plus';
+    }.property('expanded')
 });
 
 // Editable table
 RESTEasy.EditableTableComponent = Ember.Component.extend({
     tagName: 'table',
+    classNames: ['table'],
     name: null,
     value: null,
     actions: {

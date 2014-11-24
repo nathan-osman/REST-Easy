@@ -7,8 +7,8 @@
         <!-- Page title is set by Ember -->
 
         <link rel="shortcut icon" href="img/icon16.png">
-        <link rel="stylesheet" href="css/application.css">
         <link rel="stylesheet" href="vendor/css/font-awesome.min.css">
+        <link rel="stylesheet/less" type="text/css" href="less/application.less">
     </head>
     <body>
         <script type="text/x-handlebars">
@@ -31,8 +31,8 @@
                     About
                 </button>
             </div>
-            <img src="img/icon32.png">
-            <h2>{{t 'ui.title'}}</h2>
+            <img src="img/icon32.png" class="logo">
+            <h2 class="title">{{t 'ui.title'}}</h2>
         </script>
 
         <!-- Request view -->
@@ -60,11 +60,15 @@
                 <p class="help">Select one of the options below to include data with the request.</p>
                 {{combo-box choices=controller.dataModes selection=controller.dataMode}}
                 <br>
-                {{#if view.dataForm}}
-                    {{editable-table entries=controller.dataForm}}
+                {{#if view.dmForm}}
+                    {{combo-box choices=controller.formTypes selection=controller.formType}}
+                    {{editable-table entries=controller.formData}}
                 {{/if}}
-                {{#if view.dataCustom}}
-                    {{textarea value=controller.dataCustom}}
+                {{#if view.dmCustom}}
+                    <div class="control">
+                        {{input placeholder='MIME type' value=controller.dataType}}
+                        {{textarea value=controller.dataCustom rows=6}}
+                    </div>
                 {{/if}}
             {{/collapsible-section}}
 
@@ -120,9 +124,9 @@
 
         <!-- Progress view -->
         <script type="text/x-handlebars" data-template-name="app-progress">
-            <div class="container">
+            <div class="content">
                 <p>Please wait - sending request...</p>
-                <div class="bar"></div>
+                <div class="progress"></div>
                 <p>
                     <button {{action 'cancel'}}>Cancel</button>
                 </p>
@@ -141,8 +145,10 @@
 
         <!-- Collapsible section control -->
         <script type="text/x-handlebars" data-template-name="components/collapsible-section">
-            <h4>
-                <button {{bind-attr class=":expand expanded"}} {{action 'toggle'}}></button>
+            <h4 class="title" {{action 'toggle'}}>
+                <button>
+                    <span {{bind-attr class=":fa buttonClass"}}></span>
+                </button>
                 {{title}}
             </h4>
             <div {{bind-attr class=":content expanded"}}>
@@ -191,6 +197,7 @@
         </script>
 
         <!-- Scripts -->
+        <script src="vendor/js/less.min.js"></script>
         <script src="vendor/js/jquery.min.js"></script>
         <script src="vendor/js/handlebars.min.js"></script>
         <script src="vendor/js/ember.min.js"></script>
