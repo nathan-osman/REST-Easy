@@ -27,11 +27,23 @@
 @shadowOutsetColor: @lightFG;
 @shadowInsetColor:  @darkBG;
 
+// Dimensions used in calculations
+@borderSize:        1px;
+@baseVPadding:      4px;
+@baseHPadding:      8px;
+@containerPadding:  16px;
+
+@headerHeight:      50px;
+@headerPadding:     10px;
+
+// TODO: implement font line-height so we can properly calculate this
+@tabHeight:         18px + 2 * (@borderSize + @baseVPadding);
+
 // Mixins used for adding features to an element
-.border()         { border: 1px solid @borderColor; }
+.border()         { border: @borderSize solid @borderColor; }
 .borderRadius()   { border-radius: 3px; }
 
-.control()        { padding: 4px 8px; }
+.container()      { padding: @containerPadding; }
 
 .gradientLight()  { background: -moz-linear-gradient(top, @lightGradient1  0%, @lightGradient2  100%); }
 .gradientMedium() { background: -moz-linear-gradient(top, @mediumGradient1 0%, @mediumGradient2 100%); }
@@ -39,10 +51,19 @@
 
 .highlight()      { box-shadow: 0 0 3px @highlight; }
 
-.shadowOutset()   { box-shadow: outset 1px 1px 2px @shadowOutsetColor; }
-.shadowInset()    { box-shadow: inset  1px 1px 2px @shadowInsetColor; }
+.padding()        { padding: @baseVPadding @baseHPadding; }
+
+.shadowOutset()   { box-shadow:       1px 1px 2px @shadowOutsetColor; }
+.shadowInset()    { box-shadow: inset 1px 1px 2px @shadowInsetColor; }
+.textShadow()     { text-shadow:      1px 1px 0   @lightBG; }
 
 // Standard elements
+html,
+body,
+body > .ember-view {
+    height: 100%;
+}
+
 body {
     background-color: @baseBG;
     box-sizing: border-box;
@@ -54,8 +75,8 @@ body {
 button {
     .border();
     .borderRadius();
-    .control();
     .gradientMedium();
+    .padding();
     cursor: pointer;
 
     &:active {
@@ -71,7 +92,7 @@ input[type=text],
 textarea {
     .border();
     .borderRadius();
-    .control();
+    .padding();
 
     &:focus {
         .highlight();
@@ -82,7 +103,167 @@ textarea {
     }
 }
 
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 // Component classes
+.combo {
+    position: relative;
+
+    button:after {
+        content: "\25be";
+        margin-left: 8px;
+    }
+
+    ul {
+        .border();
+        .shadowOutset();
+        background-color: @lightBG;
+        display: none;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        z-index: 1;
+
+        &.expanded {
+            display: block;
+        }
+
+        li {
+            .padding();
+            cursor: pointer;
+
+            &:hover {
+                background-color: @baseBG;
+            }
+        }
+    }
+}
+
+.control {
+    input[type=text],
+    textarea {
+        display: block;
+        width: calc(~"100%" - (2 * (@borderSize + @baseHPadding)));
+    }
+}
+
+.dialog {
+    background-color: rgba(red(@baseFG), green(@baseFG), blue(@baseFG), 0.5);
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+
+    &.active {
+        display: block;
+    }
+
+    .content {
+        .border();
+        .borderRadius();
+        .container();
+        .shadowOutset();
+        background-color: @baseBG;
+        left: 50%;
+        position: fixed;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.header {
+    .gradientMedium();
+    .shadowOutset();
+    height: calc(@headerHeight - 2 * @headerPadding);
+    padding: @headerPadding;
+    position: relative;
+    z-index: 1;
+
+    .logo {
+        float: left;
+        margin-right: 8px;
+    }
+
+    .title {
+        .textShadow();
+        line-height: 32px;
+        margin: 0;
+    }
+}
+
+.pane {
+    .container();
+    height: calc(~"100%" - (@headerHeight + 2 * @containerPadding));
+    overflow: auto;
+
+    &.first {
+        float: left;
+        width: 300px;
+    }
+}
+
+@keyframes slide {
+    from { background-position: 0    0; }
+    to   { background-position: 24px 0; }
+}
+
+.progress {
+    .border();
+    .borderRadius();
+    .shadowInset();
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: slide;
+    animation-timing-function: linear;
+    background-image: url(../img/progress.png);
+    height: 12px;
+}
+
+.splitter {
+    .border();
+    .shadowInset();
+    float: left;
+    height: calc(~"100%" - (@headerHeight + 2 * @borderSize));
+    cursor: ew-resize;
+    width: 3px;
+}
+
+.tabs {
+    height: 100%;
+
+    .tab {
+        border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        height: @tabHeight;
+        margin-bottom: -1px;
+
+        &.active {
+            .gradientLight();
+            border-bottom: 1px solid @baseBG;
+        }
+    }
+
+    .content {
+        .border();
+        .container();
+        display: none;
+        height: calc(~"100%" - (@tabHeight - 1px + 2 * (@borderSize + @containerPadding)));
+        overflow: auto;
+
+        &.active {
+            display: block;
+        }
+    }
+}
+
 .table {
     border-collapse: collapse;
     width: 100%;
@@ -93,7 +274,7 @@ textarea {
 
     th, td {
         .border;
-        padding: 4px;
+        .padding();
         text-align: left;
     }
 }
