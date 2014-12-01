@@ -11,8 +11,8 @@
 // Palette generated from the base colors
 @lightBG:           lighten(@baseBG, 10%);
 @lightFG:           lighten(@baseFG, 10%);
-@darkBG:            darken(@baseBG, 10%);
-@darkFG:            darken(@baseFG, 10%);
+@darkBG:            darken(@baseBG,  10%);
+@darkFG:            darken(@baseFG,  10%);
 
 // Gradient colors
 @lightGradient1:    @lightBG;
@@ -86,6 +86,12 @@ button {
     &:hover {
         .gradientDark();
     }
+}
+
+iframe {
+    .border();
+    height: 100%;
+    width: 100%;
 }
 
 input[type=text],
