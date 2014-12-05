@@ -13,6 +13,11 @@ var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'O
     FT_MULTIPART = 'multipart/form-data',
     FORM_TYPES = [FT_URLENCODED, FT_MULTIPART];
 
+// TODO: this really needs to be converted into an Ember plugin that can lookup
+// the translations as they are needed. As it stands now, the code below will
+// not return the English translation as a fallback if a string isn't available
+// in the current locale.
+
 // Load the translation strings for the current locale and create a map from them
 (function() {
     Components.utils.import('resource://gre/modules/Services.jsm');
@@ -91,14 +96,14 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
         // Open a new request using the values from the UI and send it
         send: function() {
             var request = this.get('request'),
-                dataMode = this.get('dataMode');
+                dataMode = this.get('dataMode'),
+                username = this.get('username'),
+                password = this.get('password');
 
             request.open(
                 this.get('method'),
                 this.get('url'),
-                true,  // async?
-                this.get('username'),
-                this.get('password')
+                true  // async?
             );
 
             // Obtain the nsIHttpChannel interface so that there are virtually
@@ -108,20 +113,43 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 channel.setRequestHeader(e.name, e.value, false);
             });
 
+            // Set HTTP basic auth data if provided
+            if(username.length || password.length) {
+                channel.setRequestHeader('Authorization', 'Basic ' + btoa(username + ':' + password), false);
+            }
+
             // If no mode was selected, don't include any data
-            if(dataMode == DM_NONE) {
+            if(dataMode === DM_NONE) {
                 request.send();
 
             // If form mode was selected, create and populate a FormData
-            } else if(dataMode == DM_FORM) {
-                var params = [];
-                this.get('formData').forEach(function(e) {
-                    params.push(encodeURIComponent(e.name) + '=' + encodeURIComponent(e.value));
-                });
-                request.send(params.join('&'));
+            } else if(dataMode === DM_FORM) {
+
+                var formData;
+
+                // Manually build the query string for application/x-www-form-urlencoded
+                if(this.get('formType') === FT_URLENCODED) {
+                    formData = [];
+                    this.get('formData').forEach(function(e) {
+                        formData.push(encodeURIComponent(e.name) + '=' + encodeURIComponent(e.value));
+                    });
+                    formData = formData.join('&');
+                    channel.setRequestHeader('Content-type', FT_URLENCODED, false);
+
+                // Otherwise use FormData to build the multipart data
+                } else {
+                    formData = new FormData();
+                    this.get('formData').forEach(function(e) {
+                        formData.append(e.name, e.value);
+                    });
+                }
+
+                // Send the request
+                request.send(formData);
 
             // Form mode must be custom - just send the provided data
             } else {
+                channel.setRequestHeader('Content-type', this.get('dataType'), false);
                 request.send(this.get('dataCustom'));
             }
 
