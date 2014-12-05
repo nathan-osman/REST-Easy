@@ -109,6 +109,11 @@ textarea {
     }
 }
 
+p {
+    font-size: smaller;
+    color: @lightFG;
+}
+
 pre {
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -123,6 +128,10 @@ pre {
 .float-right {
     float: right;
     margin-left: 4px;
+}
+
+.overflow-auto {
+    overflow: auto;
 }
 
 // Component classes
@@ -161,8 +170,6 @@ pre {
 }
 
 .control {
-    overflow: auto;
-
     input[type=text],
     textarea {
         display: block;
@@ -191,9 +198,19 @@ pre {
         .shadowOutset();
         background-color: @baseBG;
         left: 50%;
+        min-width: 20%;
         position: fixed;
         top: 50%;
         transform: translate(-50%, -50%);
+
+        .title {
+            margin-top: 0;
+        }
+
+        .buttons {
+            margin-top: 32px;
+            text-align: center;
+        }
     }
 }
 
@@ -242,6 +259,7 @@ pre {
     animation-name: slide;
     animation-timing-function: linear;
     background-image: url(../img/progress.png);
+    background-repeat: repeat-x;
     height: 12px;
 }
 
@@ -260,6 +278,7 @@ pre {
 
     .content {
         display: none;
+        margin: 0 8px;
 
         &.expanded {
             display: block;

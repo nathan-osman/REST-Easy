@@ -16,7 +16,32 @@
             {{view RESTEasy.RequestView}}
             {{view RESTEasy.SplitterView}}
             {{view RESTEasy.ResponseView}}
-            {{view RESTEasy.ProgressView}}
+
+            <!-- Progress dialog for canceling the request -->
+            {{#dialog-box active=controller.displayProgress}}
+                <h4 class="title">Please Wait</h4>
+                <p>Sending the request...</p>
+                <div class="progress"></div>
+                <div class="buttons">
+                    <button {{action 'cancel'}}>
+                        <span class="fa fa-close"></span>
+                        Cancel
+                    </button>
+                </div>
+            {{/dialog-box}}
+
+            <!-- About dialog for describing the application -->
+            {{#dialog-box active=controller.displayAbout}}
+                <h4 class="title">{{t 'ui.title'}}</h4>
+                <p>Created and maintained by Nathan Osman</p>
+                <p>&copy; Copyright 2014</p>
+                <div class="buttons">
+                    <button {{action 'hideAbout'}}>
+                        <span class="fa fa-close"></span>
+                        Close
+                    </button>
+                </div>
+            {{/dialog-box}}
         </script>
 
         <!-- Page header view-->
@@ -26,7 +51,7 @@
                     <span class="fa fa-trash"></span>
                     Reset
                 </button>
-                <button {{action 'about'}}>
+                <button {{action 'showAbout'}}>
                     <span class="fa fa-info-circle"></span>
                     About
                 </button>
@@ -45,19 +70,19 @@
                 <span class="fa fa-send"></span>
                 {{t 'ui.url.send'}}
             </button>
-            <div class="control">
+            <div class="control overflow-auto">
                 {{input placeholder='http://' value=controller.url}}
             </div>
 
             <!-- HTTP headers -->
             {{#collapsible-section title='Headers'}}
-                <p class="help">The headers specified below will be added to the browser's default standard headers.</p>
+                <p class="description">The headers specified below will be added to the browser's default standard headers.</p>
                 {{editable-table entries=controller.requestHeaders}}
             {{/collapsible-section}}
 
             <!-- Data -->
             {{#collapsible-section title='Data'}}
-                <p class="help">Select one of the options below to include data with the request.</p>
+                <p class="description">Select one of the options below to include data with the request.</p>
                 {{combo-box choices=controller.dataModes selection=controller.dataMode}}
                 <br>
                 {{#if view.dmForm}}
@@ -74,7 +99,7 @@
 
             <!-- Authentication data -->
             {{#collapsible-section title='Authentication'}}
-                <p class="help">The parameters provided below will be used for HTTP Basic Auth.</p>
+                <p class="description">The parameters provided below will be used for HTTP Basic Auth.</p>
                 <div class="control">
                     {{input placeholder='Username' value=username}}
                 </div>
@@ -120,17 +145,6 @@
                     {{/if}}
                 {{/tab-content}}
             {{/tab-container}}
-        </script>
-
-        <!-- Progress view -->
-        <script type="text/x-handlebars" data-template-name="app-progress">
-            <div class="content">
-                <p>Please wait - sending request...</p>
-                <div class="progress"></div>
-                <p>
-                    <button {{action 'cancel'}}>Cancel</button>
-                </p>
-            </div>
         </script>
 
         <!-- Combo box control -->
@@ -194,6 +208,13 @@
         <!-- Tab button control -->
         <script type="text/x-handlebars" data-template-name="components/tab-button">
             {{title}}
+        </script>
+
+        <!-- Dialog box control -->
+        <script type="text/x-handlebars" data-template-name="components/dialog-box">
+            <div class="content">
+                {{yield}}
+            </div>
         </script>
 
         <!-- Scripts -->

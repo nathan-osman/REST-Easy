@@ -84,10 +84,9 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('response', null);
         },
 
-        // TODO: make this into a proper dialog box - this works for now
-        about: function() {
-            window.alert('REST Easy - Simple REST Client\nCopyright 2014 - Nathan Osman');
-        },
+        // Show and hide the about dialog
+        showAbout: function() { this.set('displayAbout', true); },
+        hideAbout: function() { this.set('displayAbout', false); },
 
         // Open a new request using the values from the UI and send it
         send: function() {
@@ -127,7 +126,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             }
 
             // Display the progress dialog
-            this.set('inProgress', true);
+            this.set('displayProgress', true);
         },
 
         // Check for completion of the request and display the results
@@ -151,14 +150,14 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
                 // Display the response and hide the progress dialog
                 this.set('response', response);
-                this.set('inProgress', false);
+                this.set('displayProgress', false);
             }
         },
 
         // Abort the request in progress
         cancel: function() {
             this.get('request').abort();
-            this.set('inProgress', false);
+            this.set('displayProgress', false);
         }
     }
 });
@@ -220,13 +219,6 @@ RESTEasy.SplitterView = Ember.View.extend({
 RESTEasy.ResponseView = Ember.View.extend({
     templateName: 'app-response',
     classNames: ['pane']
-});
-
-// View for displaying a request in progress
-RESTEasy.ProgressView = Ember.View.extend({
-    templateName: 'app-progress',
-    classNames: ['dialog'],
-    classNameBindings: ['controller.inProgress:active']
 });
 
 // TODO: the combo box and collapsible section control have identical toggle
@@ -316,4 +308,10 @@ RESTEasy.TabContentComponent = Ember.Component.extend({
     active: function() {
         return this.get('parentView.activeTab') == this.get('name');
     }.property('parentView.activeTab')
+});
+
+// Modal dialog box
+RESTEasy.DialogBoxComponent = Ember.Component.extend({
+    classNames: ['dialog'],
+    classNameBindings: ['active']
 });
