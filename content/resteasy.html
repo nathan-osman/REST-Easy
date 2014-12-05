@@ -76,20 +76,21 @@
 
             <!-- HTTP headers -->
             {{#collapsible-section title='Headers'}}
-                <p class="description">The headers specified below will be added to the browser's default standard headers.</p>
+                <p>The headers specified below will be added to any sent by the browser or specified elsewhere.</p>
                 {{editable-table entries=controller.requestHeaders}}
             {{/collapsible-section}}
 
             <!-- Data -->
             {{#collapsible-section title='Data'}}
-                <p class="description">Select one of the options below to include data with the request.</p>
+                <p>Select one of the options below to include data with the request.</p>
                 {{combo-box choices=controller.dataModes selection=controller.dataMode}}
-                <br>
                 {{#if view.dmForm}}
+                    <p>Select an appropriate MIME type for the form and use the table below to enter data.</p>
                     {{combo-box choices=controller.formTypes selection=controller.formType}}
                     {{editable-table entries=controller.formData}}
                 {{/if}}
                 {{#if view.dmCustom}}
+                    <p>Enter the data and its corresponding MIME type below.</p>
                     <div class="control">
                         {{input placeholder='MIME type' value=controller.dataType}}
                         {{textarea value=controller.dataCustom rows=6}}
@@ -99,7 +100,7 @@
 
             <!-- Authentication data -->
             {{#collapsible-section title='Authentication'}}
-                <p class="description">The parameters provided below will be used for HTTP Basic Auth.</p>
+                <p>The parameters provided below will be used for HTTP Basic Auth.</p>
                 <div class="control">
                     {{input placeholder='Username' value=username}}
                 </div>
@@ -124,7 +125,7 @@
                                 <th>Value</th>
                             </tr>
                             {{#each response.headers}}
-                                <tr>
+                                <tr class="data">
                                     <td>{{name}}</td>
                                     <td>{{value}}</td>
                                 </tr>
@@ -175,10 +176,10 @@
             <tr>
                 <th>Name</th>
                 <th>Value</th>
-                <th></th>
+                <th class="collapse"></th>
             </tr>
             {{#each entries}}
-                <tr>
+                <tr class="data">
                     <td>{{name}}</td>
                     <td>{{value}}</td>
                     <td>

@@ -90,6 +90,7 @@ button {
 
 iframe {
     .border();
+    background-color: @lightBG;
     height: 100%;
     width: 100%;
 }
@@ -110,8 +111,9 @@ textarea {
 }
 
 p {
-    font-size: smaller;
     color: @lightFG;
+    font-size: smaller;
+    text-align: justify;
 }
 
 pre {
@@ -138,9 +140,15 @@ pre {
 .combo {
     position: relative;
 
-    button:after {
-        content: "\25be";
-        margin-left: 8px;
+    button {
+        text-align: left;
+        width: 100%;
+
+        &:after {
+            content: "\25be";
+            float: right;
+            margin-left: 8px;
+        }
     }
 
     ul {
@@ -170,6 +178,8 @@ pre {
 }
 
 .control {
+    margin: 0 0 4px;
+
     input[type=text],
     textarea {
         display: block;
@@ -328,13 +338,21 @@ pre {
     border-collapse: collapse;
     width: 100%;
 
-    tr:nth-child(even) {
-        background: @darkBG;
+    tr.data {
+        font-family: monospace;
+
+        &:nth-child(even) {
+            background: darken(@baseBG, 5%);
+        }
     }
 
     th, td {
         .border;
         .padding();
         text-align: left;
+    }
+
+    .collapse {
+        width: 0;
     }
 }

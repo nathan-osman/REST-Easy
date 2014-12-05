@@ -173,10 +173,12 @@ RESTEasy.RequestView = Ember.View.extend({
     templateName: 'app-request',
     classNames: ['pane', 'first'],
 
-    // Properties that dictate which controls are visible
+    // Form data controls should be displayed?
     dmForm: function() {
         return this.get('controller.dataMode') === DM_FORM;
     }.property('controller.dataMode'),
+
+    // Custom data controls should be displayed?
     dmCustom: function() {
         return this.get('controller.dataMode') === DM_CUSTOM;
     }.property('controller.dataMode')
@@ -221,13 +223,9 @@ RESTEasy.ResponseView = Ember.View.extend({
     classNames: ['pane']
 });
 
-// TODO: the combo box and collapsible section control have identical toggle
-// methods - it might be a good idea for them to share a base class
-
 // Combo box control displaying contents as a drop-down menu
 RESTEasy.ComboBoxComponent = Ember.Component.extend({
     classNames: ['combo', 'control'],
-    expanded: false,
     actions: {
         toggle: function() {
             this.set('expanded', !this.get('expanded'));
@@ -242,7 +240,6 @@ RESTEasy.ComboBoxComponent = Ember.Component.extend({
 // Collapsible section control that hides its content by default
 RESTEasy.CollapsibleSectionComponent = Ember.Component.extend({
     classNames: ['section'],
-    expanded: false,
     actions: {
         toggle: function() {
             this.set('expanded', !this.get('expanded'));
@@ -256,7 +253,7 @@ RESTEasy.CollapsibleSectionComponent = Ember.Component.extend({
     }.property('expanded')
 });
 
-// Editable table
+// Editable table for simple name/value storage
 RESTEasy.EditableTableComponent = Ember.Component.extend({
     tagName: 'table',
     classNames: ['table'],
@@ -264,12 +261,17 @@ RESTEasy.EditableTableComponent = Ember.Component.extend({
     value: null,
     actions: {
         add: function() {
-            this.get('entries').pushObject({
-                name: this.get('name'),
-                value: this.get('value')
-            });
-            this.set('name', '');
-            this.set('value', '');
+            var name = this.get('name'),
+                value = this.get('value');
+            // Don't add anything unless both fields are filled in
+            if(name && value) {
+                this.get('entries').pushObject({
+                    name: name,
+                    value: value
+                });
+                this.set('name', '');
+                this.set('value', '');
+            }
         },
         remove: function(o) {
             this.get('entries').removeObject(o);
