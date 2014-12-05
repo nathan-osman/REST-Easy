@@ -13,30 +13,19 @@ var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'O
     FT_MULTIPART = 'multipart/form-data',
     FORM_TYPES = [FT_URLENCODED, FT_MULTIPART];
 
-// TODO: this really needs to be converted into an Ember plugin that can lookup
-// the translations as they are needed. As it stands now, the code below will
-// not return the English translation as a fallback if a string isn't available
-// in the current locale.
-
-// Load the translation strings for the current locale and create a map from them
+// Register a helper to aid in translation
 (function() {
     Components.utils.import('resource://gre/modules/Services.jsm');
-    var bundle = Services.strings.createBundle('chrome://resteasy/locale/resteasy.properties'),
-        senum = bundle.getSimpleEnumeration(),
-        strings = {},
-        string;
+    var bundle = Services.strings.createBundle('chrome://resteasy/locale/resteasy.properties');
 
-    // Add each of the strings in the bundle to the map
-    while(senum.hasMoreElements()) {
-        string = senum.getNext().QueryInterface(Components.interfaces.nsIPropertyElement);
-        strings[string.key] = string.value;
-    }
-    Ember.I18n.translations = strings;
+    Ember.Handlebars.registerHelper('t', function(value) {
+        return bundle.formatStringFromName(value, [], 0);;
+    });
 })();
 
 // Create the application and set the window title
 window.RESTEasy = Ember.Application.create();
-window.document.title = Ember.I18n.t('ui.title');
+window.document.title = Ember.Handlebars.helpers.t('application.title');
 
 // Main controller for the REST Easy application
 RESTEasy.ApplicationController = Ember.Controller.extend({

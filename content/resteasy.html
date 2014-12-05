@@ -19,26 +19,26 @@
 
             <!-- Progress dialog for canceling the request -->
             {{#dialog-box active=controller.displayProgress}}
-                <h4 class="title">Please Wait</h4>
-                <p>Sending the request...</p>
+                <h4 class="title">{{t 'dialog.progress.title'}}</h4>
+                <p>{{t 'dialog.progress.description'}}</p>
                 <div class="progress"></div>
                 <div class="buttons">
                     <button {{action 'cancel'}}>
                         <span class="fa fa-close"></span>
-                        Cancel
+                        {{t 'dialog.progress.cancel'}}
                     </button>
                 </div>
             {{/dialog-box}}
 
             <!-- About dialog for describing the application -->
             {{#dialog-box active=controller.displayAbout}}
-                <h4 class="title">{{t 'ui.title'}}</h4>
-                <p>Created and maintained by Nathan Osman</p>
-                <p>&copy; Copyright 2014</p>
+                <h4 class="title">{{t 'dialog.about.title'}}</h4>
+                <p>{{t 'dialog.about.line1'}}</p>
+                <p>{{t 'dialog.about.line2'}}</p>
                 <div class="buttons">
                     <button {{action 'hideAbout'}}>
                         <span class="fa fa-close"></span>
-                        Close
+                        {{t 'dialog.about.close'}}
                     </button>
                 </div>
             {{/dialog-box}}
@@ -93,6 +93,8 @@
                     <p>Enter the data and its corresponding MIME type below.</p>
                     <div class="control">
                         {{input placeholder='MIME type' value=controller.dataType}}
+                    </div>
+                    <div class="control">
                         {{textarea value=controller.dataCustom rows=6}}
                     </div>
                 {{/if}}
@@ -223,7 +225,6 @@
         <script src="vendor/js/jquery.min.js"></script>
         <script src="vendor/js/handlebars.min.js"></script>
         <script src="vendor/js/ember.min.js"></script>
-        <script src="vendor/js/i18n.min.js"></script>
         <script src="js/application.js"></script>
     </body>
 </html>
