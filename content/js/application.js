@@ -231,12 +231,11 @@ RESTEasy.SplitterView = Ember.View.extend({
 
             function mouseUp() {
                 $(document).off('mousemove', mouseMove);
-                $(document).off('mouseup', mouseUp);
             }
 
             // Bind the handlers until the mouse button is released
             $(document).on('mousemove', mouseMove);
-            $(document).on('mouseup', mouseUp);
+            $(document).one('mouseup', mouseUp);
         });
     }
 })
@@ -250,13 +249,22 @@ RESTEasy.ResponseView = Ember.View.extend({
 // Combo box control displaying contents as a drop-down menu
 RESTEasy.ComboBoxComponent = Ember.Component.extend({
     classNames: ['combo', 'control'],
+
     actions: {
-        toggle: function() {
-            this.set('expanded', !this.get('expanded'));
+        show: function() {
+            this.set('expanded', true);
+
+            // Hide the menu when anything is clicked
+            var self = this;
+            function hide(e) {
+                self.set('expanded', false);
+                $(document).off('click', hide);
+            }
+
+            $(document).on('click', hide);
         },
         select: function(item) {
             this.set('selection', item);
-            this.set('expanded', false);
         }
     }
 });
