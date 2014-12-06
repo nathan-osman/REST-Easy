@@ -19,26 +19,26 @@
 
             <!-- Progress dialog for canceling the request -->
             {{#dialog-box active=controller.displayProgress}}
-                <h4 class="title">{{t 'dialog.progress.title'}}</h4>
-                <p>{{t 'dialog.progress.description'}}</p>
+                <h4 class="title">{{tr 'dialog.progress.title'}}</h4>
+                <p>{{tr 'dialog.progress.description'}}</p>
                 <div class="progress"></div>
                 <div class="buttons">
                     <button {{action 'cancel'}}>
                         <span class="fa fa-close"></span>
-                        {{t 'dialog.progress.cancel'}}
+                        {{tr 'dialog.progress.cancel'}}
                     </button>
                 </div>
             {{/dialog-box}}
 
             <!-- About dialog for describing the application -->
             {{#dialog-box active=controller.displayAbout}}
-                <h4 class="title">{{t 'dialog.about.title'}}</h4>
-                <p>{{t 'dialog.about.line1'}}</p>
-                <p>{{t 'dialog.about.line2'}}</p>
+                <h4 class="title">{{tr 'dialog.about.title'}}</h4>
+                <p>{{tr 'dialog.about.line1'}}</p>
+                <p>{{tr 'dialog.about.line2'}}</p>
                 <div class="buttons">
                     <button {{action 'hideAbout'}}>
                         <span class="fa fa-close"></span>
-                        {{t 'dialog.about.close'}}
+                        {{tr 'dialog.about.close'}}
                     </button>
                 </div>
             {{/dialog-box}}
@@ -49,15 +49,15 @@
             <div style="float: right;">
                 <button {{action 'reset'}}>
                     <span class="fa fa-trash"></span>
-                    Reset
+                    {{tr 'header.reset'}}
                 </button>
                 <button {{action 'showAbout'}}>
                     <span class="fa fa-info-circle"></span>
-                    About
+                    {{tr 'header.about'}}
                 </button>
             </div>
             <img src="img/icon32.png" class="logo">
-            <h2 class="title">{{t 'ui.title'}}</h2>
+            <h2 class="title">{{tr 'application.title'}}</h2>
         </script>
 
         <!-- Request view -->
@@ -68,31 +68,31 @@
             </div>
             <button class="float-right" {{action 'send'}}>
                 <span class="fa fa-send"></span>
-                {{t 'ui.url.send'}}
+                {{tr 'request.send'}}
             </button>
             <div class="control overflow-auto">
                 {{input placeholder='http://' value=controller.url}}
             </div>
 
             <!-- HTTP headers -->
-            {{#collapsible-section title='Headers'}}
-                <p>The headers specified below will be added to any sent by the browser or specified elsewhere.</p>
+            {{#collapsible-section title='request.headers.title'}}
+                <p>{{tr 'request.headers.description'}}</p>
                 {{editable-table entries=controller.requestHeaders}}
             {{/collapsible-section}}
 
             <!-- Data -->
-            {{#collapsible-section title='Data'}}
-                <p>Select one of the options below to include data with the request.</p>
+            {{#collapsible-section title='request.data.title'}}
+                <p>{{tr 'request.data.description'}}</p>
                 {{combo-box choices=controller.dataModes selection=controller.dataMode}}
                 {{#if view.dmForm}}
-                    <p>Select an appropriate MIME type for the form and use the table below to enter data.</p>
+                    <p>{{tr 'request.data.form.description'}}</p>
                     {{combo-box choices=controller.formTypes selection=controller.formType}}
                     {{editable-table entries=controller.formData}}
                 {{/if}}
                 {{#if view.dmCustom}}
-                    <p>Enter the data and its corresponding MIME type below.</p>
+                    <p>{{tr 'request.data.custom.description'}}</p>
                     <div class="control">
-                        {{input placeholder='MIME type' value=controller.dataType}}
+                        {{input placeholder=controller.trDataType value=controller.dataType}}
                     </div>
                     <div class="control">
                         {{textarea value=controller.dataCustom rows=6}}
@@ -101,30 +101,30 @@
             {{/collapsible-section}}
 
             <!-- Authentication data -->
-            {{#collapsible-section title='Authentication'}}
-                <p>The parameters provided below will be used for HTTP Basic Auth.</p>
+            {{#collapsible-section title='request.auth.title'}}
+                <p>{{tr 'request.auth.description'}}</p>
                 <div class="control">
-                    {{input placeholder='Username' value=controller.username}}
+                    {{input placeholder=controller.trUsername value=controller.username}}
                 </div>
                 <div class="control">
-                    {{input placeholder='Password' value=controller.password}}
+                    {{input placeholder=controller.trPassword value=controller.password}}
                 </div>
             {{/collapsible-section}}
         </script>
 
         <!-- Response view -->
         <script type="text/x-handlebars" data-template-name="app-response">
-            {{#tab-container activeTab='headers'}}
-                {{tab-button name="headers" title="Headers"}}
-                {{tab-button name="raw" title="Raw"}}
-                {{tab-button name="preview" title="Preview"}}
-                {{#tab-content name="headers"}}
+            {{#tab-container activeTab='response.headers.title'}}
+                {{tab-button title="response.headers.title"}}
+                {{tab-button title="response.raw.title"}}
+                {{tab-button title="response.preview.title"}}
+                {{#tab-content title="response.headers.title"}}
                     {{#if response}}
                         <h2>{{response.status}} {{response.statusText}}</h2>
                         <table class="table">
                             <tr>
-                                <th>Name</th>
-                                <th>Value</th>
+                                <th>{{tr 'table.name'}}</th>
+                                <th>{{tr 'table.value'}}</th>
                             </tr>
                             {{#each response.headers}}
                                 <tr class="data">
@@ -135,12 +135,12 @@
                         </table>
                     {{/if}}
                 {{/tab-content}}
-                {{#tab-content name="raw"}}
+                {{#tab-content title="response.raw.title"}}
                     {{#if response}}
                         <pre class="pre">{{response.raw}}</pre>
                     {{/if}}
                 {{/tab-content}}
-                {{#tab-content name="preview"}}
+                {{#tab-content title="response.preview.title"}}
                     {{#if response }}
                         {{#if response.preview}}
                             <iframe type="content" {{bind-attr src=response.preview}}></iframe>
@@ -166,7 +166,7 @@
                 <button>
                     <span {{bind-attr class=":fa buttonClass"}}></span>
                 </button>
-                {{title}}
+                {{tr title}}
             </h4>
             <div {{bind-attr class=":content expanded"}}>
                 {{yield}}
@@ -176,8 +176,8 @@
         <!-- Editable table control -->
         <script type="text/x-handlebars" data-template-name="components/editable-table">
             <tr>
-                <th>Name</th>
-                <th>Value</th>
+                <th>{{tr 'table.name'}}</th>
+                <th>{{tr 'table.value'}}</th>
                 <th class="collapse"></th>
             </tr>
             {{#each entries}}
@@ -185,7 +185,7 @@
                     <td>{{name}}</td>
                     <td>{{value}}</td>
                     <td>
-                        <button {{action 'remove' this}} title="Remove header">
+                        <button {{action 'remove' this}} {{bind-attr title=trRemove}}>
                             <span class="fa fa-trash"></span>
                         </button>
                     </td>
@@ -193,15 +193,15 @@
             {{else}}
                 <tr>
                     <td colspan="3">
-                        <p class="info">Table is empty</p>
+                        <p class="info">{{tr 'table.empty'}}</p>
                     </td>
                 </tr>
             {{/each}}
             <tr>
-                <td><div class="control">{{input placeholder='Name' value=name}}</div></td>
-                <td><div class="control">{{input placeholder='Value' value=value}}</div></td>
+                <td><div class="control">{{input placeholder=trName value=name}}</div></td>
+                <td><div class="control">{{input placeholder=trValue value=value}}</div></td>
                 <td>
-                    <button {{action 'add'}} title="Add header">
+                    <button {{action 'add'}} {{bind-attr title=trAdd}}>
                         <span class="fa fa-plus"></span>
                     </button>
                 </td>
@@ -210,7 +210,7 @@
 
         <!-- Tab button control -->
         <script type="text/x-handlebars" data-template-name="components/tab-button">
-            {{title}}
+            {{tr title}}
         </script>
 
         <!-- Dialog box control -->

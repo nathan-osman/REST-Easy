@@ -3,35 +3,42 @@
  * Copyright 2014 - Nathan Osman *
  *********************************/
 
-// Constants
-var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'OPTIONS'],
-    DM_NONE = 'None',
-    DM_FORM = 'Form',
-    DM_CUSTOM = 'Custom Data',
-    DATA_MODES = [DM_NONE, DM_FORM, DM_CUSTOM],
-    FT_URLENCODED = 'application/x-www-form-urlencoded',
-    FT_MULTIPART = 'multipart/form-data',
-    FORM_TYPES = [FT_URLENCODED, FT_MULTIPART];
-
 // Register a helper to aid in translation
 (function() {
     Components.utils.import('resource://gre/modules/Services.jsm');
     var bundle = Services.strings.createBundle('chrome://resteasy/locale/resteasy.properties');
 
-    Ember.Handlebars.registerHelper('t', function(value) {
-        return bundle.formatStringFromName(value, [], 0);;
-    });
+    // Create the 'tr' function and register it as a helper
+    var tr = window.tr = function(name) {
+        return bundle.formatStringFromName(name, [], 0);
+    }
+    Ember.Handlebars.registerBoundHelper('tr', tr);
 })();
+
+// Constants
+var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'OPTIONS'],
+    DM_NONE = tr('request.data.type.none'),
+    DM_FORM = tr('request.data.type.form'),
+    DM_CUSTOM = tr('request.data.type.custom'),
+    DATA_MODES = [DM_NONE, DM_FORM, DM_CUSTOM],
+    FT_URLENCODED = 'application/x-www-form-urlencoded',
+    FT_MULTIPART = 'multipart/form-data',
+    FORM_TYPES = [FT_URLENCODED, FT_MULTIPART];
 
 // Create the application and set the window title
 window.RESTEasy = Ember.Application.create();
-window.document.title = Ember.Handlebars.helpers.t('application.title');
+window.document.title = tr('application.title');
 
 // Main controller for the REST Easy application
 RESTEasy.ApplicationController = Ember.Controller.extend({
     methods: HTTP_METHODS,
     dataModes: DATA_MODES,
     formTypes: FORM_TYPES,
+
+    // Translations for attributes
+    trDataType: tr('request.data.custom.type'),
+    trUsername: tr('request.auth.username'),
+    trPassword: tr('request.auth.password'),
 
     // Initialize the application for the first time
     init: function() {
@@ -274,8 +281,13 @@ RESTEasy.CollapsibleSectionComponent = Ember.Component.extend({
 RESTEasy.EditableTableComponent = Ember.Component.extend({
     tagName: 'table',
     classNames: ['table'],
-    name: null,
-    value: null,
+
+    // Translations for attributes
+    trName: tr('table.name'),
+    trValue: tr('table.value'),
+    trRemove: tr('table.remove'),
+    trAdd: tr('table.add'),
+
     actions: {
         add: function() {
             var name = this.get('name'),
@@ -309,12 +321,12 @@ RESTEasy.TabButtonComponent = Ember.Component.extend({
 
     // Indicate if this tab is currently active
     active: function() {
-        return this.get('parentView.activeTab') == this.get('name');
+        return this.get('parentView.activeTab') == this.get('title');
     }.property('parentView.activeTab'),
 
     // Set the tab as the active tab
     click: function() {
-        this.set('parentView.activeTab', this.get('name'));
+        this.set('parentView.activeTab', this.get('title'));
     }
 });
 
@@ -325,7 +337,7 @@ RESTEasy.TabContentComponent = Ember.Component.extend({
 
     // Indicate if this tab is currently active
     active: function() {
-        return this.get('parentView.activeTab') == this.get('name');
+        return this.get('parentView.activeTab') == this.get('title');
     }.property('parentView.activeTab')
 });
 
