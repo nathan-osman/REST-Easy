@@ -214,7 +214,7 @@ RESTEasy.SplitterView = Ember.View.extend({
 
     // Setup the event handlers for the splitter
     didInsertElement: function() {
-        var $splitter = $(this.get('element')),
+        var $splitter = this.$(),
             $pane = $splitter.prev();
 
         $splitter.mousedown(function(e) {
@@ -347,6 +347,31 @@ RESTEasy.TabContentComponent = Ember.Component.extend({
     active: function() {
         return this.get('parentView.activeTab') == this.get('title');
     }.property('parentView.activeTab')
+});
+
+// Pre that provides syntax-highlighting capabilities
+RESTEasy.HighlightPreComponent = Ember.Component.extend({
+
+    // Watch for changes to the raw property
+    rawChanged: function() {
+        var raw = this.get('raw');
+        this.$('pre').text(raw);
+
+        // Highlight right away if the text is less than 10kb in size,
+        // otherwise display a notice that highlighting may take a while
+        if(raw.length < 10000) {
+            this.send('highlight');
+        } else {
+            this.set('notice', true);
+        }
+    }.observes('raw').on('didInsertElement'),
+
+    actions: {
+        highlight: function() {
+            hljs.highlightBlock(this.$('pre').get(0));
+            this.set('notice', false);
+        }
+    }
 });
 
 // Modal dialog box

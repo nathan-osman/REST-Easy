@@ -8,6 +8,7 @@
 
         <link rel="shortcut icon" href="img/icon16.png">
         <link rel="stylesheet" href="vendor/css/font-awesome.min.css">
+        <link rel="stylesheet" href="vendor/css/highlight.min.css">
         <link rel="stylesheet/less" type="text/css" href="less/application.less">
     </head>
     <body>
@@ -137,13 +138,15 @@
                 {{/tab-content}}
                 {{#tab-content title="response.raw.title"}}
                     {{#if response}}
-                        <pre class="pre">{{response.raw}}</pre>
+                        {{highlight-pre raw=response.raw}}
                     {{/if}}
                 {{/tab-content}}
                 {{#tab-content title="response.preview.title"}}
                     {{#if response }}
                         {{#if response.preview}}
                             <iframe type="content" {{bind-attr src=response.preview}}></iframe>
+                        {{else}}
+                            <p>No preview available for this content.</p>
                         {{/if}}
                     {{/if}}
                 {{/tab-content}}
@@ -213,6 +216,22 @@
             {{tr title}}
         </script>
 
+        <!-- Syntax highlighting pre -->
+        <script type="text/x-handlebars" data-template-name="components/highlight-pre">
+            {{#if notice}}
+                <div class="notice">
+                    <div class="actions">
+                        <button {{action 'highlight'}}>
+                            <span class="fa fa-paint-brush"></span>
+                            {{tr 'highlight.highlight'}}
+                        </button>
+                    </div>
+                    <div class="message">{{tr 'highlight.notice'}}</div>
+                </div>
+            {{/if}}
+            <pre></pre>
+        </script>
+
         <!-- Dialog box control -->
         <script type="text/x-handlebars" data-template-name="components/dialog-box">
             <div class="content">
@@ -225,6 +244,7 @@
         <script src="vendor/js/jquery.min.js"></script>
         <script src="vendor/js/handlebars.min.js"></script>
         <script src="vendor/js/ember.min.js"></script>
+        <script src="vendor/js/highlight.min.js"></script>
         <script src="js/application.js"></script>
     </body>
 </html>

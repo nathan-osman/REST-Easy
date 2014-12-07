@@ -158,6 +158,7 @@ pre {
         display: none;
         list-style-type: none;
         margin: 0;
+        min-width: calc(~"100%" - (2 * @borderSize));
         padding: 0;
         position: absolute;
         z-index: 1;
@@ -241,6 +242,22 @@ pre {
         .textShadow();
         line-height: 32px;
         margin: 0;
+    }
+}
+
+.notice {
+    .border();
+    .borderRadius();
+    .padding();
+    background-color: lighten(@highlight, 15%);
+    overflow: auto;
+
+    .actions {
+        float: right;
+    }
+
+    .message {
+        .padding();
     }
 }
 
