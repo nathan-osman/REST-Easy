@@ -95,6 +95,7 @@ iframe {
     width: 100%;
 }
 
+input[type=password],
 input[type=text],
 textarea {
     .border();
@@ -181,6 +182,7 @@ pre {
 .control {
     margin: 0 0 4px;
 
+    input[type=password],
     input[type=text],
     textarea {
         display: block;
@@ -246,10 +248,10 @@ pre {
 }
 
 .notice {
-    .border();
     .borderRadius();
     .padding();
     background-color: lighten(@highlight, 15%);
+    border: @borderSize solid @highlight;
     overflow: auto;
 
     .actions {

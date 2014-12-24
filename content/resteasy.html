@@ -108,7 +108,7 @@
                     {{input placeholder=controller.trUsername value=controller.username}}
                 </div>
                 <div class="control">
-                    {{input placeholder=controller.trPassword value=controller.password}}
+                    {{input type='password' placeholder=controller.trPassword value=controller.password}}
                 </div>
             {{/collapsible-section}}
         </script>
@@ -138,7 +138,7 @@
                 {{/tab-content}}
                 {{#tab-content title="response.raw.title"}}
                     {{#if response}}
-                        {{highlight-pre raw=response.raw}}
+                        {{highlight-pre raw=response.raw contentType=response.contentType}}
                     {{/if}}
                 {{/tab-content}}
                 {{#tab-content title="response.preview.title"}}
@@ -146,7 +146,7 @@
                         {{#if response.preview}}
                             <iframe type="content" {{bind-attr src=response.preview}}></iframe>
                         {{else}}
-                            <p>No preview available for this content.</p>
+                            <p>{{tr 'response.preview.error'}}</p>
                         {{/if}}
                     {{/if}}
                 {{/tab-content}}
@@ -218,18 +218,22 @@
 
         <!-- Syntax highlighting pre -->
         <script type="text/x-handlebars" data-template-name="components/highlight-pre">
-            {{#if notice}}
-                <div class="notice">
-                    <div class="actions">
-                        <button {{action 'highlight'}}>
-                            <span class="fa fa-paint-brush"></span>
-                            {{tr 'highlight.highlight'}}
-                        </button>
+            {{#if textContentType}}
+                {{#if notice}}
+                    <div class="notice">
+                        <div class="actions">
+                            <button {{action 'highlight'}}>
+                                <span class="fa fa-paint-brush"></span>
+                                {{tr 'highlight.highlight'}}
+                            </button>
+                        </div>
+                        <div class="message">{{tr 'highlight.notice'}}</div>
                     </div>
-                    <div class="message">{{tr 'highlight.notice'}}</div>
-                </div>
+                {{/if}}
+                <pre></pre>
+            {{else}}
+                <p>{{tr 'response.raw.error'}}</p>
             {{/if}}
-            <pre></pre>
         </script>
 
         <!-- Dialog box control -->
@@ -242,6 +246,7 @@
         <!-- Scripts -->
         <script src="vendor/js/less.min.js"></script>
         <script src="vendor/js/jquery.min.js"></script>
+        <script src="vendor/js/jquery.hotkeys.min.js"></script>
         <script src="vendor/js/handlebars.min.js"></script>
         <script src="vendor/js/ember.min.js"></script>
         <script src="vendor/js/highlight.min.js"></script>

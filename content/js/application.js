@@ -157,13 +157,14 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
         readyStateChange: function(request) {
             if(request.readyState === 4) {
                 var headers = this.parseHeaders(request.getAllResponseHeaders()),
+                    contentType = request.getResponseHeader('Content-Type')
                     response = {
                         status: request.status,
                         statusText: request.statusText,
                         headers: headers,
+                        contentType: contentType,
                         raw: request.response
-                    },
-                    contentType = request.getResponseHeader('Content-Type');
+                    };
 
                 // TODO: this is broken for binary filetypes - raw should be a
                 // hex dump and (for images) a preview should be displayed
@@ -352,9 +353,23 @@ RESTEasy.TabContentComponent = Ember.Component.extend({
 // Pre that provides syntax-highlighting capabilities
 RESTEasy.HighlightPreComponent = Ember.Component.extend({
 
+    // Determine if the content type is text based
+    textContentType: function() {
+        var p = this.get('contentType').match(/([^\/]+)\/([^;]+)/),
+            type = p && p[1],
+            subtype = p && p[2];
+
+        if(type === 'text')
+            return true;
+        else if(type === 'application' && (subtype == 'javascript' || subtype == 'json'))
+            return true;
+        return false;
+    }.property('contentType'),
+
     // Watch for changes to the raw property
     rawChanged: function() {
-        var raw = this.get('raw');
+        var raw = this.get('raw')
+
         this.$('pre').text(raw);
 
         // Highlight right away if the text is less than 10kb in size,
