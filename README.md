@@ -1,17 +1,13 @@
 ## REST Easy
 
-> **Note:** REST Easy is currently undergoing some drastic reorganization. Consequently, some
-> of the information listed below may be inaccurate.
-
 REST Easy is a Firefox add-on that provides a full-featured REST client in the browser.
 It is still a work in progress, but the features currently implemented include:
 
- - support for GET, POST, and HEAD methods
- - parameter editor for POST requests
- - ability to customize nearly every HTTP request header
+ - support for all common HTTP methods
+ - parameter editor supporting both `application/x-www-form-urlencoded` and `multipart/form-data`
+ - ability to specify arbitrary data for POST and PUT requests
  - preview of HTML both as text and rendered in the browser
  - syntax highlighting for HTML, JavaScript/JSON, and XML
- - preview of images and a simple hex viewer for binary files
 
 Features planned for upcoming releases include:
 
@@ -21,15 +17,11 @@ Features planned for upcoming releases include:
 
 ### Instructions
 
-Using REST Easy is simple: just click the toolbar button or the "REST Easy" item in the web developer menu.
+Using REST Easy is simple: just click the toolbar button to open a new tab.
 
-### Screenshots
+### Screenshot
 
-[![](http://i.stack.imgur.com/yADPd.png)](http://i.stack.imgur.com/Ad3Uf.png)
-
-[![](http://i.stack.imgur.com/W8EU5.png)](http://i.stack.imgur.com/iZUX3.png)
-[![](http://i.stack.imgur.com/ZVsox.png)](http://i.stack.imgur.com/o127F.png)
-
+[![](http://i.stack.imgur.com/CXgHZ.png)](http://i.stack.imgur.com/CXgHZ.png)
 
 ### Get Involved
 
@@ -38,14 +30,16 @@ We'd love to have you contribute!
 Just fork this repository, make your changes, and submit a pull request.
 Here are some of the areas we would like some help in:
 
- - **JavaScript programmers:** the add-on is written almost exclusively in JavaScript.
-   We currently use XMLHttpRequest for sending the requests but this has three of drawbacks:
+ - **JavaScript programmers:** the following features are still in the planning stages:
 
-    - certain request headers cannot be set
-    - redirects are automatically followed
-    - HTTP basic authentication is handled by the browser (although the add-on can supply the required data)
+     - loading and saving requests
+     - preview of more file types
+     - ability to specify a file to upload with a POST or PUT request
 
- - **Localization:** the add-on currently provides only an English translation.
+ - **Theme designers:** our current theme is written in LESS and compiled on-the-fly to CSS in the browser.
+   Although the current theme is usable, we welcome improvements.
+
+ - **Localization:** the add-on has already been translated into a few languages, but we're always excited to add support for more languages.
    All translations for other languages are welcome.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/nathan-osman/rest-easy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
