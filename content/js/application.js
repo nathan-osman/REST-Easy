@@ -10,7 +10,7 @@
 
     // Create the 'tr' function and register it as a helper
     var tr = window.tr = function(name) {
-        return bundle.formatStringFromName(name, [], 0);
+        return bundle.GetStringFromName(name);
     }
     Ember.Handlebars.registerBoundHelper('tr', tr);
 })();

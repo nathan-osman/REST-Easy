@@ -16,8 +16,8 @@ function startup(data, reason) {
     // Add the primary button to the toolbar
     addButtonToToolbar(
         'resteasy',
-        _('ui.title'),
-        _('ui.tooltip'),
+        _('application.title'),
+        _('application.tooltip'),
         'chrome://resteasy/content/img/icon16.png',
         'chrome://resteasy/content/img/icon32.png',
         function(window) {
