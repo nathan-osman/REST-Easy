@@ -194,9 +194,17 @@ RESTEasy.HeaderView = Ember.View.extend({
 });
 
 // View for setting request
-RESTEasy.RequestView = Ember.View.extend({
+RESTEasy.RequestView = Ember.View.extend(Ember.ViewTargetActionSupport, {
     templateName: 'app-request',
     classNames: ['pane', 'first'],
+
+    // Set keyboard shortcut for firing request
+    didInsertElement: function() {
+        var self = this;
+        this.$('input.url').on('keypress', null, 'return', function() {
+            self.triggerAction({action: 'send'});
+        });
+    },
 
     // Form data controls should be displayed?
     dmForm: function() {
