@@ -41,5 +41,3 @@ Here are some of the areas we would like some help in:
 
  - **Localization:** the add-on has already been translated into a few languages, but we're always excited to add support for more languages.
    All translations for other languages are welcome.
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/nathan-osman/rest-easy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
