@@ -166,8 +166,9 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                         raw: request.response
                     };
 
-                // TODO: this is broken for binary filetypes - raw should be a
-                // hex dump and (for images) a preview should be displayed
+                // TODO: this is not implemented correctly for binary filetypes
+                // - raw should be a hex dump and (for images) a preview should
+                //   be displayed
 
                 // If the MIME type is text/*, then display a preview of the document
                 if(contentType.substring(0, 5) == 'text/')
