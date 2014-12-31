@@ -15,6 +15,9 @@ function install(data, reason) {}
 function uninstall(data, reason) {}
 
 // This method is run each time the add-on is initialized
+// - immediately after installation
+// - when enabled from the add-ons page
+// - after Firefox startup
 function startup(data, reason) {
 
     // Create a string bundle representing the current locale
@@ -62,9 +65,13 @@ function startup(data, reason) {
     });
 }
 
+// This method is run whenever the add-on is shutting down
+// - immediately before completing uninstallation of the add-on
+// - when disabled from the add-ons page
+// - before quitting Firefox
 function shutdown(data, reason) {
 
-    // Remove the widget
+    // Remove the toolbar button
     Components.utils.import("resource:///modules/CustomizableUI.jsm");
     CustomizableUI.destroyWidget(BUTTON_ID);
 }

@@ -23,6 +23,12 @@ Using REST Easy is simple: just click the toolbar button to open a new tab.
 
 [![](http://i.stack.imgur.com/CXgHZ.png)](http://i.stack.imgur.com/CXgHZ.png)
 
+### Building the Add-on
+
+The add-on uses an extremely simple Makefile to build the XPI. Simply open a terminal in the directory containing the source code and run:
+
+    make
+
 ### Get Involved
 
 Interested in helping out with REST Easy development?
