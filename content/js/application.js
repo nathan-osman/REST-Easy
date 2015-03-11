@@ -173,6 +173,14 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 // If the MIME type is text/*, then display a preview of the document
                 if(contentType.substring(0, 5) == 'text/')
                     response['preview'] = 'data:' + contentType + ',' + encodeURIComponent(request.response);
+				
+				// Try to parse the response to JSON
+				try {
+					response['json'] = JSON.stringify(JSON.parse(request.response),null,2);
+				} catch (e) {
+					// TODO: Change this string from the locale files!
+					response['json'] = "Invalid Json syntax!";
+				}
 
                 // Display the response and hide the progress dialog
                 this.set('response', response);

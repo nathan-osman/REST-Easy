@@ -118,7 +118,9 @@
             {{#tab-container activeTab='response.headers.title'}}
                 {{tab-button title="response.headers.title"}}
                 {{tab-button title="response.raw.title"}}
+                {{tab-button title="request.data.type.none"}}
                 {{tab-button title="response.preview.title"}}
+                
                 {{#tab-content title="response.headers.title"}}
                     {{#if response}}
                         <h2>{{response.status}} {{response.statusText}}</h2>
@@ -140,6 +142,13 @@
                     {{#if response}}
                         {{highlight-pre raw=response.raw contentType=response.contentType}}
                     {{/if}}
+                {{/tab-content}}
+                {{#tab-content title="request.data.type.none"}}
+					{{#if response.json}}
+
+						{{highlight-pre raw=response.json contentType=response.contentType}}
+
+					{{/if}}
                 {{/tab-content}}
                 {{#tab-content title="response.preview.title"}}
                     {{#if response }}
