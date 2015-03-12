@@ -147,11 +147,11 @@
                         {{#if response.preview}}
                             <iframe type="content" {{bind-attr src=response.preview}}></iframe>
                         {{else}}
-							{{#if response.json}}
-								{{highlight-pre raw=response.json contentType=response.contentType}}
-							{{else}}
-								<p>{{tr 'response.preview.error'}}</p>
-							{{/if}}
+                            {{#if response.json}}
+                                {{highlight-pre raw=response.json contentType=response.contentType}}
+                            {{else}}
+                                <p>{{tr 'response.preview.error'}}</p>
+                            {{/if}}
                         {{/if}}
                     {{/if}}
                 {{/tab-content}}
