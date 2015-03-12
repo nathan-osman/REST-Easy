@@ -178,8 +178,6 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 try {
                     response['json'] = JSON.stringify(JSON.parse(request.response),null,2);
                 } catch (e) {
-                    // TODO: Change this string from the locale files!
-                    //response['json'] = "Invalid Json syntax!";
                     response['json'] = false;
                 }
 
