@@ -190,18 +190,26 @@
             </tr>
             {{#each entries}}
                 <tr class="data">
-                    <td {{action "edit" this on="doubleClick"}}>
+                    <td>
                         {{#if editing}}
-                            <div class="control">{{input value=name}}</div>
+                            <form class="control" {{action "save" this on="submit"}}>
+                                {{input value=name}}
+                            </form>
                         {{else}}
-                            {{name}}
+                            <div {{action "edit" this on="doubleClick"}}>
+                                {{name}}
+                            </div>
                         {{/if}}
                     </td>
-                    <td {{action "edit" this on="doubleClick"}}>
+                    <td>
                         {{#if editing}}
-                            <div class="control">{{input value=value}}</div>
+                            <form class="control" {{action "save" this on="submit"}}>
+                                {{input value=value}}
+                            </form>
                         {{else}}
-                            {{value}}
+                            <div {{action "edit" this on="doubleClick"}}>
+                                {{value}}
+                            </div>
                         {{/if}}
                     </td>
                     <td>
