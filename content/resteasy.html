@@ -119,7 +119,7 @@
                 {{tab-button title="response.headers.title"}}
                 {{tab-button title="response.raw.title"}}
                 {{tab-button title="response.preview.title"}}
-                
+
                 {{#tab-content title="response.headers.title"}}
                     {{#if response}}
                         <h2>{{response.status}} {{response.statusText}}</h2>
@@ -190,12 +190,30 @@
             </tr>
             {{#each entries}}
                 <tr class="data">
-                    <td>{{name}}</td>
-                    <td>{{value}}</td>
+                    <td {{action "edit" this on="doubleClick"}}>
+                        {{#if editing}}
+                            <div class="control">{{input value=name}}</div>
+                        {{else}}
+                            {{name}}
+                        {{/if}}
+                    </td>
+                    <td {{action "edit" this on="doubleClick"}}>
+                        {{#if editing}}
+                            <div class="control">{{input value=value}}</div>
+                        {{else}}
+                            {{value}}
+                        {{/if}}
+                    </td>
                     <td>
-                        <button {{action 'remove' this}} {{bind-attr title=trRemove}}>
-                            <span class="fa fa-trash"></span>
-                        </button>
+                        {{#if editing}}
+                            <button {{action 'save' this}} {{bind-attr title=trSave}}>
+                                <span class="fa fa-check"></span>
+                            </button>
+                        {{else}}
+                            <button {{action 'remove' this}} {{bind-attr title=trRemove}}>
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        {{/if}}
                     </td>
                 </tr>
             {{else}}
