@@ -78,8 +78,8 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('dataMode', DATA_MODES[0]);
             this.set('formType', FORM_TYPES[0]);
             this.set('formData', []);
-            this.set('customType', '');
-            this.set('customData', '');
+            this.set('dataType', '');
+            this.set('dataCustom', '');
             this.set('username', '');
             this.set('password', '');
             this.set('response', null);
@@ -173,10 +173,10 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 // If the MIME type is text/*, then display a preview of the document
                 if(contentType.substring(0, 5) == 'text/')
                     response['preview'] = 'data:' + contentType + ',' + encodeURIComponent(request.response);
-				
+
                 // Try to parse the response to JSON
                 try {
-                    response['json'] = JSON.stringify(JSON.parse(request.response),null,2);
+                    response['json'] = JSON.stringify(JSON.parse(request.response), null, 2);
                 } catch (e) {
                     response['json'] = false;
                 }
