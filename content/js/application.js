@@ -145,7 +145,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
         readyStateChange: function(request) {
             if(request.readyState === 4) {
                 var headers = this.parseHeaders(request.getAllResponseHeaders()),
-                    contentType = request.getResponseHeader('Content-Type')
+                    contentType = request.getResponseHeader('Content-Type'),
                     response = {
                         status: request.status,
                         statusText: request.statusText,
