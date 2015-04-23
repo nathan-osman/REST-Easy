@@ -144,9 +144,9 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
         // Check for completion of the request and display the results
         readyStateChange: function(request) {
             if(request.readyState === 4) {
-                var headers = this.parseHeaders(request.getAllResponseHeaders()),
-                    contentType = request.getResponseHeader('Content-Type'),
-                    response = {
+                var headers = this.parseHeaders(request.getAllResponseHeaders());
+                var contentType = request.getResponseHeader('Content-Type');
+                var response = {
                         status: request.status,
                         statusText: request.statusText,
                         headers: headers,
@@ -157,10 +157,11 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 // TODO: this is not implemented correctly for binary filetypes
                 // - raw should be a hex dump and (for images) a preview should
                 //   be displayed
-
-                // If the MIME type is text/*, then display a preview of the document
-                if(contentType.substring(0, 5) == 'text/')
-                    response['preview'] = 'data:' + contentType + ',' + encodeURIComponent(request.response);
+                if(contentType !== null) {
+                    // If the MIME type is text/*, then display a preview of the document
+                    if(contentType.substring(0, 5) == 'text/') 
+                        response['preview'] = 'data:' + contentType + ',' + encodeURIComponent(request.response);
+                }
 
                 // Try to parse the response to JSON
                 try {
@@ -168,6 +169,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 } catch (e) {
                     response['json'] = false;
                 }
+
 
                 // Display the response and hide the progress dialog
                 this.set('response', response);
