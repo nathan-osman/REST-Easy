@@ -154,13 +154,15 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                         raw: request.response
                     };
 
-                // TODO: this is not implemented correctly for binary filetypes
-                // - raw should be a hex dump and (for images) a preview should
-                //   be displayed
+                if (contentType) {
+                    // TODO: this is not implemented correctly for binary filetypes
+                    // - raw should be a hex dump and (for images) a preview should
+                    //   be displayed
 
-                // If the MIME type is text/*, then display a preview of the document
-                if(contentType.substring(0, 5) == 'text/')
-                    response['preview'] = 'data:' + contentType + ',' + encodeURIComponent(request.response);
+                    // If the MIME type is text/*, then display a preview of the document
+                    if(contentType.substring(0, 5) == 'text/')
+                        response['preview'] = 'data:' + contentType + ',' + encodeURIComponent(request.response);
+                }
 
                 // Try to parse the response to JSON
                 try {
