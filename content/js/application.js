@@ -58,6 +58,10 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
     actions: {
 
+        saveRequest: function() {
+            alert("Saving request..." + this.get('saveName'));
+        },
+
         // Clear all values and set them to their defaults
         reset: function() {
             this.set('method', HTTP_METHODS[0]);
@@ -71,6 +75,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('username', '');
             this.set('password', '');
             this.set('response', null);
+            this.set('saveName', '');
         },
 
         // Show and hide the about dialog

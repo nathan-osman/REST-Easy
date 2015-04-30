@@ -111,6 +111,18 @@
                     {{input type='password' placeholder=controller.trPassword value=controller.password}}
                 </div>
             {{/collapsible-section}}
+
+            <!-- Authentication data -->
+            {{#collapsible-section title='request.auth.title'}}
+                <p>{{tr 'request.auth.description'}}</p>
+                <div class="control verflow-auto">
+                    {{input placeholder=controller.trUsername value=controller.saveName}}
+                </div>
+                <button class="float-right" {{action 'saveRequest'}}>
+                    <span class="fa fa-info-circle"></span>
+                    Save
+                </button>
+            {{/collapsible-section}}
         </script>
 
         <!-- Response view -->
