@@ -17,6 +17,37 @@ var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'O
 window.RESTEasy = Ember.Application.create();
 window.document.title = tr('application.title');
 
+
+// -----------------------
+// Initialize the database
+var localDB = window.indexedDB.open("REST-Easy", 2);
+
+// TODO: remove the console.logs
+localDB.onsuccess = function(event) {
+    // Do something with localDB.result!
+    console.log("DB: Open Success!");
+    var idb = event.target.result;
+};
+
+
+localDB.onerror = function(event) {
+    // Do something with localDB.errorCode!
+    console.log("DB: error opening the database with code " + localDB.errorCode);
+};
+
+
+localDB.onupgradeneeded = function(event) { 
+    var idb = event.target.result;
+    console.log("DB: updateding the version");
+
+    // Create an objectStore for this database
+    var objectStore = idb.createObjectStore("savedRequests", { keyPath: "saveName" });
+    console.log(objectStore);
+};
+
+
+
+
 // Main controller for the REST Easy application
 RESTEasy.ApplicationController = Ember.Controller.extend({
     methods: HTTP_METHODS,
@@ -42,6 +73,8 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
         // Reset all values to their defaults
         this.send('reset');
+
+
     },
 
     // Parse a string containing response headers, returning a list of objects
@@ -58,6 +91,61 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
     actions: {
 
+        saveRequest: function() {
+            var db = localDB.result;
+            console.log(db);
+            //var db = this.db;
+
+            var transaction = db.transaction(["savedRequests"], "readwrite");
+            var objectStore = transaction.objectStore("savedRequests");
+
+            var saveItem = {
+                saveName: this.get('saveName'),
+                method: this.get('method'),
+                url: this.get('url'),
+                requestHeaders: this.get('requestHeaders'),
+                dataMode: this.get('dataMode'),
+                formType: this.get('formType'),
+                formData: this.get('formData'),
+                dataType: this.get('dataType'),
+                dataCustom: this.get('dataCustom'),
+                username: this.get('username'),
+                password: this.get('password'),
+                saveName: this.get('saveName')
+            };
+            console.log("Item:");
+            console.log(saveItem);
+
+            var request = objectStore.add(saveItem);
+            request.onsuccess = function(event) {
+                // TODO: remove the console.logs
+                console.log("Saved!");
+                console.log(event);
+            };
+        },
+
+        loadRequest: function() {
+            var saveName = "";  // Dont know how to get the selected value from a dropdown (which is not currently existing)
+
+
+            localDB.result.transaction("savedRequests").objectStore("savedRequests").get(saveName).onsuccess = function (event) {
+                var record = event.target.result;
+
+                this.set('method', HTTP_METHODS[0]);    // TODO:
+                this.set('url', record.url);
+                this.set('requestHeaders', record.requestHeaders);
+                this.set('dataMode', DATA_MODES[0]);    // TODO:
+                this.set('formType', FORM_TYPES[0]);    // TODO:
+                this.set('formData', record.formData);
+                this.set('dataType', record.dataType);
+                this.set('dataCustom', record.dataCustom);
+                this.set('username', record.username);
+                this.set('password', record.password);
+                this.set('saveName', record.saveName);
+            };
+
+        }
+
         // Clear all values and set them to their defaults
         reset: function() {
             this.set('method', HTTP_METHODS[0]);
@@ -71,6 +159,24 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('username', '');
             this.set('password', '');
             this.set('response', null);
+            this.set('saveName', '');
+
+            if(localDB.readyState === "done") {
+                var db = localDB.result;
+
+                // Example:
+                // https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB#Using_a_cursor
+                localDB.result.transaction("savedRequests").objectStore("savedRequests").openCursor().onsuccess = function (event) {
+                    var cursor = event.target.result;
+                    if(cursor) {
+                        // TODO: put it in a dropdown item
+                        console.log(cursor.value);
+                        cursor.continue();
+                    } else {
+                        console.log("All Items:");
+                    }
+                };
+            }
         },
 
         // Show and hide the about dialog
