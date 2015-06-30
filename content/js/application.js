@@ -146,6 +146,23 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
         },
 
+        // Collections
+        setRequestFromCollection: function(item) {
+          this.set('method', item.method);    // TODO:
+          this.set('url', item.url);
+          /*this.set('requestHeaders', record.requestHeaders);
+          this.set('dataMode', DATA_MODES[0]);    // TODO:
+          this.set('formType', FORM_TYPES[0]);    // TODO:
+          this.set('formData', record.formData);
+          this.set('dataType', record.dataType);
+          this.set('dataCustom', record.dataCustom);
+          this.set('username', record.username);
+          this.set('password', record.password);
+          this.set('saveName', record.saveName);*/
+
+          console.log(this);
+        },
+
         // Clear all values and set them to their defaults
         reset: function() {
             this.set('method', HTTP_METHODS[0]);
@@ -160,6 +177,16 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('password', '');
             this.set('response', null);
             this.set('saveName', '');
+            this.set('collections', [{
+              method: 'GET',
+              url: 'www.vg.no'
+            }, {
+              method: 'GET',
+              url: 'http://www.google.com'
+            }, {
+              method: 'POST',
+              url: 'post.restservice.com'
+            }]);
 
             if(localDB.readyState === "done") {
                 var db = localDB.result;
@@ -185,7 +212,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
         // Open a new request using the values from the UI and send it
         send: function() {
-            var request = this.get('request'),
+            var request  = this.get('request'),
                 dataMode = this.get('dataMode'),
                 username = this.get('username'),
                 password = this.get('password'),
@@ -205,9 +232,6 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
             // Obtain the nsIHttpChannel interface so that there are virtually
             // no restrictions on which headers may be set
-            console.log('channel', request.channel);
-            console.log('interfaces', Components.interfaces);
-            console.log('this', this);
             var channel = request.channel.QueryInterface(Components.interfaces.nsIHttpChannel);
             this.get('requestHeaders').forEach(function(e) {
                 channel.setRequestHeader(e.name, e.value, false);
