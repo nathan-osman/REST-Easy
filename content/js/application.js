@@ -36,7 +36,7 @@ localDB.onerror = function(event) {
 };
 
 
-localDB.onupgradeneeded = function(event) { 
+localDB.onupgradeneeded = function(event) {
     var idb = event.target.result;
     console.log("DB: updateding the version");
 
@@ -144,7 +144,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 this.set('saveName', record.saveName);
             };
 
-        }
+        },
 
         // Clear all values and set them to their defaults
         reset: function() {
@@ -188,16 +188,26 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             var request = this.get('request'),
                 dataMode = this.get('dataMode'),
                 username = this.get('username'),
-                password = this.get('password');
+                password = this.get('password'),
+                url      = this.get('url');
 
+            // If url does not start with http://, we help the user out and add it for them
+            // Improvements and suggestions to behaviour welcome
+            if (!/^(http:\/\/)/.test(url)) {
+              url = 'http://' + url;
+            }
+            console.log(this.get('url'))
             request.open(
                 this.get('method'),
-                this.get('url'),
+                url,
                 true  // async?
             );
 
             // Obtain the nsIHttpChannel interface so that there are virtually
             // no restrictions on which headers may be set
+            console.log('channel', request.channel);
+            console.log('interfaces', Components.interfaces);
+            console.log('this', this);
             var channel = request.channel.QueryInterface(Components.interfaces.nsIHttpChannel);
             this.get('requestHeaders').forEach(function(e) {
                 channel.setRequestHeader(e.name, e.value, false);
