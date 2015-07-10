@@ -111,8 +111,20 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             var transaction = db.transaction([DATABASE_KEY], "readwrite");
             var objectStore = transaction.objectStore(DATABASE_KEY);
 
-            // We use url as saveName for now
+            // We use url as primary key for now
             var saveName = this.get('url'); //this.get('saveName')
+
+            // If url does not start with http://, we help the user out and add it for them
+            // Improvements and suggestions to behaviour welcome
+            if (!/^(http:\/\/)/.test(saveName)) {
+              saveName = 'http://' + saveName;
+            }
+
+            // Do some very basic validation to prevent empty entries
+            // We (for now) assume it starts with http:// here so length 10 is fair
+            if (saveName.length < 10) {
+              return;
+            }
 
             var saveItem = {
                 saveName: saveName,
@@ -155,21 +167,26 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             };
         },
 
-        // Collections
-        setRequestFromCollection: function(item) {
-            this.set('method', item.method);    // TODO:
-            this.set('url', item.url);
-            /*this.set('requestHeaders', record.requestHeaders);
-            this.set('dataMode', DATA_MODES[0]);    // TODO:
-            this.set('formType', FORM_TYPES[0]);    // TODO:
-            this.set('formData', record.formData);
-            this.set('dataType', record.dataType);
-            this.set('dataCustom', record.dataCustom);
-            this.set('username', record.username);
-            this.set('password', record.password);
-            this.set('saveName', record.saveName);*/
+        removeRequestFromCollection: function(item) {
+            var objectStore = localDB.result.transaction(DATABASE_KEY, "readwrite").objectStore(DATABASE_KEY);
+            var saveName = item.saveName;
 
-            console.log(this);
+            var request = objectStore.delete(saveName)
+            updateCollections.call(this, request);
+        },
+
+        assignRequestToState: function(item) {
+            this.set('method', item.method);
+            this.set('url', item.url);
+            this.set('requestHeaders', item.requestHeaders);
+            this.set('dataMode', item.dataMode);
+            this.set('formType', item.formType);
+            this.set('formData', item.formData);
+            this.set('dataType', item.dataType);
+            this.set('dataCustom', item.dataCustom);
+            this.set('username', item.username);
+            this.set('password', item.password);
+            this.set('saveName', item.saveName);
         },
 
         // Clear all values and set them to their defaults
@@ -207,7 +224,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             if (!/^(http:\/\/)/.test(url)) {
               url = 'http://' + url;
             }
-            console.log(this.get('url'))
+
             request.open(
                 this.get('method'),
                 url,

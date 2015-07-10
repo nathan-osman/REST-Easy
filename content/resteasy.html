@@ -78,7 +78,7 @@
                     </button>
                     <button class="float-right" {{action 'saveRequest'}}>
                         <span class="fa fa-info-circle"></span>
-                        + Collections
+                        {{tr 'request.save'}}
                     </button>
                     <div class="control overflow-auto">
                         {{input placeholder='http://' value=controller.url action='send' on='enter'}}
@@ -132,9 +132,10 @@
                 {{/tab-content}} <!-- End request tab-->
                 {{#tab-content title="request.tab.collections"}}
                     {{#each collections}}
-                    <div {{action 'setRequestFromCollection' ../this}}>
-                        <span>{{method}}</span>
-                        <span>{{url}}</span>
+                    <div>
+                        <span {{action 'assignRequestToState' ../this}}>{{method}}</span>
+                        <span {{action 'assignRequestToState' ../this}}>{{url}}</span>
+                        <span {{action 'removeRequestFromCollection' ../this}}>Remove</span>
                     </div>
                     {{else}}
                         <h3>{{tr 'request.collections.noCollections'}}</h3>
