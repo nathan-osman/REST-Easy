@@ -76,6 +76,10 @@
                         <span class="fa fa-send"></span>
                         {{tr 'request.send'}}
                     </button>
+                    <button class="float-right" {{action 'saveRequest'}}>
+                        <span class="fa fa-info-circle"></span>
+                        + Collections
+                    </button>
                     <div class="control overflow-auto">
                         {{input placeholder='http://' value=controller.url action='send' on='enter'}}
                     </div>
@@ -117,16 +121,13 @@
                         </div>
                     {{/collapsible-section}}
 
-                    <!-- Authentication data -->
+                    <!-- Used to be add to collections -->
                     {{#collapsible-section title='request.auth.title'}}
                         <p>{{tr 'request.auth.description'}}</p>
                         <div class="control verflow-auto">
+                        <!-- TODO -->
                             {{input placeholder=controller.trUsername value=controller.saveName}}
                         </div>
-                        <button class="float-right" {{action 'saveRequest'}}>
-                            <span class="fa fa-info-circle"></span>
-                            Save
-                        </button>
                     {{/collapsible-section}}
                 {{/tab-content}} <!-- End request tab-->
                 {{#tab-content title="request.tab.collections"}}
