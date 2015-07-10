@@ -40,16 +40,29 @@ localDB.onupgradeneeded = function(event) {
     console.log(objectStore);
 };
 
-var updateCollections = function() {
-    console.log('Updating collections');
-    localDB.result.transaction(DATABASE_KEY).objectStore(DATABASE_KEY).mozGetAll().onsuccess = function (event) {
-      var collections =  event.target.result;
-      self.set('collections', event.target.result);
-      console.log('Collections are now', collections);
+// Utility methods
+var updateCollections = function (waitFor) {
+    console.log('Running update method');
+
+    // We also need to .call this method.. ES5 ftw
+    var self = this;
+    var waitFor = waitFor || localDB;
+    waitFor.onsuccess = function(event) {
+        var db = event.target.result;
+        var collections = [];
+
+        localDB.result.transaction(DATABASE_KEY).objectStore(DATABASE_KEY).openCursor().onsuccess = function (event) {
+            var cursor = event.target.result;
+            if(cursor) {
+                collections.push(cursor.value);
+                cursor.continue();
+            } else {
+                console.info(collections.length + " items fetched from db, setting state.");
+                self.set('collections', collections);
+            }
+        };
     };
-}
-
-
+};
 
 // Main controller for the REST Easy application
 RESTEasy.ApplicationController = Ember.Controller.extend({
@@ -93,7 +106,6 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
     },
 
     actions: {
-
         saveRequest: function() {
             var db = localDB.result;
             var transaction = db.transaction([DATABASE_KEY], "readwrite");
@@ -118,11 +130,13 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             console.log("About to save:", saveItem);
 
             var request = objectStore.add(saveItem);
+
+            // Update collection state from db
+            updateCollections.call(this, request);
         },
 
         loadRequest: function() {
             var saveName = record.url;
-
 
             localDB.result.transaction(DATABASE_KEY).objectStore(DATABASE_KEY).get(saveName).onsuccess = function (event) {
                 var record = event.target.result;
@@ -172,27 +186,8 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('password', '');
             this.set('response', null);
 
-            console.log('readyState', localDB.readyState);
-            var self = this;
-            localDB.onsuccess = function(event) {
-                // Do something with localDB.result!
-                var db = event.target.result;
-                var collections = [];
-                console.log('result', db);
-
-                // Example:
-                // https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB#Using_a_cursor
-                localDB.result.transaction(DATABASE_KEY).objectStore(DATABASE_KEY).openCursor().onsuccess = function (event) {
-                    var cursor = event.target.result;
-                    if(cursor) {
-                        collections.push(cursor.value);
-                        cursor.continue();
-                    } else {
-                        console.info(collections.length + " items fetched from db, setting state.");
-                        self.set('collections', collections);
-                    }
-                };
-            };
+            // Update collection state from db
+            updateCollections.call(this);
         },
 
         // Show and hide the about dialog
