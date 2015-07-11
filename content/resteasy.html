@@ -72,16 +72,18 @@
                     <div class="float-left">
                         {{combo-box choices=controller.methods selection=controller.method}}
                     </div>
-                    <button class="float-right" {{action 'send'}}>
-                        <span class="fa fa-send"></span>
-                        {{tr 'request.send'}}
-                    </button>
-                    <button class="float-right" {{action 'saveRequest'}}>
-                        <span class="fa fa-info-circle"></span>
-                        {{tr 'request.save'}}
-                    </button>
                     <div class="control overflow-auto">
                         {{input placeholder='http://' value=controller.url action='send' on='enter'}}
+                    </div>
+                    <div class="row">
+                        <button class="float-left" {{action 'send'}}>
+                            <span class="fa fa-send"></span>
+                            {{tr 'request.send'}}
+                        </button>
+                        <button class="float-left" {{action 'saveRequest'}}>
+                            <span class="fa fa-save"></span>
+                            {{tr 'request.save'}}
+                        </button>
                     </div>
 
                     <!-- HTTP headers -->
@@ -120,16 +122,7 @@
                             {{input type='password' placeholder=controller.trPassword value=controller.password}}
                         </div>
                     {{/collapsible-section}}
-
-                    <!-- Used to be add to collections -->
-                    {{#collapsible-section title='request.auth.title'}}
-                        <p>{{tr 'request.auth.description'}}</p>
-                        <div class="control verflow-auto">
-                        <!-- TODO -->
-                            {{input placeholder=controller.trUsername value=controller.saveName}}
-                        </div>
-                    {{/collapsible-section}}
-                {{/tab-content}} <!-- End request tab-->
+                {{/tab-content}}  -->
                 {{#tab-content title="request.tab.collections"}}
                     {{#each collections}}
                     <div>
