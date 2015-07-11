@@ -12,7 +12,9 @@ var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'O
     FT_URLENCODED = 'application/x-www-form-urlencoded',
     FT_MULTIPART = 'multipart/form-data',
     FORM_TYPES = [FT_URLENCODED, FT_MULTIPART],
-    DATABASE_KEY = 'savedRequests';
+    DATABASE_KEY = 'savedRequests',
+    REQUEST_TAB = 'request-tab',
+    COLLECTIONS_TAB = 'collections-tab';
 
 // Create the application and set the window title
 window.RESTEasy = Ember.Application.create();
@@ -44,9 +46,13 @@ localDB.onupgradeneeded = function(event) {
 var updateCollections = function (waitFor) {
     console.log('Running update method');
 
+    if (!waitFor) {
+        console.error('Unexpected waitFor in updateCollections', waitFor);
+        return;
+    }
+
     // We also need to .call this method.. ES5 ftw
     var self = this;
-    var waitFor = waitFor || localDB;
     waitFor.onsuccess = function(event) {
         var db = event.target.result;
         var collections = [];
@@ -62,6 +68,12 @@ var updateCollections = function (waitFor) {
             }
         };
     };
+};
+
+var setActiveTab = function (className) {
+
+  // Suggestions for improvments welcome..
+  Ember.$('.' + className).click();
 };
 
 // Main controller for the REST Easy application
@@ -145,6 +157,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
             // Update collection state from db
             updateCollections.call(this, request);
+            setActiveTab(COLLECTIONS_TAB);
         },
 
         loadRequest: function() {
@@ -187,6 +200,8 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('username', item.username);
             this.set('password', item.password);
             this.set('saveName', item.saveName);
+
+            setActiveTab(REQUEST_TAB);
         },
 
         // Clear all values and set them to their defaults
@@ -204,7 +219,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('response', null);
 
             // Update collection state from db
-            updateCollections.call(this);
+            updateCollections.call(this,  localDB);
         },
 
         // Show and hide the about dialog

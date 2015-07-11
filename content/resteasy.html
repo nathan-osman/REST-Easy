@@ -64,8 +64,8 @@
         <!-- Request view -->
         <script type="text/x-handlebars" data-template-name="app-request" class="tabs">
             {{#tab-container activeTab='request.tab.request'}}
-                {{tab-button title="request.tab.request"}}
-                {{tab-button title="request.tab.collections"}}
+                {{tab-button class="request-tab" title="request.tab.request"}}
+                {{tab-button class="collections-tab" title="request.tab.collections"}}
 
                 {{#tab-content title="request.tab.request"}}
                     <!-- Request method, URL, and send button -->
@@ -122,17 +122,29 @@
                             {{input type='password' placeholder=controller.trPassword value=controller.password}}
                         </div>
                     {{/collapsible-section}}
-                {{/tab-content}}  -->
+                {{/tab-content}}
                 {{#tab-content title="request.tab.collections"}}
-                    {{#each collections}}
-                    <div>
-                        <span {{action 'assignRequestToState' ../this}}>{{method}}</span>
-                        <span {{action 'assignRequestToState' ../this}}>{{url}}</span>
-                        <span {{action 'removeRequestFromCollection' ../this}}>Remove</span>
-                    </div>
-                    {{else}}
-                        <h3>{{tr 'request.collections.noCollections'}}</h3>
-                    {{/each}}
+
+                    <!-- Collections tab -->
+                    <h4>Saved requests</h4>
+                    <table class="table">
+                        {{#each collections}}
+                            <tr class="hoverhand">
+                                <td {{action 'assignRequestToState' ../this}}>
+                                  <span class="fa fa-circle-o" style="color: {{colorClass}}"></span>
+                                  {{method}}
+                                </td>
+                                <td {{action 'assignRequestToState' ../this}}>
+                                  <i>{{url}}</i>
+                                </td>
+                                <td {{action 'removeRequestFromCollection' ../this}}>
+                                    <span class="fa fa-trash"></span>
+                                </td>
+                            </tr>
+                        {{else}}
+                            <h3>{{tr 'request.collections.noCollections'}}</h3>
+                        {{/each}}
+                    </table>
                 {{/tab-content}} <!-- End collections tab -->
             {{/tab-container}}
         </script>
@@ -323,5 +335,8 @@
         <script src="js/components/tab.js"></script>
         <script src="js/components/highlight.js"></script>
         <script src="js/components/dialog.js"></script>
+
+        <!-- Handlebar helpers -->
+        <script src="js/helpers/colorClass.js"></script>
     </body>
 </html>
