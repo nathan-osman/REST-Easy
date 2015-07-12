@@ -11,7 +11,10 @@ var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'O
     DATA_MODES = [DM_NONE, DM_FORM, DM_CUSTOM],
     FT_URLENCODED = 'application/x-www-form-urlencoded',
     FT_MULTIPART = 'multipart/form-data',
-    FORM_TYPES = [FT_URLENCODED, FT_MULTIPART];
+    FORM_TYPES = [FT_URLENCODED, FT_MULTIPART],
+    DATABASE_KEY = 'savedRequests',
+    REQUEST_TAB = 'request-tab',
+    COLLECTIONS_TAB = 'collections-tab';
 
 // Create the application and set the window title
 window.RESTEasy = Ember.Application.create();
@@ -23,12 +26,6 @@ window.document.title = tr('application.title');
 var localDB = window.indexedDB.open("REST-Easy", 2);
 
 // TODO: remove the console.logs
-localDB.onsuccess = function(event) {
-    // Do something with localDB.result!
-    console.log("DB: Open Success!");
-    var idb = event.target.result;
-};
-
 
 localDB.onerror = function(event) {
     // Do something with localDB.errorCode!
@@ -36,17 +33,48 @@ localDB.onerror = function(event) {
 };
 
 
-localDB.onupgradeneeded = function(event) { 
+localDB.onupgradeneeded = function(event) {
     var idb = event.target.result;
     console.log("DB: updateding the version");
 
     // Create an objectStore for this database
-    var objectStore = idb.createObjectStore("savedRequests", { keyPath: "saveName" });
+    var objectStore = idb.createObjectStore(DATABASE_KEY, { keyPath: "saveName" });
     console.log(objectStore);
 };
 
+// Utility methods
+var updateCollections = function (waitFor) {
+    console.log('Running update method');
 
+    if (!waitFor) {
+        console.error('Unexpected waitFor in updateCollections', waitFor);
+        return;
+    }
 
+    // We also need to .call this method.. ES5 ftw
+    var self = this;
+    waitFor.onsuccess = function(event) {
+        var db = event.target.result;
+        var collections = [];
+
+        localDB.result.transaction(DATABASE_KEY).objectStore(DATABASE_KEY).openCursor().onsuccess = function (event) {
+            var cursor = event.target.result;
+            if(cursor) {
+                collections.push(cursor.value);
+                cursor.continue();
+            } else {
+                console.info(collections.length + " items fetched from db, setting state.");
+                self.set('collections', collections);
+            }
+        };
+    };
+};
+
+var setActiveTab = function (className) {
+
+  // Suggestions for improvments welcome..
+  Ember.$('.' + className).click();
+};
 
 // Main controller for the REST Easy application
 RESTEasy.ApplicationController = Ember.Controller.extend({
@@ -90,17 +118,28 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
     },
 
     actions: {
-
         saveRequest: function() {
             var db = localDB.result;
-            console.log(db);
-            //var db = this.db;
+            var transaction = db.transaction([DATABASE_KEY], "readwrite");
+            var objectStore = transaction.objectStore(DATABASE_KEY);
 
-            var transaction = db.transaction(["savedRequests"], "readwrite");
-            var objectStore = transaction.objectStore("savedRequests");
+            // We use url as primary key for now
+            var saveName = this.get('url'); //this.get('saveName')
+
+            // If url does not start with http://, we help the user out and add it for them
+            // Improvements and suggestions to behaviour welcome
+            if (!/^(http:\/\/)/.test(saveName)) {
+              saveName = 'http://' + saveName;
+            }
+
+            // Do some very basic validation to prevent empty entries
+            // We (for now) assume it starts with http:// here so length 10 is fair
+            if (saveName.length < 10) {
+              return;
+            }
 
             var saveItem = {
-                saveName: this.get('saveName'),
+                saveName: saveName,
                 method: this.get('method'),
                 url: this.get('url'),
                 requestHeaders: this.get('requestHeaders'),
@@ -110,25 +149,21 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 dataType: this.get('dataType'),
                 dataCustom: this.get('dataCustom'),
                 username: this.get('username'),
-                password: this.get('password'),
-                saveName: this.get('saveName')
+                password: this.get('password')
             };
-            console.log("Item:");
-            console.log(saveItem);
+            console.log("About to save:", saveItem);
 
             var request = objectStore.add(saveItem);
-            request.onsuccess = function(event) {
-                // TODO: remove the console.logs
-                console.log("Saved!");
-                console.log(event);
-            };
+
+            // Update collection state from db
+            updateCollections.call(this, request);
+            setActiveTab(COLLECTIONS_TAB);
         },
 
         loadRequest: function() {
-            var saveName = "";  // Dont know how to get the selected value from a dropdown (which is not currently existing)
+            var saveName = record.url;
 
-
-            localDB.result.transaction("savedRequests").objectStore("savedRequests").get(saveName).onsuccess = function (event) {
+            localDB.result.transaction(DATABASE_KEY).objectStore(DATABASE_KEY).get(saveName).onsuccess = function (event) {
                 var record = event.target.result;
 
                 this.set('method', HTTP_METHODS[0]);    // TODO:
@@ -143,8 +178,31 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 this.set('password', record.password);
                 this.set('saveName', record.saveName);
             };
+        },
 
-        }
+        removeRequestFromCollection: function(item) {
+            var objectStore = localDB.result.transaction(DATABASE_KEY, "readwrite").objectStore(DATABASE_KEY);
+            var saveName = item.saveName;
+
+            var request = objectStore.delete(saveName)
+            updateCollections.call(this, request);
+        },
+
+        assignRequestToState: function(item) {
+            this.set('method', item.method);
+            this.set('url', item.url);
+            this.set('requestHeaders', item.requestHeaders);
+            this.set('dataMode', item.dataMode);
+            this.set('formType', item.formType);
+            this.set('formData', item.formData);
+            this.set('dataType', item.dataType);
+            this.set('dataCustom', item.dataCustom);
+            this.set('username', item.username);
+            this.set('password', item.password);
+            this.set('saveName', item.saveName);
+
+            setActiveTab(REQUEST_TAB);
+        },
 
         // Clear all values and set them to their defaults
         reset: function() {
@@ -159,24 +217,9 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             this.set('username', '');
             this.set('password', '');
             this.set('response', null);
-            this.set('saveName', '');
 
-            if(localDB.readyState === "done") {
-                var db = localDB.result;
-
-                // Example:
-                // https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB#Using_a_cursor
-                localDB.result.transaction("savedRequests").objectStore("savedRequests").openCursor().onsuccess = function (event) {
-                    var cursor = event.target.result;
-                    if(cursor) {
-                        // TODO: put it in a dropdown item
-                        console.log(cursor.value);
-                        cursor.continue();
-                    } else {
-                        console.log("All Items:");
-                    }
-                };
-            }
+            // Update collection state from db
+            updateCollections.call(this,  localDB);
         },
 
         // Show and hide the about dialog
@@ -185,14 +228,21 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
         // Open a new request using the values from the UI and send it
         send: function() {
-            var request = this.get('request'),
+            var request  = this.get('request'),
                 dataMode = this.get('dataMode'),
                 username = this.get('username'),
-                password = this.get('password');
+                password = this.get('password'),
+                url      = this.get('url');
+
+            // If url does not start with http://, we help the user out and add it for them
+            // Improvements and suggestions to behaviour welcome
+            if (!/^(http:\/\/)/.test(url)) {
+              url = 'http://' + url;
+            }
 
             request.open(
                 this.get('method'),
-                this.get('url'),
+                url,
                 true  // async?
             );
 

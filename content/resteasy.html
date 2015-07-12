@@ -62,67 +62,91 @@
         </script>
 
         <!-- Request view -->
-        <script type="text/x-handlebars" data-template-name="app-request">
-            <!-- Request method, URL, and send button -->
-            <div class="float-left">
-                {{combo-box choices=controller.methods selection=controller.method}}
-            </div>
-            <button class="float-right" {{action 'send'}}>
-                <span class="fa fa-send"></span>
-                {{tr 'request.send'}}
-            </button>
-            <div class="control overflow-auto">
-                {{input placeholder='http://' value=controller.url action='send' on='enter'}}
-            </div>
+        <script type="text/x-handlebars" data-template-name="app-request" class="tabs">
+            {{#tab-container activeTab='request.tab.request'}}
+                {{tab-button class="request-tab" title="request.tab.request"}}
+                {{tab-button class="collections-tab" title="request.tab.collections"}}
 
-            <!-- HTTP headers -->
-            {{#collapsible-section title='request.headers.title'}}
-                <p>{{tr 'request.headers.description'}}</p>
-                {{editable-table entries=controller.requestHeaders}}
-            {{/collapsible-section}}
-
-            <!-- Data -->
-            {{#collapsible-section title='request.data.title'}}
-                <p>{{tr 'request.data.description'}}</p>
-                {{combo-box choices=controller.dataModes selection=controller.dataMode}}
-                {{#if view.dmForm}}
-                    <p>{{tr 'request.data.form.description'}}</p>
-                    {{combo-box choices=controller.formTypes selection=controller.formType}}
-                    {{editable-table entries=controller.formData}}
-                {{/if}}
-                {{#if view.dmCustom}}
-                    <p>{{tr 'request.data.custom.description'}}</p>
-                    <div class="control">
-                        {{input placeholder=controller.trDataType value=controller.dataType}}
+                {{#tab-content title="request.tab.request"}}
+                    <!-- Request method, URL, and send button -->
+                    <div class="float-left">
+                        {{combo-box choices=controller.methods selection=controller.method}}
                     </div>
-                    <div class="control">
-                        {{textarea value=controller.dataCustom rows=6}}
+                    <div class="control overflow-auto">
+                        {{input placeholder='http://' value=controller.url action='send' on='enter'}}
                     </div>
-                {{/if}}
-            {{/collapsible-section}}
+                    <div class="row">
+                        <button class="float-left" {{action 'send'}}>
+                            <span class="fa fa-send"></span>
+                            {{tr 'request.send'}}
+                        </button>
+                        <button class="float-left" {{action 'saveRequest'}}>
+                            <span class="fa fa-save"></span>
+                            {{tr 'request.save'}}
+                        </button>
+                    </div>
 
-            <!-- Authentication data -->
-            {{#collapsible-section title='request.auth.title'}}
-                <p>{{tr 'request.auth.description'}}</p>
-                <div class="control">
-                    {{input placeholder=controller.trUsername value=controller.username}}
-                </div>
-                <div class="control">
-                    {{input type='password' placeholder=controller.trPassword value=controller.password}}
-                </div>
-            {{/collapsible-section}}
+                    <!-- HTTP headers -->
+                    {{#collapsible-section title='request.headers.title'}}
+                        <p>{{tr 'request.headers.description'}}</p>
+                        {{editable-table entries=controller.requestHeaders}}
+                    {{/collapsible-section}}
 
-            <!-- Authentication data -->
-            {{#collapsible-section title='request.auth.title'}}
-                <p>{{tr 'request.auth.description'}}</p>
-                <div class="control verflow-auto">
-                    {{input placeholder=controller.trUsername value=controller.saveName}}
-                </div>
-                <button class="float-right" {{action 'saveRequest'}}>
-                    <span class="fa fa-info-circle"></span>
-                    Save
-                </button>
-            {{/collapsible-section}}
+                    <!-- Data -->
+                    {{#collapsible-section title='request.data.title'}}
+                        <p>{{tr 'request.data.description'}}</p>
+                        {{combo-box choices=controller.dataModes selection=controller.dataMode}}
+                        {{#if view.dmForm}}
+                            <p>{{tr 'request.data.form.description'}}</p>
+                            {{combo-box choices=controller.formTypes selection=controller.formType}}
+                            {{editable-table entries=controller.formData}}
+                        {{/if}}
+                        {{#if view.dmCustom}}
+                            <p>{{tr 'request.data.custom.description'}}</p>
+                            <div class="control">
+                                {{input placeholder=controller.trDataType value=controller.dataType}}
+                            </div>
+                            <div class="control">
+                                {{textarea value=controller.dataCustom rows=6}}
+                            </div>
+                        {{/if}}
+                    {{/collapsible-section}}
+
+                    <!-- Authentication data -->
+                    {{#collapsible-section title='request.auth.title'}}
+                        <p>{{tr 'request.auth.description'}}</p>
+                        <div class="control">
+                            {{input placeholder=controller.trUsername value=controller.username}}
+                        </div>
+                        <div class="control">
+                            {{input type='password' placeholder=controller.trPassword value=controller.password}}
+                        </div>
+                    {{/collapsible-section}}
+                {{/tab-content}}
+                {{#tab-content title="request.tab.collections"}}
+
+                    <!-- Collections tab -->
+                    <h4>Saved requests</h4>
+                    <table class="table">
+                        {{#each collections}}
+                            <tr class="hoverhand">
+                                <td {{action 'assignRequestToState' ../this}}>
+                                  <span class="fa fa-circle-o" style="color: {{colorClass}}"></span>
+                                  {{method}}
+                                </td>
+                                <td {{action 'assignRequestToState' ../this}}>
+                                  <i>{{url}}</i>
+                                </td>
+                                <td {{action 'removeRequestFromCollection' ../this}}>
+                                    <span class="fa fa-trash"></span>
+                                </td>
+                            </tr>
+                        {{else}}
+                            <h3>{{tr 'request.collections.noCollections'}}</h3>
+                        {{/each}}
+                    </table>
+                {{/tab-content}} <!-- End collections tab -->
+            {{/tab-container}}
         </script>
 
         <!-- Response view -->
@@ -311,5 +335,8 @@
         <script src="js/components/tab.js"></script>
         <script src="js/components/highlight.js"></script>
         <script src="js/components/dialog.js"></script>
+
+        <!-- Handlebar helpers -->
+        <script src="js/helpers/colorClass.js"></script>
     </body>
 </html>
