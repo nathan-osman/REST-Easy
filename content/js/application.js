@@ -153,7 +153,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             };
             console.log("About to save:", saveItem);
 
-            var request = objectStore.add(saveItem);
+            var request = objectStore.put(saveItem);
 
             // Update collection state from db
             updateCollections.call(this, request);
