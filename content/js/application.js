@@ -236,7 +236,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
 
             // If url does not start with http://, we help the user out and add it for them
             // Improvements and suggestions to behaviour welcome
-            if (!/^(http:\/\/)/.test(url)) {
+            if (!/^\s*(http:\/\/)/.test(url)) {
               url = 'http://' + url;
             }
 
