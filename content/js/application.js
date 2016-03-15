@@ -126,9 +126,10 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             // We use url as primary key for now
             var saveName = this.get('url'); //this.get('saveName')
 
-            // If url does not start with http://, we help the user out and add it for them
-            // Improvements and suggestions to behaviour welcome
-            if (!/^(http:\/\/)/.test(saveName)) {
+            // If url does not start with http:// or https://, we help the user
+            // out and add it for them. Improvements and suggestions to
+            // behaviour welcome
+            if (!/^(https?:\/\/)/.test(saveName)) {
               saveName = 'http://' + saveName;
             }
 
