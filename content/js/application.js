@@ -70,6 +70,15 @@ var updateCollections = function (waitFor) {
     };
 };
 
+var fixMissingUrlScheme = function(url) {
+    // If url does not start with http:// or https://, we help the user out and add it for them
+    // Improvements and suggestions to behaviour welcome
+    if (!/^\s*(https?:\/\/)/.test(url)) {
+        url = 'http://' + url;
+    }
+    return url;
+}
+
 var setActiveTab = function (className) {
 
   // Suggestions for improvments welcome..
@@ -126,11 +135,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             // We use url as primary key for now
             var saveName = this.get('url'); //this.get('saveName')
 
-            // If url does not start with http://, we help the user out and add it for them
-            // Improvements and suggestions to behaviour welcome
-            if (!/^(http:\/\/)/.test(saveName)) {
-              saveName = 'http://' + saveName;
-            }
+            saveName = fixMissingUrlScheme(saveName);
 
             // Do some very basic validation to prevent empty entries
             // We (for now) assume it starts with http:// here so length 10 is fair
@@ -234,11 +239,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
                 password = this.get('password'),
                 url      = this.get('url');
 
-            // If url does not start with http://, we help the user out and add it for them
-            // Improvements and suggestions to behaviour welcome
-            if (!/^\s*(http:\/\/)/.test(url)) {
-              url = 'http://' + url;
-            }
+            url = fixMissingUrlScheme(url);
 
             request.open(
                 this.get('method'),
