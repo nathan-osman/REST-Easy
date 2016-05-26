@@ -4,7 +4,7 @@
  *********************************/
 
 // Constants
-var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'OPTIONS'],
+var HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT','PATCH', 'DELETE', 'LINK', 'UNLINK', 'OPTIONS'],
     DM_NONE = tr('request.data.type.none'),
     DM_FORM = tr('request.data.type.form'),
     DM_CUSTOM = tr('request.data.type.custom'),
