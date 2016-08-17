@@ -43,6 +43,23 @@
                     </button>
                 </div>
             {{/dialog-box}}
+            
+            {{#dialog-box active=controller.displaySaveDialog}}
+                <h4 class="title"></h4>
+                <div class="control">
+                    {{input placeholder=(tr 'dialog.save.description') value=controller.name}}
+                </div>
+                <div class="buttons">
+                    <button {{action 'hideSaveDialog'}}>
+                        <span class="fa fa-close"></span>
+                        {{tr 'dialog.save.close'}}
+                    </button>
+                    <button {{action 'saveRequest'}}>
+                        <span class="fa fa-check"></span>
+                         {{tr 'dialog.save.save'}}
+                    </button>
+                </div>
+            {{/dialog-box}}
         </script>
 
         <!-- Page header view-->
@@ -80,7 +97,7 @@
                             <span class="fa fa-send"></span>
                             {{tr 'request.send'}}
                         </button>
-                        <button class="float-left" {{action 'saveRequest'}}>
+                        <button class="float-left" {{action 'openSaveDialog'}}>
                             <span class="fa fa-save"></span>
                             {{tr 'request.save'}}
                         </button>
@@ -130,6 +147,11 @@
                     <table class="table">
                         {{#each collections}}
                             <tr class="hoverhand">
+                                {{#if hasAName}}
+                                <td colspan="2" {{action 'assignRequestToState' ../this}}>
+                                  {{saveName}}
+                                </td>
+                                {{else}}
                                 <td {{action 'assignRequestToState' ../this}}>
                                   <span class="fa fa-circle-o" style="color: {{colorClass}}"></span>
                                   {{method}}
@@ -137,6 +159,7 @@
                                 <td {{action 'assignRequestToState' ../this}}>
                                   <i>{{url}}</i>
                                 </td>
+                                {{/if}}
                                 <td {{action 'removeRequestFromCollection' ../this}}>
                                     <span class="fa fa-trash"></span>
                                 </td>
