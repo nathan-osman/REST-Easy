@@ -127,24 +127,32 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
     },
 
     actions: {
+        openSaveDialog: function() {
+          this.set('displaySaveDialog', true);
+        },
+        hideSaveDialog: function() {
+          this.set('displaySaveDialog', false);
+        },
         saveRequest: function() {
             var db = localDB.result;
             var transaction = db.transaction([DATABASE_KEY], "readwrite");
             var objectStore = transaction.objectStore(DATABASE_KEY);
 
-            // We use url as primary key for now
-            var saveName = this.get('url'); //this.get('saveName')
-
-            saveName = fixMissingUrlScheme(saveName);
 
             // Do some very basic validation to prevent empty entries
             // We (for now) assume it starts with http:// here so length 10 is fair
-            if (saveName.length < 10) {
+            var url = fixMissingUrlScheme(this.get('url'));
+            if (url.length < 10) {
               return;
             }
 
+            // We use url or request name as primary key
+            var hasAName = this.get('name') && this.get('name').trim().length !== 0;
+            var saveName = hasAName ? this.get('name').trim() : url;
+            
             var saveItem = {
                 saveName: saveName,
+                hasAName : hasAName,
                 method: this.get('method'),
                 url: this.get('url'),
                 requestHeaders: this.get('requestHeaders'),
@@ -163,6 +171,7 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
             // Update collection state from db
             updateCollections.call(this, request);
             setActiveTab(COLLECTIONS_TAB);
+            this.set('displaySaveDialog', false);
         },
 
         loadRequest: function() {
