@@ -60,6 +60,23 @@
                     </button>
                 </div>
             {{/dialog-box}}
+            
+            {{#dialog-box active=controller.displayConfirmDeleteDialog}}
+                <h4 class="title"></h4>
+                <div class="control">
+                    <p>{{tr 'dialog.confirmDelete.description'}}{{#if selectedItem.hasAName}} <strong>{{selectedItem.saveName}}</strong> {{/if}}?</p>
+                </div>
+                <div class="buttons">
+                    <button {{action 'hideConfirmDeleteDialog'}}>
+                        <span class="fa fa-close"></span>
+                       {{tr 'dialog.confirmDelete.cancel'}}
+                    </button>
+                    <button {{action 'removeRequestFromCollection' selectedItem}}>
+                        <span class="fa fa-check"></span>
+                        {{tr 'dialog.confirmDelete.confirm'}}
+                    </button>
+                </div>
+            {{/dialog-box}}
         </script>
 
         <!-- Page header view-->
@@ -160,7 +177,7 @@
                                   <i>{{url}}</i>
                                 </td>
                                 {{/if}}
-                                <td {{action 'removeRequestFromCollection' ../this}}>
+                                <td {{action 'openConfirmDeleteDialog' ../this}}>
                                     <span class="fa fa-trash"></span>
                                 </td>
                             </tr>

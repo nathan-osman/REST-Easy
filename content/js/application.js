@@ -133,6 +133,16 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
         hideSaveDialog: function() {
           this.set('displaySaveDialog', false);
         },
+        hideConfirmDeleteDialog: function() {
+          this.set('displayConfirmDeleteDialog', false);
+        },
+        openConfirmDeleteDialog: function(item) {
+          var  msg = tr('dialog.confirmDelete.description');
+          msg += " <b>" + item.saveName + "</b> ?";
+          this.set('displayConfirmDeleteDialog', true);
+          this.set('selectedItem', item);
+          this.set('dialogMessage', msg);
+        },
         saveRequest: function() {
             var db = localDB.result;
             var transaction = db.transaction([DATABASE_KEY], "readwrite");
@@ -197,9 +207,9 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
         removeRequestFromCollection: function(item) {
             var objectStore = localDB.result.transaction(DATABASE_KEY, "readwrite").objectStore(DATABASE_KEY);
             var saveName = item.saveName;
-
             var request = objectStore.delete(saveName)
             updateCollections.call(this, request);
+            this.set('displayConfirmDeleteDialog', false);
         },
 
         assignRequestToState: function(item) {
