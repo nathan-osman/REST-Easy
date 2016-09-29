@@ -215,7 +215,16 @@ RESTEasy.ApplicationController = Ember.Controller.extend({
         assignRequestToState: function(item) {
             this.set('method', item.method);
             this.set('url', item.url);
-            this.set('requestHeaders', item.requestHeaders);
+            // transform headers in Ember Objects
+            var headers = [];
+            item.requestHeaders.forEach(function(header){
+              headers.push(Ember.Object.create({
+                        editing: false,
+                        name: header.name,
+                        value: header.value
+                    }));
+            });
+            this.set('requestHeaders', headers);
             this.set('dataMode', item.dataMode);
             this.set('formType', item.formType);
             this.set('formData', item.formData);
